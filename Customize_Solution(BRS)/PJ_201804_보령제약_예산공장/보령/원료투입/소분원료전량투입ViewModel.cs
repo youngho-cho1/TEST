@@ -83,6 +83,7 @@ namespace 보령
         {
             get { return _BR_BRS_SEL_ProductionOrder_Component_Summary; }
             set { _BR_BRS_SEL_ProductionOrder_Component_Summary = value; }
+
         }
 
         BR_BRS_SEL_ProductionOrder_Component_Summary.OUTDATACollection _filteredComponents;
