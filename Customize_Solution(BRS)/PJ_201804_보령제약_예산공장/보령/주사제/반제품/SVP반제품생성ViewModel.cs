@@ -96,6 +96,7 @@ namespace 보령
                     {
                         try
                         {
+
                             IsBusy = true;
 
                             CommandResults["LoadedCommandAsync"] = false;
