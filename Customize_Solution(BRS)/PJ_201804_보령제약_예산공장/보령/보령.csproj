@@ -546,6 +546,7 @@
     <Compile Include="반제품\포장공정반제품분할.xaml.cs">
       <DependentUpon>포장공정반제품분할.xaml</DependentUpon>
     </Compile>
+    <Compile Include="반제품\포장공정반제품분할ViewModel - 복사본.cs" />
     <Compile Include="반제품\포장공정반제품분할ViewModel.cs" />
     <Compile Include="반제품\포장반제품분할수량확인.xaml.cs">
       <DependentUpon>포장반제품분할수량확인.xaml</DependentUpon>
