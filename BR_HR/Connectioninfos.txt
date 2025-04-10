@@ -1,0 +1,12 @@
+<NewDataSet>
+   <CONINFO>
+       <SVRNAME>172.18.1.35</SVRNAME>
+       <PROTOCOL>TCP_BUFFERED</PROTOCOL>
+       <PORT>4510</PORT>
+       <FROMDATE>-7</FROMDATE>
+       <DATE>+1</DATE>
+       <COMPANY>PHARM</COMPANY>
+       <LOGSOURCE>BRHR</LOGSOURCE>
+       <LOGNAME>BR_HR BatchJobLog</LOGNAME>
+   </CONINFO>
+</NewDataSet>

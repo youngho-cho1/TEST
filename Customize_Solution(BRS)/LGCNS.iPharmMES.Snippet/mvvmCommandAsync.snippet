@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Command</Title>
+      <Author>Punkguy (LGCNS)</Author>
+      <Description>CommandAsync Template</Description>
+      <HelpUrl></HelpUrl>
+      <Shortcut>mvvmCommandAsync</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>CommandName</ID>
+          <ToolTip>Command name</ToolTip>
+          <Default>myCmd</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[
+        public ICommand $CommandName$CommandAsync
+        {
+            get
+            {
+                return new AsyncCommandBase(async arg =>
+                {
+                    using (await AwaitableLocks["$CommandName$CommandAsync"].EnterAsync())
+                    {
+                        try
+                        {
+                            IsBusy = true;
+                        
+                            CommandResults["$CommandName$CommandAsync"] = false;
+                            CommandCanExecutes["$CommandName$CommandAsync"] = false;
+
+                            ///
+                            /// 
+                            ///
+
+                            CommandResults["$CommandName$CommandAsync"] = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            CommandResults["$CommandName$CommandAsync"] = false;
+                            OnException(ex.Message, ex);
+                        }
+                        finally
+                        {
+                            CommandCanExecutes["$CommandName$CommandAsync"] = true;
+                            
+                            IsBusy = false;
+                        }
+                    }
+                },  arg =>
+                {
+                    return CommandCanExecutes.ContainsKey("$CommandName$CommandAsync") ?
+                        CommandCanExecutes["$CommandName$CommandAsync"] : (CommandCanExecutes["$CommandName$CommandAsync"] = true);
+                });
+            }
+        }
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

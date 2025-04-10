@@ -1,0 +1,62 @@
+diff a/Customize_Solution(BRS)/PJ_201804_보령제약_예산공장/보령/정제체크마스터/정제체크마스터조회.xaml b/Customize_Solution(BRS)/PJ_201804_보령제약_예산공장/보령/정제체크마스터/정제체크마스터조회.xaml	(rejected hunks)
+@@ -132,33 +132,36 @@
+                             HorizontalAlignment="Right" Command="{Binding GetIPCResultCommandAsync}"/>
+                 </Grid>
+ 
+                 <Grid x:Name="IPCResultSection" Grid.Row="1" Margin="5">
+                     <c1:C1DataGrid x:Name="dgCheckMasterIPCResult" HeadersVisibility="Column" AutoGenerateColumns="False"
+                                    ScrollBarStyle="{Binding Source={StaticResource dgScroll}}"
+-                                   CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserSort="False"
++                                   CanUserAddRows="False" CanUserEditRows="True" CanUserRemoveRows="False" CanUserSort="False"
+                                    ItemsSource="{Binding Path=BR_BRS_GET_Selector_Check_Master.OUTDATAs}">
+                         <c1:C1DataGrid.Columns>
+                             <c1:DataGridTextColumn Header="No" Width="40" Binding="{Binding SEQ}"/>
+-                            <c1:DataGridTextColumn Header="점검 일시" MinWidth="150" Binding="{Binding STDATETIME}"/>
++                            <c1:DataGridTextColumn Header="점검 일시" MinWidth="130" Binding="{Binding STDATETIME}"/>
+ 
+-                            <c1:DataGridTextColumn Header="평균질량" MinWidth="100" Binding="{Binding AVG_WEIGHT}"/>
+-                            <c1:DataGridTextColumn Header="개개질량(최소)" MinWidth="100" Binding="{Binding MIN_WEIGHT}"/>
+-                            <c1:DataGridTextColumn Header="개개질량(최대)" MinWidth="100" Binding="{Binding MAX_WEIGHT}"/>
++                            <!--<c1:DataGridTextColumn Header="평균질량" MinWidth="100" Binding="{Binding AVG_WEIGHT}"/>-->
++                            <c1:DataGridTextColumn Header="평균질량" MinWidth="80" Binding="{Binding AVG_WEIGHT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="개별질량(최소)" MinWidth="80" Binding="{Binding MIN_WEIGHT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="개별질량(최대)" MinWidth="80" Binding="{Binding MAX_WEIGHT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="개별질량RSD" MinWidth="80" Binding="{Binding SD_WEIGHT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+ 
+-                            <c1:DataGridTextColumn Header="두께(평균)" MinWidth="100" Binding="{Binding AVG_THICK}"/>
+-                            <c1:DataGridTextColumn Header="두께(최소)" MinWidth="100" Binding="{Binding MIN_THICK}"/>
+-                            <c1:DataGridTextColumn Header="두께(최대)" MinWidth="100" Binding="{Binding MAX_THICK}"/>
++                            <c1:DataGridTextColumn Header="두께(평균)" MinWidth="80" Binding="{Binding AVG_THICK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="두께(최소)" MinWidth="80" Binding="{Binding MIN_THICK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="두께(최대)" MinWidth="80" Binding="{Binding MAX_THICK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+ 
+-                            <c1:DataGridTextColumn Header="경도(평균)" MinWidth="100" Binding="{Binding AVG_HARDNESS}"/>
+-                            <c1:DataGridTextColumn Header="경도(최소)" MinWidth="100" Binding="{Binding MIN_HARDNESS}"/>
+-                            <c1:DataGridTextColumn Header="경도(최대)" MinWidth="100" Binding="{Binding MAX_HARDNESS}"/>
++                            <c1:DataGridTextColumn Header="경도(평균)" MinWidth="80" Binding="{Binding AVG_HARDNESS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="경도(최소)" MinWidth="80" Binding="{Binding MIN_HARDNESS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="경도(최대)" MinWidth="80" Binding="{Binding MAX_HARDNESS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+ 
+-                            <c1:DataGridTextColumn Header="직경(평균)" MinWidth="100" Binding="{Binding AVG_DIAMETER}"/>
+-                            <c1:DataGridTextColumn Header="직경(최소)" MinWidth="100" Binding="{Binding MIN_DIAMETER}"/>
+-                            <c1:DataGridTextColumn Header="직경(최대)" MinWidth="100" Binding="{Binding MAX_DIAMETER}"/>
++                            <!-- 2022.12.07 박희돈 직경 항목 삭제. QA팀 요청 -->
++                            <!--<c1:DataGridTextColumn Header="직경(평균)" MinWidth="100" Binding="{Binding AVG_DIAMETER, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="직경(최소)" MinWidth="100" Binding="{Binding MIN_DIAMETER, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
++                            <c1:DataGridTextColumn Header="직경(최대)" MinWidth="100" Binding="{Binding MAX_DIAMETER, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+                         </c1:C1DataGrid.Columns>
+                     </c1:C1DataGrid>
+                 </Grid>
+             </Grid>
+ 
+             <Grid x:Name="Footer" Grid.Row="2">
+@@ -171,7 +174,7 @@
+                             Click="btnCancel_Click"/>
+                 </StackPanel>
+             </Grid>
+ 
+         </Grid>
+     </toolkit:BusyIndicator>
+-</ShopFloorUI:ShopFloorCustomWindow>
++</ShopFloorUI:ShopFloorCustomWindow>
+\ No newline at end of file

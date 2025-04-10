@@ -1,0 +1,108 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+           x:Class="보령.포장공정최종생산수율_지시량" 
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           mc:Ignorable="d"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:local="clr-namespace:보령"
+           Width="550" Height="400" Name="Main"
+           Title="포장공정최종생산수율_지시량">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <Style TargetType="sdk:Label">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <local:포장공정최종생산수율_지시량ViewModel x:Name="ViewModel"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Border x:Name="PrintArea" Margin="5" BorderBrush="#FFD6D4D4" BorderThickness="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Name="FormulaGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <sdk:Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Content="최종 생산 수율 계산식" HorizontalAlignment="Right"/>
+                    <sdk:Label Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Content=" = "/>
+                    <sdk:Label Grid.Row="0" Grid.Column="2" Content="T (실 생산량)"/>
+                    <Line Grid.Row="1" Grid.Column="2" Stroke="Black" Stretch="Fill" StrokeThickness="1" X2="1"/>
+                    <sdk:Label Grid.Row="2" Grid.Column="2" Content="T (이론량 (포장지시수량))"/>
+                    <sdk:Label Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Content=" X 100" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid Grid.Row="1" Name="InputValueGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <sdk:Label Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Content=" = "/>
+                    <TextBox Grid.Row="0" Grid.Column="2" MinWidth="200" Text="{Binding InputVal1, Mode=TwoWay, StringFormat='0.##0'}"/>
+                    <Line Grid.Row="1" Grid.Column="2" Stroke="Black" Stretch="Fill" StrokeThickness="1" X2="1"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" MinWidth="200" Text="{Binding InputVal2, Mode=TwoWay, StringFormat='0.##0'}"/>
+                    <sdk:Label Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Content=" X 100" HorizontalAlignment="Left"/>
+                </Grid>
+                <Grid Grid.Row="2" Name="OutputValueGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <sdk:Label Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" Content=" = "/>
+                    <TextBox Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" MinWidth="200" Text="{Binding OutputVal, Mode=TwoWay}"/>
+                    <sdk:Label Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Content="%" HorizontalAlignment="Left"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="기록" Width="100" Height="40" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right" Command="{Binding ConfirmCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            <Button Grid.Column="1" Content="취소" Width="100" Height="40" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="Cancel" Click="Cancel_Click"/>
+        </Grid>
+    </Grid>
+</ShopFloorUI:ShopFloorCustomWindow>

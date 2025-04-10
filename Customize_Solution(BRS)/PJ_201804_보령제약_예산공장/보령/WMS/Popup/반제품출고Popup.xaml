@@ -1,0 +1,89 @@
+﻿<icommon:iPharmMESChildWindow x:Class="보령.반제품출고Popup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    mc:Ignorable="d" Title="반제품검량"
+    Width="800" Height="300">
+    <Grid x:Name="LayoutRoot" Background="White" Loaded="LayoutRoot_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Name="ConditionPannel">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <sdk:Label Name="txtType" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox Name="txtBCDScan" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="40" Padding="10" KeyDown="txtBCDScan_KeyDown" />
+            <Button Name="btnSelTarget" Grid.Column="2" Width="100" Height="40" Content="선 택" Click="btnSelTarget_Click"/>
+            <Button Name="btnChkTarget" Grid.Column="3" Width="100" Height="40" Content="검 량" Click="btnChkTarget_Click"/>
+            <!--<Grid Grid.Column="3" Name="StatusGroup">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <sdk:Label Name="VesselStatus" Grid.Row="0" HorizontalAlignment="Right" Content="0600-001 : 진행중" Margin="0,0,10,0"/>
+                <sdk:Label Name="ScaleStatus" Grid.Row="1" HorizontalAlignment="Right" Content="WBAL3102 : 연결성공" Margin="0,0,10,0"/>
+            </Grid>-->
+        </Grid>
+        <Grid Grid.Row="1" Name="MainPanel">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Fill="Transparent" Canvas.ZIndex="1"/>
+            <c1:C1DataGrid Name="IBCInfoList" Grid.Column="0" Canvas.ZIndex="2" Margin="2"
+                           HeadersVisibility="Column" CanUserAddRows="False" CanUserEditRows="False" CanUserFilter="False" CanUserRemoveRows="False" AutoGenerateColumns="False" SelectionMode="SingleRow"
+                           ItemsSource="{Binding BR_BRS_GET_VESSEL_INFO_DETAIL.OUTDATA_WIPs}">
+                <c1:C1DataGrid.Columns>
+                    <c1:DataGridTextColumn Binding="{Binding VESSELID}" Header="용기번호" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding NOTATION}" Header="단위" Width="*"/>
+                    <!--<c1:DataGridTextColumn Binding="{Binding TOTALQTY_UPPER}" Header="상한값" Width="*"/>-->
+                    <c1:DataGridTextColumn Binding="{Binding TOTALQTY, StringFormat='#0.00#g'}" Header="총중량" Width="*"/>
+                    <!--<c1:DataGridTextColumn Binding="{Binding TOTALQTY_LOWER}" Header="하한값" Width="*"/>-->
+                    <c1:DataGridTextColumn Binding="{Binding REALQTY, StringFormat='#0.00#g'}" Header="실중량" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding CHECKWEIGHT}" Header="검량여부" Width="*"/>
+                </c1:C1DataGrid.Columns>
+            </c1:C1DataGrid>
+            <c1:C1DataGrid Name="PalletInfoList" Grid.Column="0" Canvas.ZIndex="1" Margin="2"
+                           HeadersVisibility="Column" CanUserAddRows="False" CanUserEditRows="False" CanUserFilter="False" CanUserRemoveRows="False" AutoGenerateColumns="False" SelectionMode="SingleRow"
+                           ItemsSource="{Binding BR_BRS_GET_VESSEL_INFO_DETAIL.OUTDATA_DETAILs}">
+                <c1:C1DataGrid.Columns>
+                    <c1:DataGridTextColumn Binding="{Binding MTRLID}" Header="자재코드" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding MTRLNAME}" Header="자재명" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding MLOTID}" Header="성적번호" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding NOTATION}" Header="단위" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding TOTALQTY, StringFormat='#0.00#g'}" Header="총중량" Width="*"/>
+                    <!--<c1:DataGridTextColumn Binding="{Binding TOTALQTY_UPPER}" Header="상한값" Width="*"/>-->
+                    <!--<c1:DataGridTextColumn Binding="{Binding MSUBLOTQTY}" Header="내용물중량" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding TOTALQTY_LOWER}" Header="하한값" Width="*"/>-->
+                    <c1:DataGridTextColumn Binding="{Binding REALQTY, StringFormat='#0.00#g'}" Header="실중량" Width="*"/>
+                    <c1:DataGridTextColumn Binding="{Binding CHECKWEIGHT}" Header="검량여부" Width="*"/>
+                </c1:C1DataGrid.Columns>
+            </c1:C1DataGrid>
+            <Border Name="WeighingPannel" Grid.Column="1" BorderBrush="#FFB0BDCA" BorderThickness="1" Margin="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <sdk:Label Name="txtUpper" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <Border Grid.Row="1" BorderBrush="DarkGray" BorderThickness="5" Margin="5"/>
+                    <sdk:Label Name="txtWeight" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                    <sdk:Label Name="txtLower" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Button Name="btnConfirm" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="40" Content="확 인" Click="btnConfirm_Click"/>
+    </Grid>
+</icommon:iPharmMESChildWindow>

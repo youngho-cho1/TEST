@@ -1,0 +1,63 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.간섭상황조회" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:toolkit ="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:보령"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:controlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ezmes="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    Width="1000" Height="630"
+    Title="간섭상황조회" x:Name="Main">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:간섭상황조회ViewModel x:Name="VM"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Name="BusyIndicator" IsBusy="{Binding IsBusy, Mode=TwoWay}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="530"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="PrintArea" Grid.Row="0" BorderBrush="#FFD6D4D4" BorderThickness="1">
+                <Grid Grid.Row="0" x:Name="MainSection">
+                    <sdk:DataGrid x:Name="CheckDataGrid" AutoGenerateColumns="False" CanUserReorderColumns="False"
+                                   HeadersVisibility="Column" ItemsSource="{Binding ListInterfer}" Height="524" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" FontSize="12">
+                        <sdk:DataGrid.Columns>
+                            <sdk:DataGridTextColumn Header="간섭번호" Binding="{Binding SEQ}" Width="2*" IsReadOnly="True" FontSize="12"/>
+                            <sdk:DataGridTextColumn Header="간섭내용" Binding="{Binding SITUATION}" Width="13*" IsReadOnly="True" FontSize="12"/>
+                            <sdk:DataGridTextColumn Header="간섭구분" Binding="{Binding GUBUN}" Width="4*" IsReadOnly="True" FontSize="12"/>
+                            <sdk:DataGridTextColumn Header="최대 간섭횟수" Binding="{Binding CRITERIA}" Width="4*" IsReadOnly="True" FontSize="12"/>
+                            <sdk:DataGridTextColumn Header="간섭횟수" Width="4*" Binding="{Binding SUMNO}" IsReadOnly="True" FontSize="12">
+                                <sdk:DataGridTextColumn.CellStyle>
+                                    <Style TargetType="sdk:DataGridCell">
+                                        <Setter Property="Background" Value="{Binding OVER_COLOR}"/>
+                                    </Style>
+                                </sdk:DataGridTextColumn.CellStyle>
+                            </sdk:DataGridTextColumn>
+                        </sdk:DataGrid.Columns>
+                    </sdk:DataGrid>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1" x:Name="ButtonSection">
+                <Button x:Name="btnConfirm" Content="기록" Command="{Binding ConfirmCommandAsync}" Margin="340,11,528,11"/>
+                <Button x:Name="btnCancel" Content="취소"  Click="btnCancel_Click" Margin="528,11,340,11" RenderTransformOrigin="1.28,0.142"/>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

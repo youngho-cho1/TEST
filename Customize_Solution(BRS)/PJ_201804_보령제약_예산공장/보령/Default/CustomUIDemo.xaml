@@ -1,0 +1,39 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="Site.CustomUIDemo" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:local="clr-namespace:Site"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           mc:Ignorable="d" x:Name="Main"
+           Title="CustomUIDemo Page">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:CustomUIDemoViewModel x:Key="VM"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="CurrentOrder" FontSize="14" HorizontalAlignment="Left"/>
+            <c1:C1DataGrid Grid.Row="1" AutoGenerateColumns="True" HeadersVisibility="Column"
+                           CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False"
+                           ItemsSource="{Binding CURORDER}"/>
+            <TextBlock Grid.Row="2" Text="CurrentInstruction" FontSize="14" HorizontalAlignment="Left"/>
+            <c1:C1DataGrid Grid.Row="3" AutoGenerateColumns="True" HeadersVisibility="Column" 
+                           CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False"
+                           ItemsSource="{Binding CURINST}"/>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

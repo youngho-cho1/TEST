@@ -1,0 +1,145 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.WMS자재환입처리"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:local="clr-namespace:보령"
+    mc:Ignorable="d"
+    Width="1000" Height="300" Title="WMS자재환입처리" Name="Main">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:WMS자재환입처리ViewModel x:Key="ViewModel"/>
+        <local:ListStatusConverter x:Key="ListStatusConverter"/>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Width" Value="20"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Name="BusyIndicator" IsBusy="{Binding IsBusy, Mode=TwoWay}" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Height="40" Name="ScanGroup">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <sdk:Label Grid.Column="0" Content="자재 바코드" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="1" Name="MTRLBCD" Text="{Binding MTRLBCD,Mode=TwoWay}" Margin="5" VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:EditBoxKeyDownAction Command="{Binding BCDCheckCommandAsync}" CommandParameter="{Binding Text, ElementName=MTRLBCD}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <sdk:Label Grid.Column="2" Content="자재 SUBLOT" HorizontalAlignment="Center"/>
+                <TextBox Grid.Column="3" Text="{Binding MSUBLOTBCD,Mode=TwoWay}" Margin="5" IsReadOnly="True" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="4" Text="{Binding MSUBLOTQTYSTR,Mode=TwoWay}" Margin="5" IsReadOnly="True" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Row="1" Name="MainGroup">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Name="MaterialGroup">
+                    <ScrollViewer  Canvas.ZIndex="1" Padding="0">
+                        <c1:C1DataGrid Name="MTRLGrid" SelectionChanged="MTRLGrid_SelectionChanged" SelectionMode="SingleRow" Canvas.ZIndex="1"
+                               HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+                               AutoGenerateColumns="False" CanUserAddRows="False" CanUserRemoveRows="False" CanUserEditRows="False" HeadersVisibility="Column">
+                            <c1:C1DataGrid.Columns>
+                                <c1:DataGridTextColumn Header="자재코드" Binding="{Binding Path=MTRLID, Mode=TwoWay}"/>
+                                <c1:DataGridTextColumn Header="자재명" Binding="{Binding Path=MTRLNAME, Mode=TwoWay}"/>
+                                <c1:DataGridTextColumn Header="자재바코드" Binding="{Binding Path=MSUBLOTBCD, Mode=TwoWay}"/>
+                                <c1:DataGridTextColumn Header="처리상태" Binding="{Binding Path=RESULT, Mode=TwoWay}"/>
+                                <!--<c1:DataGridTextColumn Header="처리상태" Binding="{Binding Path=RESULT, Mode=TwoWay, Converter={StaticResource ListStatusConverter}}"/>-->
+                            </c1:C1DataGrid.Columns>
+                        </c1:C1DataGrid>
+                    </ScrollViewer>
+                    <Border Canvas.ZIndex="2" Background="Transparent" Margin="0,0,20,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Name="INDATAGroup">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Name="ScaleTypeButtonGroup">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="저울스캔" Margin="5">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding ScaleScanCommand}" CommandParameter="{Binding ElementName=Main}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Grid.Column="1" Content="저울미스캔" Margin="5">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding QuantityInsertCommand}" CommandParameter="{Binding ElementName=Main}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="25"/>
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="0" Content="저울 ID" HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="1" Margin="5" Text="{Binding SCALEID, Mode=TwoWay}" Name="txtScaleId" IsReadOnly="True" VerticalAlignment="Center"/>
+                        <sdk:Label Grid.Column="2" Content="측정값" HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="3" Margin="5" Text="{Binding SCALEVAL, Mode=TwoWay}" Name="txtWeight" IsReadOnly="True" VerticalAlignment="Center" TextChanged="txtWeight_TextChanged"/>
+                        <TextBlock Grid.Column="4" Name="txtUOM" Text="{Binding ScaleUOM, Mode=TwoWay}" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="25"/>
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="0" Content="환산변수" HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="1" Margin="5" Name="txtParam" VerticalAlignment="Center" Text="{Binding PARAM, Mode=TwoWay, StringFormat=\{0:0.##0\}}" KeyDown="txtParam_KeyDown"/>
+                        <!--<TextBox Grid.Column="1" Margin="5" Name="txtParam" Text="{Binding PARAM, Mode=TwoWay}" IsReadOnly="True" VerticalAlignment="Center"/>-->
+                        <sdk:Label Grid.Column="2" Content="환산결과" HorizontalAlignment="Right"/>
+                        <TextBox Grid.Column="3" Margin="5" Text="{Binding RETURNQTY, Mode=TwoWay}" Name="txtResult" IsReadOnly="True" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="4" Name="txtReturnUOM" Text="{Binding ReturnUOM, Mode=TwoWay}" VerticalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Height="40" Name="ButtonGroup">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="자재 환입" Width="120" Margin="5" Name="btnReturn" Click="btnReturn_Click"/>
+                    <!--<Button Content="환입 불요" Width="120" Margin="5" Name="btnNotReturn" Click="btnNotReturn_Click"/>-->
+                    <Button Content="기록" Name="btnConfrim" Width="120" Margin="5" Command="{Binding ConfrimCommandAsync}"/>
+                    <Button Content="취소" Name="btnCancel" Width="120" Margin="5" Click="btnCancel_Click" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

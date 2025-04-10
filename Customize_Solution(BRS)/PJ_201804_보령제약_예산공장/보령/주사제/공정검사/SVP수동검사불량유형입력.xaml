@@ -1,0 +1,487 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.SVP수동검사불량유형입력"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ControlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib" 
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:local="clr-namespace:보령"
+    x:Name="Main"
+    Title="SVP수동검사불량유형입력"
+    Height="715" Width="1220">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <icontrol:ReverseBoolConverter x:Key="boolRevConverter" />
+        <local:SVP수동검사불량유형입력ViewModel x:Key="VM"/>
+        <Style x:Key="LabelStyle" TargetType="sdk:Label">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="TextStyle" TargetType="TextBox">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0 2 0 2" />
+        </Style>
+        <Style x:Key="NumericStyle" TargetType="toolkit:NumericUpDown">
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0 0 0 0" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style TargetType="ScrollBar" x:Key="gdScroll">
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="MinWidth" Value="25"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Background="White" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadCommandAsync}"
+                                               CommandParameter="{Binding ElementName=Main}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="13*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" x:Name="PrintArea" BorderBrush="#FFD6D4D4" BorderThickness="3">
+                <Grid x:Name="MainGrid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="291*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" x:Name="MainSection" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="검사자" IsEnabled="True" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding Path=INSUSER, Mode=TwoWay}" IsReadOnly="True" Grid.ColumnSpan="3" Style="{Binding Source={StaticResource TextStyle}}"/>
+                        <sdk:Label Grid.Column="7" Grid.Row="1" Content="검사일자" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <c1:C1DateTimePicker Grid.Row="1" Grid.Column="9" Grid.ColumnSpan="3" x:Name="c1pkrTo" 
+                                Margin="0 5 0 5"
+                                Width="auto"
+                                DateFormat="Short"
+                                TimeFormat="Custom"
+                                TimeIncrement="00:01:00"
+                                EditMode="Date"
+                                FontSize="12"
+                                DateTime="{Binding Path=Date, Mode=TwoWay}" IsReadOnly="True" IsEnabled="{Binding IsEnableDate}"  MinTimeEditorWidth="150" />
+                        <sdk:Label Grid.Column="13" Grid.Row="1" Content="검사수량(Vial)" Grid.ColumnSpan="3" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.Column="16" Grid.ColumnSpan="2" Grid.Row="1" x:Name="INSPECTQTY" Value="{Binding Path=INSPECTQTY, Mode=TwoWay}" HorizontalAlignment="Left" Width="125" />
+                        <sdk:Label Grid.Column="19" Grid.Row="1" Content="검사차수" Grid.ColumnSpan="3" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.Column="22" Grid.ColumnSpan="2" Grid.Row="1" x:Name="INSPECTCNT" IsEnabled="{Binding IsEnabled}" Value="{Binding Path=INSPECTCNT, Mode=TwoWay}" HorizontalAlignment="Left" Width="125" />
+                    </Grid>
+
+                    <Grid Grid.Row="1" x:Name="MainSection2" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="126*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="123" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="127*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="126*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="127*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="127*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="128*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="65*" />
+                            <ColumnDefinition Width="62*"/>
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="내용물 - 이물" HorizontalAlignment="Left" FontSize="20" Style="{Binding Source={StaticResource LabelStyle}}" />
+
+                        <sdk:Label Grid.Column="1" Grid.Row="2" Content="흰티" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="3" Content="(치명결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="36,0" />
+                        <sdk:Label Grid.Column="3" Grid.Row="2" Content="No.1" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="2" x:Name="REJECT_NO1" Value="{Binding Path=REJECT_NO1, Mode=TwoWay}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="2" Content="검은티" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="3" Content="(치명결점)" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="37,0,36,0" />
+                        <sdk:Label Grid.Column="9" Grid.Row="2" Content="No.2" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="11" Grid.Row="2" x:Name="REJECT_NO2" Value="{Binding Path=REJECT_NO2, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="2" Content="유색" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="3" Content="(치명결점)" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="37,0,36,0" />
+                        <sdk:Label Grid.Column="15" Grid.Row="2" Content="No.3" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="17" Grid.Row="2" x:Name="REJECT_NO3" Value="{Binding Path=REJECT_NO3, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="19" Grid.Row="2" Content="금속성" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="19" Grid.Row="3" Content="(치명결점)" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="37,0" />
+                        <sdk:Label Grid.Column="21" Grid.Row="2" Content="No.4" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="23" Grid.Row="2" x:Name="REJECT_NO4" Value="{Binding Path=REJECT_NO4, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" Grid.ColumnSpan="2" />
+
+                        <sdk:Label Grid.Column="1" Grid.Row="4" Content="유리조각" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="5" Content="(치명결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="36,0" />
+                        <sdk:Label Grid.Column="3" Grid.Row="4" Content="No.5" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="4" x:Name="REJECT_NO5" Value="{Binding Path=REJECT_NO5, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="4" Content="섬유(> 1mm)" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="5" Content="(치명결점)" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="37,0,36,0" />
+                        <sdk:Label Grid.Column="9" Grid.Row="4" Content="No.6" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="11" Grid.Row="4" x:Name="REJECT_NO6" Value="{Binding Path=REJECT_NO6, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="4" Content="섬유(≤ 1mm)" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="5" Content="(중결점)" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Margin="42,0" />
+                        <sdk:Label Grid.Column="15" Grid.Row="4" Content="No.7" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="17" Grid.Row="4" x:Name="REJECT_NO7" Value="{Binding Path=REJECT_NO7, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+
+                    </Grid>
+
+                    <Grid Grid.Row="3" x:Name="MainSection3" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="내용물 - 충전량불량" HorizontalAlignment="Left" FontSize="20" Grid.ColumnSpan="5" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="2" Content="충전량불량" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="3" Content="(중결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="3" Grid.Row="2" Content="No.8" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="2" x:Name="REJECT_NO8" Value="{Binding Path=REJECT_NO8, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                    </Grid>
+
+                    <Grid Grid.Row="4" x:Name="MainSection4" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="용기" HorizontalAlignment="Left" FontSize="20" Grid.ColumnSpan="5" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="2" Content="바이알손상" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="3" Content="(치명결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="3" Grid.Row="2" Content="No.9" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="2" x:Name="REJECT_NO9" Value="{Binding Path=REJECT_NO9, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="2" Content="내부오염" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="3" Content="(중결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="9" Grid.Row="2" Content="No.10" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="11" Grid.Row="2" x:Name="REJECT_NO10" Value="{Binding Path=REJECT_NO10, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="2" Content="바이알흠집" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="3" Content="(경결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="15" Grid.Row="2" Content="No.11" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="17" Grid.Row="2" x:Name="REJECT_NO11" Value="{Binding Path=REJECT_NO11, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="19" Grid.Row="2" Content="성형불량" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="19" Grid.Row="3" Content="(경결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="21" Grid.Row="2" Content="No.12" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="23" Grid.Row="2" x:Name="REJECT_NO12" Value="{Binding Path=REJECT_NO12, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                    </Grid>
+
+                    <Grid Grid.Row="5" x:Name="MainSection5" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="캡" HorizontalAlignment="Left" FontSize="20" Grid.ColumnSpan="5" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="2" Content="캡씰링불량" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="3" Content="(중결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" Height="20" Margin="35,0,34,0" VerticalAlignment="Bottom" />
+                        <sdk:Label Grid.Column="3" Grid.Row="2" Content="No.13" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="2" x:Name="REJECT_NO13" Value="{Binding Path=REJECT_NO13, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="2" Content="이종캡" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="3" Content="(중결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="9" Grid.Row="2" Content="No.14" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="11" Grid.Row="2" x:Name="REJECT_NO14" Value="{Binding Path=REJECT_NO14, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="2" Content="캡외관불량" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="3" Content="(경결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="15" Grid.Row="2" Content="No.15" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="17" Grid.Row="2" x:Name="REJECT_NO15" Value="{Binding Path=REJECT_NO15, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                    </Grid>
+
+                    <Grid Grid.Row="6" x:Name="MainSection6" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="고무전" HorizontalAlignment="Left" FontSize="20" Grid.ColumnSpan="5" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="2" Content="고무전없음" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="3" Content="(치명결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="3" Grid.Row="2" Content="No.16" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="2" x:Name="REJECT_NO16" Value="{Binding Path=REJECT_NO16, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="2" Content="이종고무전" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="3" Content="(치명결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="9" Grid.Row="2" Content="No.17" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="11" Grid.Row="2" x:Name="REJECT_NO17" Value="{Binding Path=REJECT_NO17, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="2" Content="고무전이물" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="3" Content="(중결점)"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="15" Grid.Row="2" Content="No.18" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="17" Grid.Row="2" x:Name="REJECT_NO18" Value="{Binding Path=REJECT_NO18, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                    </Grid>
+
+                    <Grid Grid.Row="7" x:Name="MainSection7" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="2" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="그 외 불량" HorizontalAlignment="Left" FontSize="20" Grid.ColumnSpan="5" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="1" Grid.Row="2" Content="Cake상태불량" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="3" Grid.Row="2" Content="No.19" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="5" Grid.Row="2" x:Name="REJECT_NO19" Value="{Binding Path=REJECT_NO19, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="2" Content="바이알내부기벽/" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="7" Grid.Row="3" Content="고무전약액뭍음"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="9" Grid.Row="2" Content="No.20" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="11" Grid.Row="2" x:Name="REJECT_NO20" Value="{Binding Path=REJECT_NO20, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                        <sdk:Label Grid.Column="13" Grid.Row="2" Content="기타불량" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <sdk:Label Grid.Column="15" Grid.Row="2" Content="No.21" Grid.RowSpan="2" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <ShopFloorUI:NumericKeyPadType Grid.RowSpan="2" Grid.Column="17" Grid.Row="2" x:Name="REJECT_NO21" Value="{Binding Path=REJECT_NO21, Mode=TwoWay}"
+                                                   IsEnabled="{Binding isFitCountEnable}" IsReadOnly="{Binding isFitCountEnable, Converter={StaticResource boolRevConverter}}" />
+                    </Grid>
+
+                    <Grid Grid.Row="8" x:Name="MainSection8" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="1000" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                        </Grid.ColumnDefinitions>
+                        <sdk:Label Grid.Column="1" Grid.Row="1" Content="비고" HorizontalAlignment="Left" FontSize="20" Grid.ColumnSpan="5" Style="{Binding Source={StaticResource LabelStyle}}" />
+                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding Path=COMMENTS, Mode=TwoWay}" Style="{Binding Source={StaticResource TextStyle}}"/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1" x:Name="Footer" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="5" HorizontalAlignment="Center">
+                    <Button Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource VM}, FallbackValue='기록없음'}" Margin="5,1" Width="90" Height="40" 
+                            IsEnabled="{Binding isConfirmEnable}" Command="{Binding NoRecordConfirmCommand}" />
+                    <Button Content="{Binding W[CUIDefaultDataWriteToEBRButtonText], Source={StaticResource VM}, FallbackValue='기록'}" Margin="5,1" Width="90" Height="40"
+                            IsEnabled="{Binding isSaveEnable}" Command="{Binding SaveCommandAsync}"/>
+                    <Button Content="{Binding W[CUICloseButtonText], Source={StaticResource VM}, FallbackValue='닫기'}" Margin="5,1" Width="90" Height="40" Click="btnClose_Click"/>
+                </StackPanel>
+            </Grid>
+            <Image x:Name="ScreenShot" Grid.Row="1" Stretch="None"/>
+
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="보령.UserControls.CustomUIHeader"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="Auto" Width="Auto">
+    <UserControl.Resources>
+        <Style x:Key="Header" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFFFFDFD"/>
+            <Setter Property="FontSize" Value="13.333"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="Attribute" TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF96CE23"/>
+                <GradientStop Color="#FF8CC203" Offset="0.096"/>
+                <GradientStop Color="#FF7FAF06" Offset="0.983"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition MinWidth="100" Width="*"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition MinWidth="100" Width="*"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition MinWidth="100" Width="*"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition MinWidth="100" Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="8" Name="lbCampaignOrder" Text="{Binding W[CUICampaignOrderText], Source={StaticResource R}, FallbackValue='캠페인오더'}"
+                       FontFamily="Malgun Gothic" FontWeight="Bold" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" Visibility="Collapsed"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding W[CUIBatchNo], Source={StaticResource R}, FallbackValue='BatchNo'}" Style="{StaticResource Header}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtBatchNo" Style="{StaticResource Attribute}"/>
+            
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding W[CUIOrderNo], Source={StaticResource R}, FallbackValue='OrderNo'}" Style="{StaticResource Header}"/>
+            <TextBox Grid.Row="1" Grid.Column="3" Name="txtOrderNo" Style="{StaticResource Attribute}"/>
+            <ComboBox Grid.Row="1" Grid.Column="3" Name="cboOrderList" DisplayMemberPath="POID" SelectedValuePath="POID" Visibility="Collapsed"
+                      SelectionChanged="cboOrderList_SelectionChanged"/>
+
+            <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding W[CUIProcessName], Source={StaticResource R}, FallbackValue='ProcessName'}" Style="{StaticResource Header}"/>
+            <TextBox Grid.Row="1" Grid.Column="5" Name="txtProcessName" Style="{StaticResource Attribute}"/>
+            <TextBlock Grid.Row="1" Grid.Column="6" Text="{Binding W[CUIWorkRoom], Source={StaticResource R}, FallbackValue='WorkRoom'}" Style="{StaticResource Header}"/>
+            <TextBox Grid.Row="1" Grid.Column="7" Name="txtWorkRoom" Style="{StaticResource Attribute}"/>
+        </Grid>
+    </Grid>
+</UserControl>

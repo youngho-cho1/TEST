@@ -1,0 +1,67 @@
+diff a/Customize_Solution(BRS)/PJ_201804_보령제약_예산공장/보령/정제체크마스터/정제체크마스터조회ViewModel.cs b/Customize_Solution(BRS)/PJ_201804_보령제약_예산공장/보령/정제체크마스터/정제체크마스터조회ViewModel.cs	(rejected hunks)
+@@ -469,36 +469,61 @@
+ 
+                                 // BR_BRS_REG_IPC_CHECKMASTER_MULTI IPC 결과 테이블에 저장
+                                 _BR_BRS_REG_IPC_CHECKMASTER_MULTI.INDATAs.Clear();
+                                 foreach (var item in BR_BRS_GET_Selector_Check_Master.OUTDATAs)
+                                 {
+                                     decimal chk;
+-                                    decimal avgWeight = 0, avgThick = 0, avgHardness = 0, avgDiameter = 0;
++                                    decimal avgWeight = 0, minWeight = 0, maxWeight = 0, sdWeight = 0
++                                            , avgThick = 0, minThick = 0, maxThick = 0
++                                            , avgHardness = 0, minHardness = 0, maxHardness = 0;
+ 
+                                     if (decimal.TryParse(item.AVG_WEIGHT.Replace(item.WEIGHTUOM, ""), out chk))
+                                         avgWeight = chk;
++                                    if (decimal.TryParse(item.MIN_WEIGHT.Replace(item.WEIGHTUOM, ""), out chk))
++                                        minWeight = chk;
++                                    if (decimal.TryParse(item.MAX_WEIGHT.Replace(item.WEIGHTUOM, ""), out chk))
++                                        maxWeight = chk;
++                                    if (decimal.TryParse(item.SD_WEIGHT.Replace(item.SD_WEIGHTUOM, ""), out chk))
++                                        sdWeight = chk;
+                                     if (decimal.TryParse(item.AVG_THICK.Replace(item.THICKUOM, ""), out chk))
+                                         avgThick = chk;
++                                    if (decimal.TryParse(item.MIN_THICK.Replace(item.THICKUOM, ""), out chk))
++                                        minThick = chk;
++                                    if (decimal.TryParse(item.MAX_THICK.Replace(item.THICKUOM, ""), out chk))
++                                        maxThick = chk;
+                                     if (decimal.TryParse(item.AVG_HARDNESS.Replace(item.HARDNESSUOM, ""), out chk))
+                                         avgHardness = chk;
+-                                    if (decimal.TryParse(item.AVG_DIAMETER.Replace(item.DIAMETERUOM, ""), out chk))
+-                                        avgDiameter = chk;
++                                    if (decimal.TryParse(item.MIN_HARDNESS.Replace(item.HARDNESSUOM, ""), out chk))
++                                        minHardness = chk;
++                                    if (decimal.TryParse(item.MAX_HARDNESS.Replace(item.HARDNESSUOM, ""), out chk))
++                                        maxHardness = chk;
++                                    //2022.12.07 박희돈 직경 항목 삭제. QA팀 요청
++                                    //if (decimal.TryParse(item.AVG_DIAMETER.Replace(item.DIAMETERUOM, ""), out chk))
++                                    //    avgDiameter = chk;
+ 
+                                     _BR_BRS_REG_IPC_CHECKMASTER_MULTI.INDATAs.Add(new BR_BRS_REG_IPC_CHECKMASTER_MULTI.INDATA
+                                     {
+                                         EQPTID = item.EQPTID != null ? item.EQPTID : "",
+                                         POID = _mainWnd.CurrentOrder.ProductionOrderID,
+                                         OPSGGUID = _mainWnd.CurrentOrder.OrderProcessSegmentID,
+                                         SMPQTY = item.SMPQTY,
+                                         USERID = AuthRepositoryViewModel.GetUserIDByFunctionCode("OM_ProductionOrder_SUI"),
+                                         STRTDTTM = item.STDTTM,
+                                         LOCATIONID = AuthRepositoryViewModel.Instance.RoomID,
+                                         AVG_WEIGHT = avgWeight.ToString(),
++                                        MIN_WEIGHT = minWeight.ToString(),
++                                        MAX_WEIGHT = maxWeight.ToString(),
++                                        SD_WEIGHT = sdWeight.ToString(),
+                                         AVG_THICKNESS = avgThick.ToString(),
++                                        MIN_THICKNESS = minThick.ToString(),
++                                        MAX_THICKNESS = maxThick.ToString(),
+                                         AVG_HARDNESS = avgHardness.ToString(),
+-                                        AVG_DIAMETER = avgDiameter.ToString()
++                                        MIN_HARDNESS = minHardness.ToString(),
++                                        MAX_HARDNESS = maxHardness.ToString()
++                                        //2022.12.07 박희돈 직경 항목 삭제. QA팀 요청
++                                        //AVG_DIAMETER = avgDiameter.ToString()
+                                     });
+ 
+                                 }
+ 
+                                 if (await _BR_BRS_REG_IPC_CHECKMASTER_MULTI.Execute())
+                                 {

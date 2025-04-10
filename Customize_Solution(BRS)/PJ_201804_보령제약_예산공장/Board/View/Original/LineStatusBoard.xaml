@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Board_Original.LineStatusBoard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"  
+    xmlns:local="clr-namespace:Board_Original"
+    d:DesignHeight="575" d:DesignWidth="1050">
+
+    <Grid x:Name="LayoutRoot" Background="Transparent" Margin="50, 0, 50, 30">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:ProcStatusBoard Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding procList[0]}"/>
+            <local:ProcStatusBoard Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding procList[1]}"/>
+            <local:ProcStatusBoard Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding procList[2]}"/>
+            <local:ProcStatusBoard Grid.Column="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding procList[3]}"/>
+        </Grid>
+    </Grid>
+</UserControl>

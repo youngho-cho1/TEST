@@ -1,0 +1,71 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.용기중량확인"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:my="clr-namespace:보령"
+    x:Name="Main"
+    mc:Ignorable="d"
+    Width="800" Height="300" 
+    Title="용기중량확인">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <my:용기중량확인ViewModel x:Key="viewModel"/>
+        <Style x:Key="HeaderStyle" TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <Grid x:Name="LayoutRoot" Margin="2" DataContext="{Binding Source={StaticResource viewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <sdk:Label Grid.Column="0" Content="용기번호" Margin="10,0,0,0" HorizontalAlignment="Center"/>
+            <TextBox Grid.Column="1" Name="txtboxIBCID" Text="{Binding Path=txtIBCID, Mode=TwoWay}" VerticalAlignment="Center" KeyDown="txtboxIBCID_KeyDown"/>
+        </Grid>
+        <c1:C1DataGrid Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2"
+                        x:Name="dgProductionOutput" 
+                        AutoGenerateColumns="False" 
+                        Margin="10,0,10,10"
+                        CanUserAddRows="False"
+                        RowHeaderWidth="0"
+                        RowHeight="30"
+                        GridLinesVisibility="All"   
+                        AlternatingRowBackground="White"
+                        RowBackground="White"
+                        ItemsSource="{Binding ChargingMaterial}" CanUserEditRows="False" CanUserRemoveRows="False" CanUserReorderColumns="False" >
+            <c1:C1DataGrid.Columns>
+                <c1:DataGridTextColumn  Header="IBC ID" Width="*" Binding="{Binding Path=IBCID}" IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="저울 번호" Width="*" Binding="{Binding Path=SCALEID}" IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="IBC 무게" Width="*" Binding="{Binding Path=IBCWEIGHT}" IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="상태" Width="*" Binding="{Binding Path=CHK}" IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+            </c1:C1DataGrid.Columns>
+        </c1:C1DataGrid>
+
+        <Button x:Name="OKButton" Content="기록" Command="{Binding Path=ConfirmCommand}" IsEnabled="{Binding btnOKisEnabled, Mode=TwoWay}" Width="120" Height="35" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="0" />
+        <Button x:Name="CancelButton" Content="취소" Click="CancelButton_Click" Width="120" Height="35" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" />
+    </Grid>
+</ShopFloorUI:ShopFloorCustomWindow>

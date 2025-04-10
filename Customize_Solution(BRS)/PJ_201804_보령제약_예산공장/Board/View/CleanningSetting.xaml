@@ -1,0 +1,155 @@
+﻿<UserControl    x:Class="Board.CleanningSetting"
+                xmlns:local="clr-namespace:Board" 
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"  
+                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+                xmlns:ControlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+                xmlns:Ctrl="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+                xmlns:c1="clr-namespace:C1.Silverlight.DataGrid;assembly=C1.Silverlight.DataGrid.5"
+                mc:Ignorable="d"
+                d:DesignHeight="768" d:DesignWidth="1024" 
+                Name="Main">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="lblStyle" TargetType="sdk:Label">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style x:Key="txtStyle" TargetType="TextBox">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Width" Value="200"/>
+            </Style>
+            <Style x:Key="colHeader" TargetType="c1:DataGridColumnHeaderPresenter">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style x:Key="radioStyle" TargetType="RadioButton">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Margin" Value="2 0 2 0"/>
+            </Style>
+            <local:CleanningSettingViewModel x:Key="ViewModel"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" DataContext="{StaticResource ViewModel}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}"
+                                       CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"  />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ControlsLib:MainPanel_Top x:Name="mainPanel" Grid.Row="1" Grid.RowSpan="1" IsExpanded="True" IsEnableSearch="False" IsEnableSave="False" HorizontalAlignment="Stretch" Margin="6,0,-6,0">
+            <ControlsLib:MainPanel_Top.Search>
+                <Grid x:Name="searchPanel" VerticalAlignment="Center"  Margin="0 5 0 0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+
+                    <sdk:Label Grid.Column="13" Content="제품코드"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0" Width="80" />
+                    <TextBox Grid.Column="14"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0" Width="80" Text="{Binding MTRLID, Mode=TwoWay}" Style="{StaticResource txtStyle}" />
+                    <Button Grid.Column="15" Content="조회" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0" Width="80" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding Path=BtnSearchCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Grid.Column="16" Content="업데이트" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0,0,0" Width="80" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding Path=BtnUpdateCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </ControlsLib:MainPanel_Top.Search>
+            <ControlsLib:MainPanel_Top.Contents>
+                <ControlsLib:CNSDataGrid  x:Name="CleanningSettingGrid" IsRowNumber="False"  Width="Auto" HeaderRowCount="2"
+                            IsRowAdd="True" IsRowDelete="True" IsEditMode="True" IsEditSection="True"
+                            ItemsSource="{Binding Path=BR_BRS_SEL_CleanningSettingList.OUTDATAs, Mode=OneWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CommittedRowEdit">
+                            <i:InvokeCommandAction Command="{Binding RowEditCommand}"/>
+                        </i:EventTrigger>
+                        <!--<i:EventTrigger EventName="RowAdd_Click">
+                            <i:InvokeCommandAction Command="{Binding RowAddCommand}"/>
+                        </i:EventTrigger>-->
+                        <!--<i:EventTrigger EventName="RowDelete_Click">
+                            <i:InvokeCommandAction Command="{Binding RowDeleteCommand}"/>
+                        </i:EventTrigger>-->
+                    </i:Interaction.Triggers>
+                    <ControlsLib:CNSDataGrid.DataColumns>
+                        <ControlsLib:DataColumn DataField="CHK" HeadName="" HeaderWidth="30"   ColumnType="CheckBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="True"
+                                                        ItemsSource="{Binding CHK, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="라우터ID" DataField="ODNAME" ColumnType="TextBox" ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding ODID, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="라우터버젼" DataField="ODVER" ColumnType="TextBox" ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding ODVER, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="제품코드" DataField="MTRLID" ColumnType="TextBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="True"
+                                                        ItemsSource="{Binding MTRLID, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="제품버젼" DataField="MTRLVER" ColumnType="TextBox" ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding MTRLVER, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="제품명" DataField="MTRLNAME" ColumnType="TextBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="True"
+                                                        ItemsSource="{Binding MTRLNAME, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="라우터명" DataField="ODNAME" ColumnType="TextBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="200" ReadOnly="True"
+                                                        ItemsSource="{Binding ODNAME, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="공정" DataField="OPSGNAME" ColumnType="TextBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="True"
+                                                        ItemsSource="{Binding OPSGNAME, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="공정GUID" DataField="OPSGGUID" ColumnType="TextBox" ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding OPSGGUID, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="인원공수" DataField="READYVAL" ColumnType="Int32"  ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding READYVAL, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="인원공수버젼" DataField="READYVER" ColumnType="TextBox"  ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding READYVER, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="설비공수" DataField="EQPTREADYVAL" ColumnType="Int32"  ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding EQPTREADYVAL, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="사용자" DataField="INSUSERID" ColumnType="TextBox"  ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding INSUSERID, Mode=TwoWay}"/>
+                        <ControlsLib:DataColumn HeadName="생성시간" DataField="INSDTTM" ColumnType="TextBox"  ColumnVisibility="Collapsed" HorizontalAlignment="Center" HeaderWidth="150" ReadOnly="False"
+                                                        ItemsSource="{Binding INSDTTM, Mode=TwoWay}"/>
+                    </ControlsLib:CNSDataGrid.DataColumns>
+                </ControlsLib:CNSDataGrid>
+            </ControlsLib:MainPanel_Top.Contents>
+        </ControlsLib:MainPanel_Top>
+    </Grid>
+</UserControl>

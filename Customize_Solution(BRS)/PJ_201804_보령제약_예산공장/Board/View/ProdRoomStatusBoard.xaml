@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="Board.ProdRoomStatusBoard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Board"
+    mc:Ignorable="d"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"  
+    d:DesignHeight="150" d:DesignWidth="120">
+
+    <UserControl.Resources>
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="#DEEBF7" />
+        </Style>
+        <Style x:Key="TextBlockStyle01" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+        </Style>
+        <local:FontColorConverter x:Key="fontConverter"/>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent" Visibility="{Binding isRoomVisible, Mode=OneWay}">
+        <Border BorderBrush="#8497B0" BorderThickness="1">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="6*"/>
+                </Grid.RowDefinitions>
+                <Viewbox Grid.Row="0" Margin="0, 0, 0, 5">
+                    <TextBlock Grid.Row="0" Text="{Binding roomName, Mode=OneWay}" Width="120" TextAlignment="Center" FontWeight="Bold" FontSize="12" Style="{StaticResource TextBlockStyle}"/>
+                </Viewbox>
+                <Border Grid.Row="1" BorderBrush="#8497B0" BorderThickness="0, 1, 0, 0" >
+                    <Viewbox>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1.5*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Vertical" Margin="0, 0, 0, 3">
+                                <TextBlock Text="{Binding statusText, Mode=OneWay}" Style="{StaticResource TextBlockStyle01}" FontSize="14" FontWeight="Bold" Foreground="#CCFF99"/>
+                                <TextBlock Text="{Binding statusTime, Mode=OneWay}" Style="{StaticResource TextBlockStyle01}" FontSize="12" Foreground="#CCFF99" Visibility="Collapsed" />
+                                <!--<TextBlock Text="{Binding statusText, Mode=OneWay}" Style="{StaticResource TextBlockStyle01}" FontSize="14" FontWeight="Bold"  Foreground="{Binding prodActual, Converter={StaticResource fontConverter}}"/>
+                                <TextBlock Text="{Binding statusTime, Mode=OneWay}" Style="{StaticResource TextBlockStyle01}" FontSize="12" Foreground="{Binding prodActual, Converter={StaticResource fontConverter}}" />-->
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Orientation="Vertical">
+                                <StackPanel  Orientation="Horizontal">
+                                    <!--<TextBlock Text="주간진척 : " Style="{StaticResource TextBlockStyle}" Margin="5, 0, 5, 2"/>
+                                    <TextBlock Text="{Binding prodActual, Mode=OneWay}" Width="37" Style="{StaticResource TextBlockStyle}" Margin="0, 0, 10, 2" />-->
+                                    <TextBlock Text="{Binding prodActual, Mode=OneWay}" Width="120" Style="{StaticResource TextBlockStyle}" Margin="2, 0, 2, 2" />
+                                </StackPanel>
+                                <StackPanel  Orientation="Horizontal">
+                                    <!--<TextBlock Text="계획배치 : " Style="{StaticResource TextBlockStyle}"  Margin="5, 0, 5, 0" />
+                                    <TextBlock Text="{Binding prodPlan, Mode=OneWay}" Width="37" Style="{StaticResource TextBlockStyle}"  Margin="0, 0, 10, 0" />-->
+                                    <TextBlock Text="{Binding prodPlan, Mode=OneWay}" Width="120" Style="{StaticResource TextBlockStyle}"  Margin="2, 0, 2, 0" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Viewbox>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

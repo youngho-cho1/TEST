@@ -1,0 +1,10 @@
+<NewDataSet>
+   <CONINFO>
+       <SVRNAME>172.18.1.37</SVRNAME>
+       <PROTOCOL>TCP_BUFFERED</PROTOCOL>
+       <PORT>4510</PORT>
+       <DATE>-10</DATE>
+       <FROM_DATE>1<FROM_DATE>
+       <COMPANY>PHARM</COMPANY>
+   </CONINFO>
+</NewDataSet>

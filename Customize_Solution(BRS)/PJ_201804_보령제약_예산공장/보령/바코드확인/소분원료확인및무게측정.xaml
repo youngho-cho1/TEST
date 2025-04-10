@@ -1,0 +1,159 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.소분원료확인및무게측정"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"   
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:보령"
+    xmlns:localctrl="clr-namespace:보령.UserControls"
+    x:Name="Main" Title="소분원료확인및무게측정"
+    Width="900" Height="600">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:소분원료확인및무게측정ViewModel x:Key="VM"/>
+        <Style x:Key="dgScroll" TargetType="ScrollBar">
+            <Setter Property="MinWidth" Value="30"/>
+            <Setter Property="MinHeight" Value="30"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="ScaleValueStyle">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <local:CheckWeightBoolBurshConverter x:Key="ScaleBackGround"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator x:Name="BusyIn" IsBusy="{Binding IsBusy}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" x:Name="Header">
+                <localctrl:CustomUIHeader CurOrder="{Binding ElementName=Main, Path=CurrentOrder}"
+                                          OrderList="{Binding OrderList, Mode=TwoWay}"
+                                          CanSelectOrderNo="{Binding CanSelectOrder, Mode=TwoWay}"/>
+            </Grid>
+
+            <Grid Grid.Row="1" x:Name="MainSection">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="원료 바코드" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Column="1" Name="txtmsublotBcd" Margin="5" Text="{Binding MSUBLOTBCD, Mode=OneWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="KeyDown">
+                                <icommon:EditBoxKeyDownAction Command="{Binding GetMsublotInfoCommandAsync}" CommandParameter="{Binding ElementName=txtmsublotBcd, Path=Text}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding W[CUIScaleID], Source={StaticResource VM}, FallbackValue=저울 ID}"/>
+                        <TextBlock Text=" : "/>
+                        <TextBlock Text="{Binding SCALEID}"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="213*"/>
+                        <ColumnDefinition Width="56*"/>
+                        <ColumnDefinition Width="319*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <c1:C1DataGrid x:Name="LayerChargingContainerDataGrid" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="2"
+                                   HeadersVisibility="Column" AutoGenerateColumns="False" ScrollBarStyle="{Binding Source={StaticResource dgScroll}}"
+                                   CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False"
+                                   ItemsSource="{Binding BR_BRS_GET_MaterialSubLot_ContainerInfo_Dispensing.OUTDATAs}" Grid.ColumnSpan="3">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Header="제조번호" Binding="{Binding BATCHNO}"/>
+                            <c1:DataGridTextColumn Header="오더번호" Binding="{Binding POID}"/>
+                            <c1:DataGridTextColumn Header="공정" Binding="{Binding OPSGNAME}"/>
+                            <c1:DataGridTextColumn Header="자재 ID" Binding="{Binding MTRLID}"/>
+                            <c1:DataGridTextColumn Header="자재명" Binding="{Binding MTRLNAME}"/>
+                            <c1:DataGridTextColumn Header="원료시험번호" Binding="{Binding TSTREQNO}"/>
+                            <c1:DataGridTextColumn Header="무게" Binding="{Binding GROSSQTY}"/>
+                            <c1:DataGridTextColumn Header="단위" Binding="{Binding UOMNAME}" Width="60"/>
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+
+                    <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1" Margin="2">
+                        <Grid x:Name="WeighingCtrl">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding MAXVALUE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ScaleValueStyle}"/>
+                            <Border Grid.Row="1" Background="{Binding btnSaveWeightEnable, Converter={StaticResource ScaleBackGround}}">
+                                <TextBlock x:Name="txtScaleValue" Text="{Binding CURVALUE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="30"
+                                           Style="{StaticResource ScaleValueStyle}"/>
+                            </Border>
+                            <TextBlock Grid.Row="2" Text="{Binding MINVALUE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ScaleValueStyle}"/>
+                        </Grid>
+                    </Border>
+
+
+                    <Button Grid.Row="1" Grid.Column="3" Name="btnSaveWeight" Content="중량 확인" Height="30" Margin="5"
+                            IsEnabled="{Binding btnSaveWeightEnable}" Command="{Binding SaveWeightCommandAsync}"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="725*"/>
+                        <ColumnDefinition Width="58*"/>
+                        <ColumnDefinition Width="105*"/>
+                    </Grid.ColumnDefinitions>
+                    <c1:C1DataGrid x:Name="HALBDataGrid" HeadersVisibility="Column" AutoGenerateColumns="False"
+                                   ScrollBarStyle="{Binding Source={StaticResource dgScroll}}"
+                                   CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False"
+                                   ItemsSource="{Binding DISPMSUBLOTList}" Grid.ColumnSpan="3">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Header="{Binding W[CUIVesselId], Source={StaticResource VM}, FallbackValue='오더 번호'}" Binding="{Binding PoId}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <c1:DataGridTextColumn Header="{Binding W[CUIScaleID], Source={StaticResource VM}, FallbackValue='저울 번호'}" Binding="{Binding ScaleId}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <c1:DataGridTextColumn Header="{Binding W[CUIMaterialID], Source={StaticResource VM}, FallbackValue='원료코드'}" Binding="{Binding MtrlId}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <c1:DataGridTextColumn Header="{Binding W[CUIMaterialName], Source={StaticResource VM}, FallbackValue='원료명'}" Binding="{Binding MtrlName}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <!--<c1:DataGridTextColumn Header="{Binding W[CUITareWeight], Source={StaticResource VM}, FallbackValue='용기 중량'}" Binding="{Binding TareWeight, StringFormat='#0.00# g'}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                            <!--<c1:DataGridTextColumn Header="{Binding W[CUINetWeight], Source={StaticResource VM}, FallbackValue='내용 중량'}" Binding="{Binding NetWeight, StringFormat='#0.00# g'}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                            <c1:DataGridTextColumn Header="{Binding W[CUIMinWeight], Source={StaticResource VM}, FallbackValue='하한'}" Binding="{Binding MinWeight}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <c1:DataGridTextColumn Header="{Binding W[CUIGrossWeight], Source={StaticResource VM}, FallbackValue='전체 중량'}" Binding="{Binding GrossWeight, StringFormat='#0.00# g'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <c1:DataGridTextColumn Header="{Binding W[CUIMaxWeight], Source={StaticResource VM}, FallbackValue='상한'}" Binding="{Binding MaxWeight}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <c1:DataGridTextColumn Header="{Binding W[CUICurWeight], Source={StaticResource VM}, FallbackValue='무게(측정값)'}" Binding="{Binding CurWeight, StringFormat='#0.00# g'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Footer" Grid.Row="2">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Margin="5,0" x:Name="btnChangeScale" Width="100" Height="50" Content="{Binding W[CUIChangeScaleButtonText], Source={StaticResource VM}, FallbackValue=저울변경}" Command="{Binding ChangeScaleCommand}"/>
+                    <Button Margin="5,0" Name="btnComfirm" Width="100" Height="50" Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource VM}, FallbackValue=기록}" Command="{Binding ConfirmCommandAsync}"/>
+                    <Button Margin="5,0" Name="btnNoRecordConfirm" Width="100" Height="50" Content="{Binding W[CUIDefaultDataWriteToEBRButtonText], Source={StaticResource VM}, FallbackValue=기록없음}" Command="{Binding NoRecordConfirmCommandAsync}"/>
+                    <Button Margin="5,0" Name="btnClose" Width="100" Height="50" Content="{Binding W[CUICloseButtonText], Source={StaticResource VM}, FallbackValue=닫기}" Click="btnClose_Click" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+
+</ShopFloorUI:ShopFloorCustomWindow>

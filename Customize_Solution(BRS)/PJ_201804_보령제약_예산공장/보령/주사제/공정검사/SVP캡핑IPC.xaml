@@ -1,0 +1,69 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.SVP캡핑IPC"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:ezmes="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:local="clr-namespace:보령"
+           x:Name="Main" Width="1200" Height="400"
+           Title="SVP캡핑IPC">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:SVP캡핑IPCViewModel x:Key="ViewModel"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="MainSection">
+                <ezmes:CNSDataGrid  x:Name="IPCHistorys" IsRowNumber="False"  Width="Auto" HeaderRowCount="2"
+                                    IsRowAdd="True" IsRowDelete="True" IsEditMode="True" IsEditSection="True"
+                                   ItemsSource="{Binding IPCHistorys}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CommittedRowEdit">
+                            <i:InvokeCommandAction Command="{Binding RowEditCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ezmes:CNSDataGrid.DataColumns>
+                        <ezmes:DataColumn HeadName="구분" DataField="TYPE" ValueDataField="KEY" DisplayMemberPath="NAME" SelectedValuePath="KEY" ColumnType="ComboBox" HeaderWidth="150" ReadOnly="False"
+                                          ItemsSource="{Binding COMBOItems, Mode=TwoWay}"/>
+                        <ezmes:DataColumn HeadName="시각" DataField="INSDTTM" ColumnType="DateTime" HeaderWidth="150" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 1|캡핑상태" DataField="VIAL1STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 1|LeakTest(mbar)" DataField="VIAL1RSLT" ColumnType="Decimal"  ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 2|캡핑상태" DataField="VIAL2STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 2|LeakTest(mbar)" DataField="VIAL2RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 3|캡핑상태" DataField="VIAL3STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 3|LeakTest(mbar)" DataField="VIAL3RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 4|캡핑상태" DataField="VIAL4STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 4|LeakTest(mbar)" DataField="VIAL4RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 5|캡핑상태" DataField="VIAL5STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 5|LeakTest(mbar)" DataField="VIAL5RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 6|캡핑상태" DataField="VIAL6STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 6|LeakTest(mbar)" DataField="VIAL6RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 7|캡핑상태" DataField="VIAL7STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 7|LeakTest(mbar)" DataField="VIAL7RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 8|캡핑상태" DataField="VIAL8STATE" ColumnType="CheckBox" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="100" ReadOnly="False"/>
+                        <ezmes:DataColumn HeadName="Vial 8|LeakTest(mbar)" DataField="VIAL8RSLT" ColumnType="Decimal" ColumnVisibility="Visible" HorizontalAlignment="Center" HeaderWidth="120" DecimalCnt="3" ReadOnly="False"/>
+                    </ezmes:CNSDataGrid.DataColumns>
+                </ezmes:CNSDataGrid>
+            </Grid>
+            <Grid x:Name="Footer" Grid.Row="2" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="기록" Margin="5" Name="btnConfirm" Command="{Binding ComfirmCommandAsync}"/>
+                <Button Grid.Column="1" Content="취소" Margin="5" Name="btnCancel" Click="btnCancel_Click"/>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

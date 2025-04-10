@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Dependency Property</Title>
+      <Author>Punkguy (LGCNS)</Author>
+      <Description>Dependency Proeprty Template</Description>
+      <HelpUrl></HelpUrl>
+      <Shortcut>mvvmDependencyProperty</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>Type</ID>
+          <ToolTip>Property type</ToolTip>
+          <Default>bool</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>ParentName</ID>
+          <ToolTip>Parent Object name</ToolTip>
+          <Default>parentObject</Default>
+          <Function>
+          </Function>
+        </Literal>       
+        <Literal Editable="true">
+          <ID>PropertyName</ID>
+          <ToolTip>Property name</ToolTip>
+          <Default>MyProperty</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[public $Type$ $PropertyName$
+{
+    get { return ($Type$)GetValue($PropertyName$Property); }
+    set { SetValue($PropertyName$Property, value);  }
+}
+
+public static readonly DependencyProperty $PropertyName$Property =
+    DependencyProperty.Register("$PropertyName$", typeof($Type$), typeof($ParentName$), new PropertyMetadata(On$PropertyName$Property));
+
+private static void On$PropertyName$Property(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+    $ParentName$ parent = ($ParentName$)d;
+    //값을 전달할 타겟지정
+    parent = ($Type$)e.NewValue;
+}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Command with CanExecute</Title>
+      <Author>Punkguy (LGCNS)</Author>
+      <Description>Command Template with CanExecute</Description>
+      <HelpUrl></HelpUrl>
+      <Shortcut>mvvmCommandCanExecute</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>CommandName</ID>
+          <ToolTip>Command name</ToolTip>
+          <Default>myCmd</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="CSharp">
+        <![CDATA[public ICommand $CommandName$Command { get; set; }
+        private void $CommandName$(object param)
+        {
+          _CanExecute$CommandName$ = false; //시작시 false로 세팅
+          
+          _CanExecute$CommandName$ = true; //종료시 true로 세팅
+        }
+        
+        private bool _CanExecute$CommandName$ = true;
+        private bool Can$CommandName$(object param)
+        {
+          return _CanExecute$CommandName$;
+        }
+        
+        $CommandName$Command = new CommandBase($CommandName$,Can$CommandName$);  //클래스 생성자로 이동]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

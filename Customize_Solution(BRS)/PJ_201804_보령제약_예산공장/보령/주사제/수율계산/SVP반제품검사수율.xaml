@@ -1,0 +1,112 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+    x:Class="보령.SVP반제품검사수율"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:보령"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    x:Name="Main"
+    mc:Ignorable="d"
+    Title="SVP반제품검사수율"
+    Height="400" Width="750" Foreground="#FF464545" FontFamily="Malgun Gothic" FontSize="14" FontWeight="Bold">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:SVP반제품검사수율ViewModel x:Key="viewModel"/>
+        <Style x:Key="LabelStyle" TargetType="sdk:Label">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="DataGridHeaderBackGround">
+            <GradientStop Color="#FFE2E2E2" Offset="1"/>
+            <GradientStop Color="White" Offset="0.257"/>
+        </LinearGradientBrush>
+        <Style x:Key="HeaderStyle" TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="Background" Value="{StaticResource DataGridHeaderBackGround}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator x:Name="BusyIn" DataContext="{Binding Source={StaticResource viewModel}}" IsBusy="{Binding IsBusy}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="PrintArea" Grid.Row="0" BorderBrush="#FFD6D4D4" BorderThickness="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="35"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <!--계산식-->
+                    <sdk:Label Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Content="검사 공정 수율 (%)" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <sdk:Label Grid.Column="1" Grid.Row="2" Content="=" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Line Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="2"  Stroke="Black" Stretch="Fill" StrokeThickness="1" X1="0" Y1="0" X2="1" Y2="0" ></Line>
+                    <sdk:Label  Grid.Column="5" Grid.Row="1" Grid.RowSpan="3" Content="×" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <sdk:Label  Grid.Column="6" Grid.Row="1" Grid.RowSpan="3" Content="100" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <sdk:Label  Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Content="VL (검사량)" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                    <sdk:Label  Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="2" Content="VL (이론량)" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                    <!--비즈룰 계산식-->
+                    <Line Grid.Column="3" Grid.Row="6"  Grid.ColumnSpan="2"   Stroke="Black" Stretch="Fill" StrokeThickness="1" X1="0" Y1="0" X2="1" Y2="0" ></Line>
+                    <TextBox   Grid.Column="3" Grid.Row="5" Text="{Binding Result_OUT, StringFormat='0.0', Mode=TwoWay}" TextAlignment="Center" Margin="20,0,10,0" IsReadOnly="False" TextWrapping="Wrap" />
+                    <sdk:Label Grid.Column="4" Grid.Row="5" Content="(VL)" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox   Grid.Column="3" Grid.Row="7" Text="{Binding Result_IN, StringFormat='0.0', Mode=TwoWay}" TextAlignment="Center" Margin="20,0,10,0" IsReadOnly="False" />
+                    <sdk:Label  Grid.Column="4" Grid.Row="7" Content="(VL)" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <sdk:Label Grid.Column="1" Grid.Row="6" Content="=" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <sdk:Label  Grid.Column="5" Grid.Row="5" Grid.RowSpan="3"  Content="×" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <sdk:Label  Grid.Column="6" Grid.Row="5" Grid.RowSpan="3"  Content="100" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    
+                    <!--수율 계산결과-->
+                    <sdk:Label Grid.Column="1" Grid.Row="9" Content="=" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox   Grid.Column="3" Grid.Row="9" Text="{Binding Result_SUM, StringFormat='0.0', Mode=TwoWay}" TextAlignment="Center" Margin="20,0,10,0" IsReadOnly="False" />
+                    <sdk:Label  Grid.Column="4" Grid.Row="9" Content="(%)" Style="{Binding Source={StaticResource LabelStyle}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="6" Grid.ColumnSpan="3"  HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="기록" Width="100"  Margin="0,5,0,5"  Command="{Binding ConfirmCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+                    <Button Content="닫기" Width="100" Click="Close_Click"  Margin="10 5 0 5"/>
+                </StackPanel>
+            </Grid>
+            <Image x:Name="ScreenShot" Grid.ColumnSpan="3" Grid.Row="6" Stretch="None"/>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>
+
+    

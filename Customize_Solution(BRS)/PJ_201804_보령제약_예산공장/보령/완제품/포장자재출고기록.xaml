@@ -1,0 +1,58 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+    x:Class="보령.포장자재출고기록"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:보령"
+    mc:Ignorable="d" Name="Main"
+    Width="800" Height="400" Title="포장자재출고기록">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:포장자재출고기록ViewModel x:Key="ViewModel"/>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="c1:DataGridRowHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <c1:C1DataGrid Grid.Row="0" Margin="5" Name="gridPickingList"
+                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserRemoveRows="False" CanUserResizeRows="False" HeadersVisibility="None"
+                       ItemsSource="{Binding BR_BRS_SEL_ProductionOrder_Component_PickingInfo.OUTDATAs}"><!--MergingCells="gridPickingList_MergingCells"-->
+            <c1:C1DataGrid.Columns>
+                <c1:DataGridTextColumn Header="자재코드" Binding="{Binding Path=MTRLID}"/>
+                <c1:DataGridTextColumn Header="자재명" Binding="{Binding Path=MTRLNAME}"/>
+                <c1:DataGridTextColumn Header="이론량" Binding="{Binding Path=STD}"/>   
+                <c1:DataGridTextColumn Header="시험번호" Binding="{Binding Path=MLOTID}"/>
+                <c1:DataGridTextColumn Header="조정량" Binding="{Binding Path=ADJUSTQTY}"/>
+                <c1:DataGridTextColumn Header="출고량" Binding="{Binding Path=PICKINGQTY}"/>
+                <c1:DataGridTextColumn Header="추가량" Binding="{Binding Path=ADDQTY}"/>
+            </c1:C1DataGrid.Columns>
+            <c1:C1DataGrid.TopRows>
+                <!-- Add two rows of headers -->
+                <c1:DataGridColumnHeaderRow />
+            </c1:C1DataGrid.TopRows>
+        </c1:C1DataGrid>
+        <Grid Grid.Row="1" Name="btnGroup">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="btnConfirm" Width="100" Height="50" Margin="5" Content="기록" HorizontalAlignment="Right" Command="{Binding ComfirmCommandAsync}"/>
+            <Button Grid.Column="1" Name="btnCancel" Width="100" Height="50" Margin="5" Content="취소" HorizontalAlignment="Left" Click="btnCancel_Click"/>
+        </Grid>
+    </Grid>
+</ShopFloorUI:ShopFloorCustomWindow>

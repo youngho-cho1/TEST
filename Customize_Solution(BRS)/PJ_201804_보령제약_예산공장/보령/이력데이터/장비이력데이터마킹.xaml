@@ -1,0 +1,27 @@
+﻿<icommon:iPharmMESChildWindow 
+    x:Class="보령.장비이력데이터마킹"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    mc:Ignorable="d"
+    Height="200" 
+    Width="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Description" FontWeight="Bold" FontSize="16" Margin="5 0 0 0"/>
+        <TextBox x:Name="tbMark" Grid.Row="1" Margin="5 10 5 10"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="확인" Width="100" Margin="0 10 10 5" Click="Button_Click"/>
+            <Button Content="취소" Width="100" Margin="10 10 0 5" Click="Button_Click_1"/>
+        </StackPanel>
+    </Grid>
+</icommon:iPharmMESChildWindow>

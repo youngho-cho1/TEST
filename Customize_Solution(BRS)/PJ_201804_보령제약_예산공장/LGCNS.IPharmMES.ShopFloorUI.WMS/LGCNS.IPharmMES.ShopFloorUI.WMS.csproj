@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5C8785DE-EDA3-4464-A83D-87B1176A489A}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WMS</RootNamespace>
+    <AssemblyName>WMS</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.Silverlight.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Data.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Data.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.DataGrid.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.DataGrid.5.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.Common">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.ControlsLib">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.ControlsLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.CorLib">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.CorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.iPharmMES.Common">
+      <HintPath>..\..\Reference Assemblies\LGCNS.iPharmMES.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.iPharmMES.Controls">
+      <HintPath>..\..\Reference Assemblies\LGCNS.iPharmMES.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5">
+      <HintPath>..\..\Reference Assemblies\Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference Assemblies\Silverlight5SDK\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core">
+      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model.Access\BR_BRS_CHK_PartWashingRecipe.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_VESSEL_INFO_DETAIL.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_PartWashingComplete,Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_PartWashingEnd.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_PartWashingHistory.Aceess.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_PartWashingInitiate.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_PartWashingStart.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EmptyVessel.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_PartWasherInfo.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_PartWashingDetail.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_PartWashingHistory.Acess.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_PartWashingInfo_RoomNo.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderDetail_ORDER.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderVesselInfo.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderVesselInfo_Detail.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_UsedToolInfo.Acess.cs" />
+    <Compile Include="Part Washisng\PartWashing.xaml.cs">
+      <DependentUpon>PartWashing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Part Washisng\PartWashingViewModel.cs" />
+    <Compile Include="Part Washisng\Popup\C1PartWahsingWindow.cs" />
+    <Compile Include="Part Washisng\Popup\TooidInputAdd.xaml.cs">
+      <DependentUpon>TooidInputAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Part Washisng\Popup\WashingMessageBox.xaml.cs">
+      <DependentUpon>WashingMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WMSInOut\Popup\StorageInWeighing.xaml.cs">
+      <DependentUpon>StorageInWeighing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\Popup\StorageOutWheinging.xaml.cs">
+      <DependentUpon>StorageOutWheinging.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\StorageInOutWms.xaml.cs">
+      <DependentUpon>StorageInOutWms.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\Popup\BinPalletPopup.xaml.cs">
+      <DependentUpon>BinPalletPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\Popup\MaterialPopup.xaml.cs">
+      <DependentUpon>MaterialPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\Popup\OrderBatchnoPopup.xaml.cs">
+      <DependentUpon>OrderBatchnoPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\Popup\OutStnInfo.xaml.cs">
+      <DependentUpon>OutStnInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\StorageInOutWmsViewModel.cs" />
+    <Compile Include="WMSInOut\WMSInOut.xaml.cs">
+      <DependentUpon>WMSInOut.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMSInOut\WMSInoutViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Part Washisng\PartWashing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Part Washisng\Popup\TooidInputAdd.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Part Washisng\Popup\WashingMessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ButtonTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\WMSTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMSInOut\Popup\StorageInWeighing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMSInOut\Popup\StorageOutWheinging.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMSInOut\StorageInOutWms.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMSInOut\Popup\BinPalletPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMSInOut\Popup\MaterialPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMSInOut\Popup\OrderBatchnoPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMSInOut\Popup\OutStnInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMSInOut\WMSInOut.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Font\LCD.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ico_minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ico_Error.png" />
+    <Resource Include="Images\ico_Ok.png" />
+    <Resource Include="Images\ico_Warring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ico_null.png" />
+    <Resource Include="Images\ico_off.png" />
+    <Resource Include="Images\ico_on.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /R /Y "$(TargetPath)" "$(ProjectDir)..\LGCNS.iPharmMES.SUI\ClientBin"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,184 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.반제품Pallet적재"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ic="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:mainControl="clr-namespace:LGCNS.EZMES.MainControls;assembly=LGCNS.EZMES.MainControls"
+    xmlns:controlLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    xmlns:userCtl="clr-namespace:LGCNS.EZMES.Common.UserCtl;assembly=LGCNS.EZMES.Common" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:cns3="clr-namespace:LGCNS.EZMES.ControlsLib.Converter;assembly=LGCNS.EZMES.ControlsLib"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:local="clr-namespace:보령" 
+    xmlns:localctrl="clr-namespace:보령.UserControls"
+    Title="반제품 Pallet 적재" Loaded="Main_Loaded"
+    Height="750" Width="975"
+    x:Name="Main" >
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <Style x:Key="lblStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="10,3"/>
+        </Style>
+        <Style x:Key="txtStyle" TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="10,3"/>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Malgun Gothic"/>
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Width" Value="130"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="10,3"/>
+        </Style>
+        <Style x:Key="stkStyle" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <local:반제품Pallet적재ViewModel x:Key="VM"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator x:Name="BusyIn" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                       CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0" x:Name="Header">
+                <localctrl:CustomUIHeader CurOrder="{Binding ElementName=Main, Path=CurrentOrder}"
+                                          OrderList="{Binding OrderList, Mode=TwoWay}"
+                                          CanSelectOrderNo="{Binding CanSelectOrder, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="OrderNoSelection_Changed">
+                            <i:InvokeCommandAction Command="{Binding OrderChagedCommandAsync}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </localctrl:CustomUIHeader>
+            </Grid>
+
+            <Grid Grid.Row="1" x:Name="MainSection">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding HeaderTextComponentName, Mode=OneWay}" Style="{StaticResource lblStyle}" FontWeight="Bold" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Pallet번호" Style="{Binding Source={StaticResource lblStyle}}" />
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtContainer" Style="{Binding Source={StaticResource txtStyle}}" 
+                     InputMethod.PreferredImeState="On" InputMethod.PreferredImeConversionMode="Alphanumeric">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:EditBoxKeyDownAction Command="{Binding ContainerBarcodeChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBox Grid.Row="1" Grid.Column="2" IsReadOnly="True" Text="{Binding lblEqptID, Mode=OneWay}" Style="{Binding Source={StaticResource txtStyle}}"/>
+
+                <controlLib:CNSDataGrid x:Name="LoadedContainer" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" IsRowNumber="False"
+                                        ItemsSource="{Binding LoadedPalletMaterialSubLot.OUTDATAs, Mode=TwoWay}">
+                    <controlLib:CNSDataGrid.DataColumns>
+                        <controlLib:DataColumn DataField="SEL" HeadName="" HeaderWidth="30"   ColumnType="CheckBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False" />
+                        <controlLib:DataColumn DataField="POID" HeadName="오더번호" HeaderWidth="120" ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False"/>
+                        <controlLib:DataColumn DataField="BATCHNO" HeadName="제조번호" HeaderWidth="120" ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False"/>
+                        <controlLib:DataColumn DataField="OPSGNAME" HeadName="공정" HeaderWidth="80" ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False"/>
+                        <controlLib:DataColumn DataField="LOADED_VESSELID" HeadName="Palleft번호" HeaderWidth="130"   ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                        <controlLib:DataColumn DataField="VESSELID" HeadName="용기번호" HeaderWidth="180"   ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                        <controlLib:DataColumn DataField="MSUBLOTQTY" HeadName="무게" HeaderWidth="90"   ColumnType="TextBox" HorizontalAlignment="Right" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                        <controlLib:DataColumn DataField="UOMNAME" HeadName="단위" HeaderWidth="70"   ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                    </controlLib:CNSDataGrid.DataColumns>
+                </controlLib:CNSDataGrid>
+
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource stkStyle}"
+                        HorizontalAlignment="Left">
+                    <Button Content="기록 준비" Style="{Binding Source={StaticResource btnStyle}}" Visibility="Collapsed"
+                        Command="{Binding ConfirmReadyCommand}"/>
+                    <Button Content="기록 준비 취소" Style="{Binding Source={StaticResource btnStyle}}" Visibility="Collapsed"
+                        Command="{Binding ConfirmReadyCancelCommand}"/>
+                </StackPanel>
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Style="{Binding Source={StaticResource btnStyle}}"
+                        HorizontalAlignment="Right" Content="Pallet 적재 취소" Command="{Binding ClickCancelBinLoadCommandAsync}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="용기번호" Style="{Binding Source={StaticResource lblStyle}}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txtMaterial" Style="{Binding Source={StaticResource txtStyle}}"
+                     InputMethod.PreferredImeState="On" InputMethod.PreferredImeConversionMode="Alphanumeric">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:EditBoxKeyDownAction Command="{Binding MaterialBarcodeChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+
+                <controlLib:CNSDataGrid x:Name="NonLoadedContainer" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" IsRowNumber="False"
+                                        ItemsSource="{Binding NonLoadedPalletMaterialSubLot.OUTDATAs, Mode=TwoWay}">
+                    <controlLib:CNSDataGrid.DataColumns>
+                        <controlLib:DataColumn DataField="SEL" HeadName="" HeaderWidth="30"   ColumnType="CheckBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False" />
+                        <controlLib:DataColumn DataField="POID" HeadName="오더번호" HeaderWidth="120" ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False"/>
+                        <controlLib:DataColumn DataField="BATCHNO" HeadName="제조번호" HeaderWidth="120" ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False"/>
+                        <controlLib:DataColumn DataField="OPSGNAME" HeadName="공정" HeaderWidth="80" ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="False"/>
+                        <controlLib:DataColumn DataField="VESSELID" HeadName="용기번호" HeaderWidth="180"   ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                        <controlLib:DataColumn DataField="MSUBLOTQTY" HeadName="무게" HeaderWidth="90"   ColumnType="TextBox" HorizontalAlignment="Right" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                        <controlLib:DataColumn DataField="UOMNAME" HeadName="단위" HeaderWidth="70"   ColumnType="TextBox" HorizontalAlignment="Center" Excel="False" ColumnVisibility="Visible" ReadOnly="True" />
+                    </controlLib:CNSDataGrid.DataColumns>
+                </controlLib:CNSDataGrid>
+
+                <!--
+                <c1:C1DataGrid Name="GridContainer" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" AutoGenerateColumns="False" HeadersVisibility="Column"
+                           CanUserAddRows="False" CanUserRemoveRows="False" SelectionMode="SingleRow"
+                           ItemsSource="{Binding ListContainer}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTextColumn Header="오더번호" Binding="{Binding Path=POID}"/>
+                        <c1:DataGridTextColumn Header="용기번호" Binding="{Binding Path=VESSELID}" IsSelectable="True" IsReadOnly="False"/>
+                        <c1:DataGridTextColumn Header="제조번호" Binding="{Binding Path=BATCHNO}"/>
+                        <c1:DataGridTextColumn Header="공정" Binding="{Binding Path=OPSGNAME}"/>
+                        <c1:DataGridTextColumn Header="자재 ID" Binding="{Binding Path=MTRLID}"/>
+                        <c1:DataGridTextColumn Header="자재명" Binding="{Binding Path=MTRLNAME}"/>
+                        <c1:DataGridTextColumn Header="원료시험번호" Binding="{Binding Path=TSTREQNO}"/>
+                        <c1:DataGridTextColumn Header="CV무게" Binding="{Binding Path=MSUBLOTQTYSTR}"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+                -->
+            </Grid>
+            <Grid Grid.Row="3" x:Name="Footer">
+                <StackPanel Style="{Binding Source={StaticResource stkStyle}}">
+                    <Button Content="Pallet 적재" Style="{Binding Source={StaticResource btnStyle}}"
+                        Command="{Binding ClickBinLoadCommand}" Margin="10,0"/>
+                    <Button Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource R}, FallbackValue='기록'}"
+                        Style="{Binding Source={StaticResource btnStyle}}" Command="{Binding ConfirmCommand}" Margin="10,0"/>
+                    <Button Content="{Binding W[CUICloseButtonText], Source={StaticResource R}, FallbackValue='닫기'}"
+                        Style="{Binding Source={StaticResource btnStyle}}" Margin="10,0" Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

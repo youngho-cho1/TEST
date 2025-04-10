@@ -1,0 +1,307 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.장비이력데이터V1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="clr-namespace:보령"       
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:sdk ="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:toolkit ="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icommonCtl ="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    mc:Ignorable="d"
+    Title="설비 이력 데이터 기록"
+    x:Name="Main"
+    Width="1100" Height="820">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <c1:DataPointConverter x:Key="fc"/>
+        <icommonCtl:String2ColorConverter x:Key="String2ColorConverter"/>
+        <DataTemplate x:Key="series">
+            <Border Background="#FFBABABA" BorderBrush="#FFA3A3A3" BorderThickness="1" Padding="3">
+                <TextBlock FontSize="9" Margin="2" Foreground="White" 
+                           Text="{Binding Converter={StaticResource fc}, 
+                    ConverterParameter=Series:\{#SeriesLabel\}\{#NewLine\}}" />
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="marker">
+            <c1:ChartPanelObject x:Name="obj" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Center" MouseLeftButtonUp="obj_MouseLeftButtonUp">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Rectangle Width="3" Grid.Row="0" Fill="Green" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+                    <Border BorderBrush="DarkGreen"  BorderThickness="1" Background="#30ff0000" CornerRadius="3" Grid.Row="1">
+                        <Grid>
+                            <TextBlock Foreground="White" x:Name="tbMark" Margin="2,2,18,2" Text="{Binding ElementName=obj,Path=Tag}" />
+                            <Button Width="16" Height="16" Tag="{Binding ElementName=obj}" HorizontalAlignment="Right" VerticalAlignment="Center" Click="RemoveButton_Click">
+                                <Image Source="/보령;component/Images/btn_x_red.png" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Rectangle Width="3" Grid.Row="2" Fill="Green" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+                </Grid>
+            </c1:ChartPanelObject>
+        </DataTemplate>
+
+        <!--<DataTemplate x:Key="markerMax">
+            <c1:ChartPanelObject x:Name="obj" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="DarkRed"  BorderThickness="1" Background="Pink"  CornerRadius="3" HorizontalAlignment="Left">
+                        <Grid>
+                            <TextBlock Foreground="Black" x:Name="tbMax" Margin="2,2,18,2" Text="{Binding ElementName=obj,Path=Tag}" />
+                        </Grid>
+                    </Border>
+                    <Rectangle Height="2" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Fill="Red" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+                </Grid>
+            </c1:ChartPanelObject>
+        </DataTemplate>-->
+        <DataTemplate x:Key="markerMax">
+            <c1:ChartPanelObject x:Name="obj" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="DarkRed"  BorderThickness="1" Background="Pink"  CornerRadius="3" HorizontalAlignment="Left" Canvas.ZIndex="1">
+                        <Grid>
+                            <TextBlock Foreground="Black" x:Name="tbMax" Margin="2,2,18,2" Text="{Binding ElementName=obj,Path=Tag}" />
+                        </Grid>
+                    </Border>
+                    <Rectangle Height="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Fill="Red" VerticalAlignment="Center" HorizontalAlignment="Stretch" Canvas.ZIndex="0"/>
+                </Grid>
+            </c1:ChartPanelObject>
+        </DataTemplate>
+
+        <DataTemplate x:Key="markerMin">
+            <c1:ChartPanelObject x:Name="obj" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="DarkBlue" BorderThickness="1" Background="LightBlue"  CornerRadius="3" HorizontalAlignment="Right" Canvas.ZIndex="1">
+                        <Grid>
+                            <TextBlock Foreground="Black" x:Name="tbMin" Margin="2,2,18,2" Text="{Binding ElementName=obj,Path=Tag}" />
+                        </Grid>
+                    </Border>
+                    <Rectangle Height="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Fill="Blue" VerticalAlignment="Center" HorizontalAlignment="Stretch" Canvas.ZIndex="0"/>
+                </Grid>
+            </c1:ChartPanelObject>
+        </DataTemplate>
+
+        <!--<DataTemplate x:Key="markerMouseX">
+            <c1:ChartPanelObject x:Name="obj" DataPoint="double.NaN, 0.5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                <Border IsHitTestVisible="False" BorderBrush="Transparent" Padding="2" BorderThickness="0 2 0 0" Margin="0 -1 0 0">
+                    <TextBlock Foreground="Black" Text="{Binding ElementName=obj,Path=DataPoint.X,StringFormat='y={0:#.#}'}"/>
+                </Border>
+            </c1:ChartPanelObject>
+        </DataTemplate>-->
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy}">
+
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <!-- <RowDefinition Height="50"/>
+                <RowDefinition Height="180"/>-->
+                <RowDefinition Height="240"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0"
+                   FontSize="9" Text="{Binding ProtoSeries}" Visibility="{Binding IsProtoSeriesVisible}"/>
+
+                <!--<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch">-->
+
+                <TextBlock Grid.Row="1" Grid.Column="0"  Text="장비번호" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 10 0" FontSize="14" />
+                <TextBox Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0 0 10 0" FontSize="14" Height="35" Padding="5"
+                         Text="{Binding txtEQPTID, Mode=TwoWay}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="2"  Text="From " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 10 0" FontSize="14" />
+                <c1:C1DateTimePicker x:Name="c1pkrFromDate" Grid.Row="1" Grid.Column="3" 
+                                 Margin="0 5 0 5"
+                                 DateFormat="Short"
+                                 TimeIncrement="00:01:00"
+                                 EditMode="Date"
+                                 FontSize="14"
+                                 DateTime="{Binding FromDt,Mode=TwoWay}" MinTimeEditorWidth="120" TimeFormat="Custom" CustomTimeFormat="HH:mm:ss"/>
+                <c1:C1DateTimePicker x:Name="c1pkrFromTime" Grid.Row="1" Grid.Column="4" 
+                                 Margin="0 5 0 5"
+                                 DateFormat="Short"
+                                 TimeIncrement="00:01:00"
+                                 EditMode="Time"
+                                 FontSize="14"
+                                 DateTime="{Binding FromDt,Mode=TwoWay}" MinTimeEditorWidth="120" TimeFormat="Custom" CustomTimeFormat="HH:mm:ss" GotFocus="c1pkrFromTime_GotFocus"/>
+
+                <TextBlock  Grid.Row="1" Grid.Column="5"  Text="To " VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="10 0 10 0" FontSize="14"/>
+                <c1:C1DateTimePicker x:Name="c1pkrToDate" Grid.Row="1" Grid.Column="6"
+                                 Margin="0 5 0 5"
+                                 DateFormat="Short"
+                                 TimeIncrement="00:01:00"
+                                 EditMode="Date"
+                                 FontSize="14"
+                                 DateTime="{Binding ToDt,Mode=TwoWay}" MinTimeEditorWidth="120" CustomTimeFormat="HH:mm:ss" />
+                <c1:C1DateTimePicker x:Name="c1pkrToTime" Grid.Row="1" Grid.Column="7" 
+                                 Margin="0 5 0 5"
+                                 DateFormat="Short"
+                                 TimeIncrement="00:01:00"
+                                 EditMode="Time"
+                                 FontSize="14"
+                                 DateTime="{Binding ToDt,Mode=TwoWay}" MinTimeEditorWidth="120" TimeFormat="Custom" CustomTimeFormat="HH:mm:ss" GotFocus="c1pkrToTime_GotFocus"/>
+
+                <Button Content="조회" Grid.Row="1" Grid.Column="8" Margin="10,5,10,5" Command="{Binding SearchCommandAsync}"/>
+            </Grid>
+
+            <c1:C1Chart Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ChartMain">
+                <c1:C1Chart.View>
+                    <c1:ChartView />
+                </c1:C1Chart.View>
+            </c1:C1Chart>
+
+            <!-- slider over full chart -->
+
+            <my:ChartSlider Grid.Row="1" Grid.Column="0" 
+                        x:Name="ChartMainSilder" 
+                        Minimum="0" Maximum="1" 
+                        ValueChange="0.1" LowerValue="0.375" UpperValue="0.675"
+                        Margin="0"
+                        LowerValueChanged="slider_LowerValueChanged" 
+                        UpperValueChanged="slider_UpperValueChanged" 
+                        GotFocus="slider_GotFocus" />
+
+            <!--<c1:C1RangeSlider x:Name="ChartMainSilder"/>-->
+
+            <Border Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="0,10,0,0">
+                <c1:C1ChartLegend x:Name="Legend" Orientation="Horizontal" VerticalAlignment="Top" FontSize="9" />
+            </Border>
+
+            <Border x:Name="PrintArea" Grid.Row="3" BorderBrush="#FFD6D4D4" BorderThickness="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.4*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.4*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <c1:C1Chart Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="9" x:Name="ChartZoom" Margin="5">
+                        <c1:C1Chart.View>
+                            <c1:ChartView />
+                        </c1:C1Chart.View>
+                    </c1:C1Chart>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,10,0,0"
+                   FontSize="9" Text="{Binding ProtoSeries}" Visibility="{Binding IsProtoSeriesVisible}"/>
+
+                    <!--<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch">-->
+
+                    <TextBlock Grid.Row="1" Grid.Column="0"  Text="장비번호" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 10 0" FontSize="14"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0 0 10 0" FontSize="14" Height="35" IsReadOnly="True" Padding="5"
+                         Text="{Binding txtEQPTID, Mode=TwoWay}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="2"  Text="From " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 10 0" FontSize="14" />
+                    <TextBox x:Name="c1sliderFrom" Grid.Row="1" Grid.Column="3" IsReadOnly="True" Margin="0 5 0 5" Text="{Binding SelectedFromDt,Mode=TwoWay}" FontSize="14" Padding="5"  VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock  Grid.Row="1" Grid.Column="4"  Text="To " VerticalAlignment="Center"  HorizontalAlignment="Center" Margin="10 0 10 0" FontSize="14"/>
+                    <TextBox x:Name="c1sliderTo" Grid.Row="1" Grid.Column="5" IsReadOnly="True" Margin="0 5 0 5" Text="{Binding SelectedToDt,Mode=TwoWay}" FontSize="14" Padding="5"  VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+                    <!--</StackPanel>-->
+                </Grid>
+            </Border>
+
+            <sdk:DataGrid Grid.Row="4" x:Name="dgList" AutoGenerateColumns="False"  Margin="10"    ItemsSource="{Binding Path=FilteredComponents}" >
+                <sdk:DataGrid.Columns>
+                    <sdk:DataGridTextColumn Header="Tag ID" Width="3*" MaxWidth="150"  Binding="{Binding Path=TAGID}" IsReadOnly="True"/>
+                    <sdk:DataGridTextColumn Header="Tag 명" Width="3*" MaxWidth="150"  Binding="{Binding Path=TAGNAME}" IsReadOnly="True"/>
+                    <sdk:DataGridTextColumn Header="Target (Min ~ Max)" Width="2*" MaxWidth="150" Binding="{Binding Path=TARGET}" IsReadOnly="True"/>
+                    <sdk:DataGridTemplateColumn Header="Min" Width="1*" MaxWidth="100" IsReadOnly="True">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <sdk:HierarchicalDataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                                            <TextBlock Text="{Binding MIN}" FontSize="10" Foreground="{Binding MINCOL, Converter={StaticResource String2ColorConverter}}" 
+                                                                Margin="2,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </sdk:HierarchicalDataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+                    <sdk:DataGridTemplateColumn Header="Max" Width="1*" MaxWidth="100" IsReadOnly="True">
+                        <sdk:DataGridTemplateColumn.CellTemplate>
+                            <sdk:HierarchicalDataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                                            <TextBlock Text="{Binding MAX}" FontSize="10" Foreground="{Binding MAXCOL, Converter={StaticResource String2ColorConverter}}" 
+                                                                Margin="2,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </sdk:HierarchicalDataTemplate>
+                        </sdk:DataGridTemplateColumn.CellTemplate>
+                    </sdk:DataGridTemplateColumn>
+                    <sdk:DataGridTextColumn Header="Avg" Width="1*" MaxWidth="150" Binding="{Binding Path=AVG}" IsReadOnly="True"/>
+                    <sdk:DataGridTextColumn Header="Status" Width="1*" MaxWidth="70" Binding="{Binding Path=STATUS}" IsReadOnly="True"/>
+                    <sdk:DataGridTextColumn Header="Comment" Width="1*" MaxWidth="500" Binding="{Binding Path=COMMENT}" IsReadOnly="False"/>
+                    <sdk:DataGridTextColumn Header="DataNum(EA)" Width="1*" MaxWidth="500" Binding="{Binding Path=DATACOUNT}" IsReadOnly="True"/>
+                </sdk:DataGrid.Columns>
+            </sdk:DataGrid>
+
+            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 10">
+                <Button Content="기록" Width="150"
+                    Command="{Binding ConfirmCommandAsync}"/>
+
+                <Button Content="취소" Width="150" Click="Button_Click" Margin="30 0 0 0"/>
+            </StackPanel>
+
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

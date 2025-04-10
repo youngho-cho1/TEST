@@ -1,0 +1,428 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.아이솔레이터압력확인" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:local="clr-namespace:보령"
+           x:Name="Main" Width="900" Height="400"
+           Title="아이솔레이터압력확인">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:아이솔레이터압력확인ViewModel x:Key="ViewModel"/>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="sdk:Label">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Border" x:Key="block">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator x:Name="BusyIn" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="MainSection">
+                <Border Margin="5" Background="White" BorderBrush="Black" BorderThickness="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <!--<RowDefinition/>-->
+                        </Grid.RowDefinitions>
+                        <!--Header-->
+                        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="0.5" Background="LightGray">
+                            <sdk:Label Content="구분"/>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" BorderBrush="Black" BorderThickness="0.5" Background="LightGray">
+                            <sdk:Label Content="테스트 결과(Pressure Drop)"/>
+                        </Border>
+                        <!--Module 1-->
+                        <Border Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Style="{StaticResource block}">
+                            <sdk:Label Content="Module 1"/>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 1 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[0].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 2 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[1].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border  Grid.Row="1" Grid.Column="3" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 3 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[2].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 4 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[3].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 5 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[4].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 6 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[5].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="3" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 7 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[6].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 8 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[7].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 9 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[8].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 10 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[9].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="3" Style="{StaticResource block}">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 11 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[10].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 12 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[11].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <!--Module 2-->
+                        <Border Grid.Row="4" Grid.Column="0" Style="{StaticResource block}">
+                            <sdk:Label Grid.Row="4" Grid.Column="0" Content="Module 2"/>
+                        </Border>
+                        <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 13 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[12].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="4" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 14 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[13].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="4" Grid.Column="3" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 15 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[14].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="4" Grid.Column="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 16 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[15].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <!--Module 3-->
+                        <Border Grid.Row="5" Grid.Column="0" Style="{StaticResource block}">
+                            <sdk:Label Content="Module 3"/>
+                        </Border>
+                        <Border Grid.Row="5" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 17 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[16].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="5" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 18 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[17].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="5" Grid.Column="3" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 19 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[18].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="5" Grid.Column="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 20 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[19].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <!--Module 4-->
+                        <Border Grid.Row="6" Grid.Column="0" Style="{StaticResource block}">
+                            <sdk:Label Content="Module 4"/>
+                        </Border>
+                        <Border Grid.Row="6" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 21 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[20].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="6" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 22 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[21].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Style="{StaticResource block}"/>
+                        <!--Module 5-->
+                        <Border Grid.Row="7" Grid.Column="0"  Style="{StaticResource block}">
+                            <sdk:Label Content="Module 5"/>
+                        </Border>
+                        <Border Grid.Row="7" Grid.Column="1" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 23 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[22].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="7" Grid.Column="2" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 24 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[23].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="7" Grid.Column="3" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 25 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[24].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="7" Grid.Column="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="Glove 26 : "/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[25].Pressure, Mode=TwoWay}" LostFocus="Module_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>
+                        <!--Module 1-5 -->
+                        <!--<Border Grid.Row="8" Grid.Column="0" Style="{StaticResource block}">
+                            <sdk:Label Content="Module 1-5"/>
+                        </Border>
+                        <Border Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="4" Style="{StaticResource block}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <sdk:Label Grid.Column="0" Content="VHP Pressure hold test :"/>
+                                <TextBox Grid.Column="1" Text="{Binding ModuleGrovePressureList[26].Pressure, Mode=TwoWay}" LostFocus="AllModule_LostFocus"/>
+                                <sdk:Label Grid.Column="2" Content="Pa"/>
+                            </Grid>
+                        </Border>-->
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid x:Name="Footer" Grid.Row="2" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="110"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="기록" Margin="5" Name="btnConfirm" Command="{Binding ConfirmCommandAsync}"/>
+                <Button Grid.Column="1" Content="취소" Margin="5" Name="btnCancel" Click="btnCancel_Click"/>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

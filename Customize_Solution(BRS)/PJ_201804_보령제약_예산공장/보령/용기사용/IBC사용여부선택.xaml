@@ -1,0 +1,77 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+           x:Class="보령.IBC사용여부선택" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           mc:Ignorable="d"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+           xmlns:local="clr-namespace:보령"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           Width="600" Height="350"
+           Name="Main"
+           Title="IBC사용여부선택">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <Style x:Key="HeaderStyle" TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <local:IBC사용여부선택ViewModel x:Key="VM"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Name="MainBusy">
+        <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource VM}}" Margin="5">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <c1:C1DataGrid Name="IBCList" Grid.Row="0"
+                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" HeadersVisibility="Column"
+                       ItemsSource="{Binding IBCCollection}">
+                <c1:C1DataGrid.Columns>
+                    <!-- CHK는 테스트용 -->
+                    <!--<c1:DataGridCheckBoxColumn Header="Select" HeaderStyle="{StaticResource HeaderStyle}" Binding="{Binding SEL}" Width="50"/>-->
+                    <c1:DataGridTextColumn Header="Container No" HeaderStyle="{StaticResource HeaderStyle}"/>
+                    <c1:DataGridTextColumn Header="Prev Output" HeaderStyle="{StaticResource HeaderStyle}"/>
+                    <c1:DataGridTextColumn Header="Prev Operation" HeaderStyle="{StaticResource HeaderStyle}"/>
+                    <c1:DataGridTextColumn Header="Current Status" HeaderStyle="{StaticResource HeaderStyle}"/>
+                </c1:C1DataGrid.Columns>
+            </c1:C1DataGrid>
+            <Grid Name="btnGruop" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="btnRecycle" Grid.Column="0" Width="100" Height="40" Content="IBC Recycle">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding RecycleCommandAsync}" CommandParameter="{Binding ElementName=IBCList, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnCompleted" Grid.Column="1" Width="100" Height="40" Content="IBC Completed">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding CompletedCommandAsync}" CommandParameter="{Binding ElementName=IBCList, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnConfirm" Grid.Column="3" Width="100" Height="40" Content="Check"/>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding ComfirmCommandAsync}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <Button Name="btnCancel" Grid.Column="4" Width="100" Height="40" Content="Canceled" Click="btnCancel_Click"/>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

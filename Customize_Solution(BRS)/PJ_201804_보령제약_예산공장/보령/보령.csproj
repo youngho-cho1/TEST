@@ -1,0 +1,1964 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{60FEBE7F-9396-4F89-8F9F-3D1C28537320}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>보령</RootNamespace>
+    <AssemblyName>보령</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.Silverlight.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Chart.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Chart.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Chart.Extended.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Chart.Extended.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Data.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Data.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.DataGrid.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.DataGrid.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.DateTimeEditors.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.DateTimeEditors.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.FlexGrid.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.FlexGrid.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Imaging.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Imaging.5.dll</HintPath>
+    </Reference>
+    <Reference Include="CheckScale">
+      <HintPath>..\..\Reference Assemblies\CheckScale.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools">
+      <HintPath>..\..\Reference Assemblies\ImageTools.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Png">
+      <HintPath>..\..\Reference Assemblies\ImageTools.IO.Png.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Utils">
+      <HintPath>..\..\Reference Assemblies\ImageTools.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.Common">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.ControlsLib">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.ControlsLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.CorLib">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.CorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.iPharmMES.Common">
+      <HintPath>..\..\Reference Assemblies\LGCNS.iPharmMES.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.iPharmMES.Controls">
+      <HintPath>..\..\Reference Assemblies\LGCNS.iPharmMES.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5">
+      <HintPath>..\..\Reference Assemblies\Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="mscorlib" />
+    <Reference Include="ShopFloorUI">
+      <HintPath>..\..\Reference Assemblies\ShopFloorUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ShopFloorUI.Common">
+      <HintPath>..\..\Reference Assemblies\ShopFloorUI.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core">
+      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataModel\CampaignProduction.cs" />
+    <Compile Include="DataModel\Container.cs" />
+    <Compile Include="DataModel\IPCControlData.cs" />
+    <Compile Include="DataModel\Weight.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_MaterialSubLot_Dispense_Scrap.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_MaterialSubLot_Dispense_SVP_Loss.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ReDispensing_Charging.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_SVP_AreaWeighing_Dispensing_Component.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCEND_STERILE.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCSTRT_STERILE.Access.cs" />
+    <Compile Include="LIMS\LIMS샘플링확인.xaml.cs">
+      <DependentUpon>LIMS샘플링확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LIMS\LIMS샘플링확인ViewModel.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_CommonCode_LineClearance.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_Equipment_LineClearance.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_FILTERINFO.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_MaterialSubLot_ContainerInfo_Dispensing.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_MaterialSublot_Sample.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_UDT_ProductionOrderPickingInfo_Solution.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_EM_EQPT_MONITOR.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_INSTPCTION_FAILQTY.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_MaterialSublot_Sample.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_ProductionOrderCustomValue.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_ProductionOrderOutput_Conditional.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_ProductionOrderOutput_Scale_Weight_Multi.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_REG_ProductionOrderOutput_LastSoluction_NosDsp.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_SEL_ProductionOrderOutput_LastSoluction_NosDsp.Access.cs" />
+    <Compile Include="Model.Access\간섭상황\BR_BRS_REG_INTERFER_SITUATION.Access.cs" />
+    <Compile Include="Model.Access\간섭상황\BR_BRS_SEL_INTERFER_SITUATION.Access.cs" />
+    <Compile Include="Model.Access\간섭상황\BR_BRS_SEL_INTERFER_SITUATION_SUM.Access.cs" />
+    <Compile Include="Model.Access\간섭상황\BR_BRS_UPD_INTERFER_SITUATION_NOTUSE.Access.cs" />
+    <Compile Include="Model.Access\공정검사\BR_BRS_SEL_ProductionOrderTestSpecification_STANDARD.Access.cs" />
+    <Compile Include="Model.Access\무균공정\BR_BRS_REG_SVP_ASEPTIC_PROCESS.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_UDT_BRS_SVP_REJECT_INFO.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EquipmentCustomAttributeValue_ScaleInfo_EQPTID.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EquipmentStatusParameter_EQSTID.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EquipmentStatus_PROCEQPT_LIST.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EquipmentStatus_PROC_OPSG.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EquipmentStatus_SVP_WashParts.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_Equipment_Exec_Time.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_Equipment_GetInfo.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderBOM_CHGSEQ.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderCustomValue.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderDispenseSubLot_OPSG_COMPONENT.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrder_Component_Summary.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrder_RECIPEISTGUID.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductOrder_JOB_HIST.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_SVP_PartWash_EquipmentClass_EQCLNAME.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_UDT_BRS_SVP_REJECT_INFO.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_UDT_BRS_SVP_REJECT_SUM.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_UDT_BRS_SVP_REJECT_SUM_COMMENT.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_Charge_Multi.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCEND_ALL.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCSTRT_PROCEQPT.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCSTRT_ROOM.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_MaterialSubLot_ChangeQuantity.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_MaterialSubLot_ChangeQuantity_Dispense.Access.cs" />
+    <Compile Include="Model.Access\BR_RHR_REG_MaterialSubLot_Dispense_Multi.Access.cs" />
+    <Compile Include="Model.Access\LIMS\BR_BRS_SEL_ProductionOrder_SAMPLEQTY.Access.cs" />
+    <Compile Include="Model.Access\TNT\BR_UDB_REG_ProductionOrder_Packing_Start.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_CHK_EMPTY_VESSEL_Info.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_CHK_ProductionOrderBOM_NonWeighing.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_CHK_VESSEL_INFO_REQUESTOUT.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_GET_VESSEL_StorageOutList.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_GET_VESSEL_StorageOutList_EMPTY.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_REG_MaterialSubLot_Dispense_Charging.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_REG_VESSEL_WEIGHT.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_REG_WMS_S_MATERIALRETURN_MULTI.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_SEL_CurrentWeight.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_SEL_IFS_SEL_TSTNO.Access.cs" />
+    <Compile Include="Model.Access\공정검사\BR_BRS_GET_AutoInspection_Reject_Ratio.Access.cs" />
+    <Compile Include="Model.Access\공정검사\BR_BRS_GET_ProductionOrderTestSpecificationResult.Access.cs" />
+    <Compile Include="Model.Access\공정검사\BR_BRS_REG_ProductionOrderTestResult.Access.cs" />
+    <Compile Include="Model.Access\공정검사\BR_BRS_SEL_ProductionOrderIPCResult.Access.cs" />
+    <Compile Include="Model.Access\공정검사\BR_BRS_SEL_ProductionOrderIPCStandard.Access.cs" />
+    <Compile Include="Model.Access\레시피확인\BR_BRS_SEL_EquipmentRecipe.Access.cs" />
+    <Compile Include="Model.Access\레시피확인\BR_BRS_SEL_EquipmentRecipeStepType.Access.cs" />
+    <Compile Include="Model.Access\레시피확인\BR_BRS_SEL_EquipmentRecipe_TAG_ACTVAL.Access.cs" />
+    <Compile Include="Model.Access\무균공정\BR_BRS_SEL_SVP_ASEPTIC_PROCESS.Access.cs" />
+    <Compile Include="Model.Access\무균공정\BR_PHR_SEL_PERSON.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_CHK_ProductionOrderSubLot_Valid.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_GET_VESSEL_INFO_DETAIL.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_GET_VESSEL_WMS_IN.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_Dispense_Charging_Solvent.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_MaterialSubLot_Dispense_Charging_EQAC.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_MaterialSubLot_INV_Split.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_MaterialSubLot_LoadOnPallet.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_ProductionOrderOutput_INSPECTION_PACKING.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_ProductionOrderOutput_LastSoluction.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_ProductionOrderOutput_Vessel_STRT.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_MaterialSubLotSplitHistory.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_MaterialSubLot_LoadOnPallet_BYVESSELID.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_PACKING_SPLIT_QTY.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderDispenseOutput.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutputSubLot_INFO.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutputSubLot_OPSG_MULTI.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutput_Emtpy_Vessel.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutput_LoadedPallet.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutput_State.Access..cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutput_State_Info.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrder_HALB.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_UPD_MaterialSubLot_ChangeQCStateExpiryDate.Access.cs" />
+    <Compile Include="Model.Access\설비\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCEND_MULTI_SELECTION.Access.cs" />
+    <Compile Include="Model.Access\설비\BR_PHR_SEL_EquipmentClassAction_Parent_ActionStatus.Access.cs" />
+    <Compile Include="Model.Access\설비\BR_PHR_SVP_UPD_EquipmentAction_Multi.Access.cs" />
+    <Compile Include="Model.Access\소독액관리\BR_BRS_REG_MLOT_MaterialSublot_Solution.Access.cs" />
+    <Compile Include="Model.Access\소독액관리\BR_BRS_REG_ProductionOrder_MaterialSublot_Solution.Access.cs" />
+    <Compile Include="Model.Access\소독액관리\BR_BRS_UPD_MaterialSubLot_UsedQty.Access.cs" />
+    <Compile Include="Model.Access\소독액관리\BR_DWS_REG_MaterialSubLot_Dispense_Solution.Access.cs" />
+    <Compile Include="Model.Access\수동선별양품수량생성\BRS_SEL_ProductionOrder_OPSG_Output_WEIGHT.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_MRG_ProductionOrderDetailAttributeValue_Multi.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_REG_Compress_GoodQty.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_REG_Manual_Inspection_GoodQty.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_REG_ProductionOrderCompressLoss.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_TabletPressGoodCount.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Product_Yield.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Product_Yield_Capsule.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Capsule_Selection.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Compress_Capsule.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Compress_Multi_Layered.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_FERT_Selection.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Packing.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Packing_INPUT.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Packing_INPUT_REQ.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Packing_PROD.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Packing_PROD_REG.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Packing_REQ.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Compress_Loss.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_GET_SCANINFO_PALLET_IN.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_REG_WMS_PACK_PALLET_IN.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_PackingOutPut_From_TnT.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_REG_WMS_PACK_PALLET_IN_MANUAL.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_SEL_ProductionOrderBOM_PickingInfo_New.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_SEL_ProductionOrderOutput_PAPERTUBE.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_SEL_ProductionOrderPickingInfo_4Weight.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_SEL_ProductionOrder_FERT_Summary.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_PHR_INS_MaterialSubLotCustomAttributes_Multi.Access.cs" />
+    <Compile Include="Model.Access\완제품\BR_BRS_SEL_ProductionOrder_Component_PickingInfo.Access.cs" />
+    <Compile Include="Model.Access\이력데이터\BR_BRS_GET_ROOM_BMS_INFO.Access.cs" />
+    <Compile Include="Model.Access\이력데이터\BR_BRS_MRG_HISTORYDATA_ENDTIME.Access.cs" />
+    <Compile Include="Model.Access\이력데이터\BR_BRS_MRG_HISTORYDATA_STARTTIME.Access.cs" />
+    <Compile Include="Model.Access\이력데이터\BR_BRS_SEL_HISTORYDATA_TIME.Access.cs" />
+    <Compile Include="Model.Access\장비청소\BR_BRS_SEL_EquipmentList_CleanCheck.Access.cs" />
+    <Compile Include="Model.Access\장비청소\BR_BRS_SEL_EquipmentStatus_CheckCleaned_Multi.Access.cs" />
+    <Compile Include="Model.Access\장비청소\BR_BRS_SEL_EquipmentStatus_PROCEQPT.Access.cs" />
+    <Compile Include="Model.Access\장비청소\BR_BRS_SEL_EquipmentStatus_ROOM.Access.cs" />
+    <Compile Include="Model.Access\정제체크마스터\BR_BRS_GET_Selector_Check_Master_Edit.Access.cs" />
+    <Compile Include="Model.Access\정제체크마스터\BR_BRS_REG_IPC_CHECKMASTER_MULTI.Access.cs" />
+    <Compile Include="Model.Access\정제체크마스터\BR_BRS_REG_IPC_CHECKMASTER_MULTI_Edit.Access.cs" />
+    <Compile Include="Model.Access\정제체크마스터\BR_BRS_REG_IPC_CHECKMASTER_MULTI_GUBUN.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_GET_DispenseSubLot_VESSID_ISNULL.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_GET_MaterialSubLot_ContainerInfo_LayerCharging.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_ProductionOrderDispense_VesselInfo.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_REG_Dispense_Charging_Solvent_Add.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_REG_IPC_1ST_LAYERED_WEIGHT_MULTI.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_REG_ProductionOrder_Dispence_Split_Charging.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_AreaWeighing_SourceContainer.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_Charging_Solvent_History.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_Charging_Split_Dispence_History.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_POAllocation_AreaWeighing_CHG_STD.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_ProductionOrderAllocation_AreaWeighing.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_ProductionOrderAllocation_AreaWeighing_STD.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_ProductionOrderDispense_Result.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_ProductionOrderOutputSubLot.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_SEL_ProductionOrder_Dispence_Component_Summary.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_PHR_GET_MaterialSubLot_ContainerInfo_LayerCharging.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_PHR_GET_MaterialSubLot_VESSID_ISNULL.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_PHR_UPD_MaterialSubLot_ChangeVesselID_MULTI.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_UDB_REG_PMS_FILLED_BIN_IN.Access.cs" />
+    <Compile Include="Model.Access\혼합기\BR_BRS_REG_Blender_Recipe_To_Eqpt.Access.cs" />
+    <Compile Include="Model\BR_BRS_GET_UDT_ProductionOrderPickingInfo_Solution.cs" />
+    <Compile Include="Model\BR_BRS_REG_ProductionOrderOutput_Conditional.cs" />
+    <Compile Include="Model\BR_BRS_REG_ProductionOrderOutput_LastSoluction.cs" />
+    <Compile Include="Model\BR_BRS_SEL_POAllocation_AreaWeighing_CHG_STD.cs" />
+    <Compile Include="Model\BR_BRS_SEL_SVP_AreaWeighing_Dispensing_Component.cs" />
+    <Compile Include="Model\BR_BRS_SEL_Charging_Solvent_to_Dispense.cs" />
+    <Compile Include="Model\BR_BRS_SEL_EquipmentStatus_PROC_OPSG.cs" />
+    <Compile Include="Model\BR_BRS_SEL_Charging_Solvent.cs" />
+    <Compile Include="Model\BR_BRS_SEL_MaterialSubLotSplitHistory.cs" />
+    <Compile Include="Model\BR_BRS_SEL_ProductionOrderOutputSubLot_OPSG_FERT.cs" />
+    <Compile Include="Model\BR_BRS_SEL_ProductionOrder_Dispence_Component_Summary.cs" />
+    <Compile Include="Model\BR_BRS_SEL_ProductionOrder_Component_Summary.cs" />
+    <Compile Include="Model\칭량\BR_BRS_SEL_AreaWeighing_SourceContainer.cs" />
+    <Compile Include="TNT\포장공정시작.cs" />
+    <Compile Include="DataModel\ComponentInformation.cs" />
+    <Compile Include="DataModel\ContainerModel\AbstractContainerInformation.cs" />
+    <Compile Include="DataModel\ContainerModel\ISourceContainerStrategy.cs" />
+    <Compile Include="DataModel\ContainerModel\IWeighContainerStrategy.cs" />
+    <Compile Include="DataModel\ContainerModel\SourceContainerInformation.cs" />
+    <Compile Include="DataModel\ContainerModel\StdSourceContainerStrategy.cs" />
+    <Compile Include="DataModel\ContainerModel\StdWeighContainerStrategy.cs" />
+    <Compile Include="DataModel\ContainerModel\WeighContainerInformation.cs" />
+    <Compile Include="DataModel\UsedSourceContainerInfo.cs" />
+    <Compile Include="DataModel\WeighInformation.cs" />
+    <Compile Include="DataModel\WeighPrepareModel\Scale.cs" />
+    <Compile Include="Model.Access\BR_BRS_CHK_Equipment_Is_Scale.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_CHK_ProductionOrderPickingInfo_MSUBLOTBCD.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_UDT_ProductionOrderPickingInfo.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_GET_VESSEL_INFO_MTRL.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_EquipmentStatus_Output_Scale.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_LIMS_TEST_REQUEST_IP.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_ProductionOrderOutput_Charging_Output.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_ProductionOrderOUtput_Split.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_REG_WMS_S_MATERIALRETURN.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_Charging_Solvent.Access.cs" />
+    <Compile Include="Model.Access\부스점검\BR_BRS_SEL_EquipmentStatus_4CleanBooth_Multi.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_EquipmentStatus_4Scale_Multi.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_HistoryData.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_PMS_ProductionOrderOutput.Access.cs" />
+    <Compile Include="Model.Access\WMS\BR_BRS_SEL_ProductionOrderBOM_CHGSEQ_NonWeighing.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_ProductionOrderWeighingResult.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEL_Scale_ProductionOrderOutput.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_SEND_WMS_WEIGHINGRESULT.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCEND_MULTI.Access.cs" />
+    <Compile Include="Model.Access\BR_BRS_UPD_EquipmentAction_ShopFloor_PROCSTRT_MULTI.Access.cs" />
+    <Compile Include="Model.Access\BR_PHR_SEL_ProductionOrderBOM_MTRLID_CHGSEQ.Access.cs" />
+    <Compile Include="Model.Access\BR_UDB_CHK_MaterialSubLot_SourceContainer.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_REG_MaterialSubLot_Dispense_Charging_FERT.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_Charging_Solvent_to_Dispense.Access.cs" />
+    <Compile Include="Model.Access\반제품\BR_BRS_SEL_ProductionOrderOutputSubLot_OPSG_FERT.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_REG_ProductionOrderDetailYield.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Granule.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Coating.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Compress.Access.cs" />
+    <Compile Include="Model.Access\정제체크마스터\BR_BRS_GET_Selector_Check_Master.Access.cs" />
+    <Compile Include="Model.Access\수율계산\BR_BRS_SEL_Yield_Calculation_Weight_Selection.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_REG_IPC_AVG_WEIGHT_MULTI.Access.cs" />
+    <Compile Include="Model.Access\칭량\BR_BRS_REG_IPC_EACH_WEIGHT_MULTI.Access.cs" />
+    <Compile Include="Model.Access\칭량실적\BR_BRS_SEL_UDT_ProductionOrderAllocation_Info.Access.cs" />
+    <Compile Include="Model.Access\칭량실적\BR_BRS_UPD_WMS_S_WEIGHINGRESULT_QTY.Access.cs" />
+    <Compile Include="Model\BR_BRS_SEL_HistoryData.cs" />
+    <Compile Include="Model\BR_BRS_SEL_ProductionOrderBOM_CHGSEQ_NonWeighing.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\BarcodePopup.xaml.cs">
+      <DependentUpon>BarcodePopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BarcodeTextBox.cs" />
+    <Compile Include="UserControls\CustomUIHeader.xaml.cs">
+      <DependentUpon>CustomUIHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\IPCControl.xaml.cs">
+      <DependentUpon>IPCControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScaleControl.xaml.cs">
+      <DependentUpon>ScaleControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ScaleControlDW.xaml.cs">
+      <DependentUpon>ScaleControlDW.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SelectPrinterPopup.xaml.cs">
+      <DependentUpon>SelectPrinterPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SelectPrinterPopupViewModel.cs" />
+    <Compile Include="WMS\Popup\WMS일반자재환입처리팝업.xaml.cs">
+      <DependentUpon>WMS일반자재환입처리팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\Popup\WMS일반자재환입처리팝업ViewModel.cs" />
+    <Compile Include="WMS\Popup\WMS칭량자재투입팝업.xaml.cs">
+      <DependentUpon>WMS칭량자재투입팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\Popup\WMS칭량자재투입팝업ViewModel.cs" />
+    <Compile Include="WMS\Popup\RoomScalePopup.xaml.cs">
+      <DependentUpon>RoomScalePopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\Popup\반제품출고Popup.xaml.cs">
+      <DependentUpon>반제품출고Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\WMS일반자재환입처리.xaml.cs">
+      <DependentUpon>WMS일반자재환입처리.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\WMS자재환입처리.xaml.cs">
+      <DependentUpon>WMS자재환입처리.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\WMS일반자재환입처리ViewModel.cs" />
+    <Compile Include="WMS\WMS자재환입처리ViewModel.cs" />
+    <Compile Include="WMS\WMS칭량자재투입.xaml.cs">
+      <DependentUpon>WMS칭량자재투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\WMS칭량자재투입ViewModel.cs" />
+    <Compile Include="WMS\Popup\자재환입저울스캔팝업.xaml.cs">
+      <DependentUpon>자재환입저울스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\Popup\자재환입저울스캔팝업ViewModel.cs" />
+    <Compile Include="WMS\반제품검량.xaml.cs">
+      <DependentUpon>반제품검량.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WMS\반제품검량ViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WMS\반제품무게측정.xaml.cs">
+      <DependentUpon>반제품무게측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\반제품무게측정ViewModel.cs" />
+    <Compile Include="WMS\반제품입고.xaml.cs">
+      <DependentUpon>반제품입고.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\반제품입고ViewModel.cs" />
+    <Compile Include="WMS\반제품출고.xaml.cs">
+      <DependentUpon>반제품출고.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\반제품출고ViewModel.cs" />
+    <Compile Include="WMS\빈용기무게측정.xaml.cs">
+      <DependentUpon>빈용기무게측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\빈용기무게측정ViewModel.cs" />
+    <Compile Include="WMS\빈용기출고.xaml.cs">
+      <DependentUpon>빈용기출고.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\빈용기출고ViewModel.cs" />
+    <Compile Include="EM모니터링\EM모니터링.cs" />
+    <Compile Include="WMS\질소시험정보조회.xaml.cs">
+      <DependentUpon>질소시험정보조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\질소시험정보조회ViewModel.cs" />
+    <Compile Include="WMS\칭량IBC반제품무게측정.xaml.cs">
+      <DependentUpon>칭량IBC반제품무게측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\칭량IBC반제품무게측정ViewModel.cs" />
+    <Compile Include="WMS\현장칭량실적확인WMS전송ViewModel.cs" />
+    <Compile Include="공정검사\IPC검사결과조회.xaml.cs">
+      <DependentUpon>IPC검사결과조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\IPC검사결과조회ViewModel.cs" />
+    <Compile Include="공정검사\LOD측정.xaml.cs">
+      <DependentUpon>LOD측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\LOD측정ViewModel.cs" />
+    <Compile Include="공정검사\Popup\공정검사결과입력.xaml.cs">
+      <DependentUpon>공정검사결과입력.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\Popup\공정검사결과입력ViewModel.cs" />
+    <Compile Include="공정검사\캡슐개별질량세팅ViewModel.cs" />
+    <Compile Include="공정검사\캡슐개별질량세팅.xaml.cs">
+      <DependentUpon>캡슐개별질량세팅.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\경도측정.xaml.cs">
+      <DependentUpon>경도측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\경도측정ViewModel.cs" />
+    <Compile Include="공정검사\공정별성상.xaml.cs">
+      <DependentUpon>공정별성상.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\공정별성상ViewModel.cs" />
+    <Compile Include="공정검사\두께측정.xaml.cs">
+      <DependentUpon>두께측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\두께측정ViewModel.cs" />
+    <Compile Include="공정검사\마손측정.xaml.cs">
+      <DependentUpon>마손측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\마손측정ViewModel.cs" />
+    <Compile Include="공정검사\붕해측정.xaml.cs">
+      <DependentUpon>붕해측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\붕해측정ViewModel.cs" />
+    <Compile Include="공정검사\선별공정불량확인.xaml.cs">
+      <DependentUpon>선별공정불량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\선별공정불량확인ViewModel.cs" />
+    <Compile Include="공정검사\캡슐개별질량확인.xaml.cs">
+      <DependentUpon>캡슐개별질량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\캡슐개별질량확인ViewModel.cs" />
+    <Compile Include="공정검사\타정IPC_두께경도.xaml.cs">
+      <DependentUpon>타정IPC_두께경도.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\타정IPC_두께경도ViewModel.cs" />
+    <Compile Include="공정검사\타정IPC_붕해마손.xaml.cs">
+      <DependentUpon>타정IPC_붕해마손.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="공정검사\타정IPC_붕해마손ViewModel.cs" />
+    <Compile Include="공정중 시험의뢰\공정중시험의뢰.cs" />
+    <Compile Include="레시피확인\레시피확인.xaml.cs">
+      <DependentUpon>레시피확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="레시피확인\레시피확인ViewModel.cs" />
+    <Compile Include="바코드확인\SVP소분원료확인.xaml.cs">
+      <DependentUpon>SVP소분원료확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="바코드확인\SVP소분원료확인ViewModel.cs" />
+    <Compile Include="바코드확인\소분원료확인및무게측정.xaml.cs">
+      <DependentUpon>소분원료확인및무게측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="바코드확인\소분원료확인및무게측정ViewModel.cs" />
+    <Compile Include="반제품\Popup\포장공정반제품분할이력.xaml.cs">
+      <DependentUpon>포장공정반제품분할이력.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\반제품Pallet적재.xaml.cs">
+      <DependentUpon>반제품Pallet적재.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\반제품Pallet적재ViewModel.cs" />
+    <Compile Include="반제품\반제품보관정보확인.xaml.cs">
+      <DependentUpon>반제품보관정보확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\반제품보관정보확인ViewModel.cs" />
+    <Compile Include="반제품\캡슐선별반제품생성ViewModel.cs" />
+    <Compile Include="반제품\캡슐선별반제품생성.xaml.cs">
+      <DependentUpon>캡슐선별반제품생성.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\포장공정반제품분할.xaml.cs">
+      <DependentUpon>포장공정반제품분할.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\포장공정반제품분할ViewModel.cs" />
+    <Compile Include="반제품\포장반제품분할수량확인.xaml.cs">
+      <DependentUpon>포장반제품분할수량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\포장반제품분할수량확인ViewModel.cs" />
+    <Compile Include="설비사용\라인클리어런스기록.xaml.cs">
+      <DependentUpon>라인클리어런스기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\라인클리어런스기록ViewModel.cs" />
+    <Compile Include="설비사용\생산장비점검사용시작.cs" />
+    <Compile Include="설비사용\설비가동시간조회.xaml.cs">
+      <DependentUpon>설비가동시간조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\설비가동시간조회ViewModel.cs" />
+    <Compile Include="설비사용\설비가동시간체크_장비번호.xaml.cs">
+      <DependentUpon>설비가동시간체크_장비번호.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\설비가동시간체크_장비번호ViewModel.cs" />
+    <Compile Include="설비사용\작업장점검사용시작.cs" />
+    <Compile Include="수동선별양품수량생성\수동선별양품수량생성.xaml.cs">
+      <DependentUpon>수동선별양품수량생성.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수동선별양품수량생성\수동선별양품수량생성ViewModel.cs" />
+    <Compile Include="수율계산\완제품해체선별수율.xaml.cs">
+      <DependentUpon>완제품해체선별수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\완제품해체선별수율ViewModel.cs" />
+    <Compile Include="라벨발행\불출라벨발행.xaml.cs">
+      <DependentUpon>불출라벨발행.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="라벨발행\불출라벨발행ViewModel.cs" />
+    <Compile Include="수율계산\캡슐공정수율.xaml.cs">
+      <DependentUpon>캡슐공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\캡슐공정수율ViewModel.cs" />
+    <Compile Include="수율계산\캡슐반제품수율.xaml.cs">
+      <DependentUpon>캡슐반제품수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\캡슐반제품수율ViewModel.cs" />
+    <Compile Include="수율계산\캡슐선별공정수율.xaml.cs">
+      <DependentUpon>캡슐선별공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\캡슐선별공정수율ViewModel.cs" />
+    <Compile Include="수율계산\타정공정수율_다층정.xaml.cs">
+      <DependentUpon>타정공정수율_다층정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\타정공정수율_다층정ViewModel.cs" />
+    <Compile Include="수율계산\타정손실수율.xaml.cs">
+      <DependentUpon>타정손실수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\타정손실수율ViewModel.cs" />
+    <Compile Include="수율계산\포장공정수율_지시량ViewModel.cs" />
+    <Compile Include="수율계산\포장공정최종생산수율_지시량.xaml.cs">
+      <DependentUpon>포장공정최종생산수율_지시량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\포장공정최종생산수율_지시량_ViewModel.cs" />
+    <Compile Include="수율계산\포장공정최종입고수율_지시량.xaml.cs">
+      <DependentUpon>포장공정최종입고수율_지시량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\포장공정최종입고수율_지시량ViewModel.cs" />
+    <Compile Include="완제품\샘플수량수동입력.xaml.cs">
+      <DependentUpon>샘플수량수동입력.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\샘플수량수동입력ViewModel.cs" />
+    <Compile Include="완제품\이미지등록.xaml.cs">
+      <DependentUpon>이미지등록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\이미지등록ViewModel.cs" />
+    <Compile Include="라벨발행\라벨발행.xaml.cs">
+      <DependentUpon>라벨발행.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="라벨발행\라벨발행ViewModel.cs" />
+    <Compile Include="바코드확인\소분원료확인.xaml.cs">
+      <DependentUpon>소분원료확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="바코드확인\소분원료확인ViewModel.cs" />
+    <Compile Include="바코드확인\소분원료확인팝업ViewModel.cs" />
+    <Compile Include="바코드확인\소분원료확인팝업.xaml.cs">
+      <DependentUpon>소분원료확인팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\Popup\반제품저울스캔팝업.xaml.cs">
+      <DependentUpon>반제품저울스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\Popup\반제품저울스캔팝업ViewModel.cs" />
+    <Compile Include="반제품\반제품보관상태확인.xaml.cs">
+      <DependentUpon>반제품보관상태확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\반제품보관상태확인ViewModel.cs" />
+    <Compile Include="반제품\반제품분할.xaml.cs">
+      <DependentUpon>반제품분할.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\반제품분할ViewModel.cs" />
+    <Compile Include="반제품\Popup\반제품스캔팝업.xaml.cs">
+      <DependentUpon>반제품스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\Popup\반제품스캔팝업ViewModel.cs" />
+    <Compile Include="반제품\반제품투입.xaml.cs">
+      <DependentUpon>반제품투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\반제품투입ViewModel.cs" />
+    <Compile Include="반제품\과립반제품투입.xaml.cs">
+      <DependentUpon>과립반제품투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\과립반제품투입ViewModel.cs" />
+    <Compile Include="반제품\정제수확인및투입ViewModel.cs" />
+    <Compile Include="반제품\정제수확인및투입.xaml.cs">
+      <DependentUpon>정제수확인및투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\용매확인및투입.xaml.cs">
+      <DependentUpon>용매확인및투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\용매확인및투입ViewModel.cs" />
+    <Compile Include="반제품\Popup\자재저울스캔팝업.xaml.cs">
+      <DependentUpon>자재저울스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\Popup\자재저울스캔팝업ViewModel.cs" />
+    <Compile Include="반제품\저울반제품투입.xaml.cs">
+      <DependentUpon>저울반제품투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\저울반제품투입ViewModel.cs" />
+    <Compile Include="반제품\용기중량확인.xaml.cs">
+      <DependentUpon>용기중량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\용기중량확인ViewModel.cs" />
+    <Compile Include="반제품\출고반제품확인.cs" />
+    <Compile Include="반제품\칭량반제품투입.xaml.cs">
+      <DependentUpon>칭량반제품투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\칭량반제품투입ViewModel.cs" />
+    <Compile Include="반제품\포장반제품조회.xaml.cs">
+      <DependentUpon>포장반제품조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\포장반제품조회ViewModel.cs" />
+    <Compile Include="반제품\포장반제품투입.xaml.cs">
+      <DependentUpon>포장반제품투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="반제품\포장반제품투입ViewModel.cs" />
+    <Compile Include="반제품\포장실적및샘플조회ViewModel.cs" />
+    <Compile Include="반제품\포장실적및샘플조회.xaml.cs">
+      <DependentUpon>포장실적및샘플조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="부스점검\부스점검.xaml.cs">
+      <DependentUpon>부스점검.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="부스점검\부스점검ViewModel.cs" />
+    <Compile Include="부스점검\부스점검팝업.xaml.cs">
+      <DependentUpon>부스점검팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="부스점검\부스점검팝업ViewModel.cs" />
+    <Compile Include="생산출고\생산출고피킹정보조회.xaml.cs">
+      <DependentUpon>생산출고피킹정보조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="생산출고\생산출고피킹정보조회ViewModel.cs" />
+    <Compile Include="설비사용\공정작업완료확인.xaml.cs">
+      <DependentUpon>공정작업완료확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\공정작업완료확인ViewModel.cs" />
+    <Compile Include="설비사용\사용한설비확인및종료ViewModel.cs" />
+    <Compile Include="설비사용\사용한설비확인및종료.xaml.cs">
+      <DependentUpon>사용한설비확인및종료.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\생산장비사용시작.cs" />
+    <Compile Include="설비사용\작업공수관리.xaml.cs">
+      <DependentUpon>작업공수관리.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\작업장사용시작.cs" />
+    <Compile Include="설비사용\라인클리어런스조회.xaml.cs">
+      <DependentUpon>라인클리어런스조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\라인클리어런스조회ViewModel.cs" />
+    <Compile Include="설비사용\사용한설비생산종료.cs" />
+    <Compile Include="설비사용\설비가동시간체크.xaml.cs">
+      <DependentUpon>설비가동시간체크.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="설비사용\설비가동시간체크ViewModel.cs" />
+    <Compile Include="설비사용\설비사용시작.cs" />
+    <Compile Include="설비사용\설비사용종료.cs" />
+    <Compile Include="소독액관리\소독액소분라벨발행.cs" />
+    <Compile Include="소독액관리\소독액원액재고조회.cs" />
+    <Compile Include="소독액관리\소독액재고계산.cs" />
+    <Compile Include="소독액관리\소독액제조량계산.cs" />
+    <Compile Include="소독액관리\소독원액사용량계산.cs" />
+    <Compile Include="소독액관리\소독원액재고생성.cs" />
+    <Compile Include="수율계산\과립공정수율.xaml.cs">
+      <DependentUpon>과립공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\과립공정수율ViewModel.cs" />
+    <Compile Include="수율계산\반제품수율.xaml.cs">
+      <DependentUpon>반제품수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\반제품수율ViewModel.cs" />
+    <Compile Include="수율계산\선별공정수율.xaml.cs">
+      <DependentUpon>선별공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\선별공정수율ViewModel.cs" />
+    <Compile Include="수율계산\코팅공정수율.xaml.cs">
+      <DependentUpon>코팅공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\코팅공정수율ViewModel.cs" />
+    <Compile Include="수율계산\타정공정수율.xaml.cs">
+      <DependentUpon>타정공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\타정공정수율ViewModel.cs" />
+    <Compile Include="수율계산\정제수량확인.xaml.cs">
+      <DependentUpon>정제수량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\정제수량확인ViewModel.cs" />
+    <Compile Include="수율계산\포장공정수율.xaml.cs">
+      <DependentUpon>포장공정수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\포장공정수율ViewModel.cs" />
+    <Compile Include="수율계산\포장공정최종생산수율.xaml.cs">
+      <DependentUpon>포장공정최종생산수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\포장공정최종생산수율ViewModel.cs" />
+    <Compile Include="수율계산\포장공정최종입고수율.xaml.cs">
+      <DependentUpon>포장공정최종입고수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\포장공정최종입고수율ViewModel.cs" />
+    <Compile Include="완제품\popup\출고포장자재환산popup.xaml.cs">
+      <DependentUpon>출고포장자재환산popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\popup\포장자재저울스캔.xaml.cs">
+      <DependentUpon>포장자재저울스캔.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\popup\포장자재저울스캔ViewModel.cs" />
+    <Compile Include="완제품\popup\포장자재확인.xaml.cs">
+      <DependentUpon>포장자재확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\중량선별기범위.xaml.cs">
+      <DependentUpon>중량선별기범위.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\중량선별기범위ViewModel.cs" />
+    <Compile Include="완제품\출고포장자재환산.xaml.cs">
+      <DependentUpon>출고포장자재환산.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\출고포장자재환산ViewModel.cs" />
+    <Compile Include="완제품\포장완제품입고3.xaml.cs">
+      <DependentUpon>포장완제품입고3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장완제품입고2.xaml.cs">
+      <DependentUpon>포장완제품입고2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장완제품입고3ViewModel.cs" />
+    <Compile Include="완제품\포장완제품입고2ViewModel.cs" />
+    <Compile Include="완제품\포장자재사진등록ViewModel.cs" />
+    <Compile Include="완제품\포장자재사진등록.xaml.cs">
+      <DependentUpon>포장자재사진등록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장자재정산.xaml.cs">
+      <DependentUpon>포장자재정산.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장자재정산ViewModel.cs" />
+    <Compile Include="완제품\포장자재중량측정.xaml.cs">
+      <DependentUpon>포장자재중량측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장완제품입고.xaml.cs">
+      <DependentUpon>포장완제품입고.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장완제품입고ViewModel.cs" />
+    <Compile Include="완제품\포장자재중량측정ViewModel.cs" />
+    <Compile Include="완제품\포장자재출고기록.xaml.cs">
+      <DependentUpon>포장자재출고기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="완제품\포장자재출고기록ViewModel.cs" />
+    <Compile Include="용기사용\IBC사용여부선택.xaml.cs">
+      <DependentUpon>IBC사용여부선택.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="용기사용\IBC사용여부선택ViewModel.cs" />
+    <Compile Include="용기사용\용기사용종료.cs" />
+    <Compile Include="원료칭량\Popup\DispensingInfoPopup.xaml.cs">
+      <DependentUpon>DispensingInfoPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료칭량\Popup\AllocationInfoPopup.xaml.cs">
+      <DependentUpon>AllocationInfoPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료칭량\소분원료현장칭량.xaml.cs">
+      <DependentUpon>소분원료현장칭량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료칭량\소분원료현장칭량ViewModel.cs" />
+    <Compile Include="원료칭량\원료칭량확인및기록.xaml.cs">
+      <DependentUpon>원료칭량확인및기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료칭량\원료칭량확인및기록ViewModel.cs" />
+    <Compile Include="원료칭량\현장칭량ViewModel.cs" />
+    <Compile Include="원료칭량\현장칭량_기준량.xaml.cs">
+      <DependentUpon>현장칭량_기준량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료칭량\현장칭량_기준량ViewModel.cs" />
+    <Compile Include="원료투입\소분원료분할투입.xaml.cs">
+      <DependentUpon>소분원료분할투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료투입\소분원료분할투입ViewModel.cs" />
+    <Compile Include="원료투입\소분원료전량투입.xaml.cs">
+      <DependentUpon>소분원료전량투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료투입\소분원료전량투입ViewModel.cs" />
+    <Compile Include="원료투입\소분원료분할투입팝업.xaml.cs">
+      <DependentUpon>소분원료분할투입팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료투입\소분원료전량투입팝업.xaml.cs">
+      <DependentUpon>소분원료전량투입팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="원료투입\소분원료분할투입팝업ViewModel.cs" />
+    <Compile Include="원료투입\소분원료전량투입팝업ViewModel.cs" />
+    <Compile Include="원료투입\액조제탱크투입.cs" />
+    <Compile Include="이력데이터\BMS실시간데이터.xaml.cs">
+      <DependentUpon>BMS실시간데이터.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\ChartSlider.cs" />
+    <Compile Include="이력데이터\선별공정불량입력.cs" />
+    <Compile Include="이력데이터\장비실시간데이터.xaml.cs">
+      <DependentUpon>장비실시간데이터.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터.xaml.cs">
+      <DependentUpon>장비이력데이터.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터Popup.xaml.cs">
+      <DependentUpon>장비이력데이터Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터V1.xaml.cs">
+      <DependentUpon>장비이력데이터V1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터V1ViewModel.cs" />
+    <Compile Include="이력데이터\장비이력데이터V2.xaml.cs">
+      <DependentUpon>장비이력데이터V2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터V2ViewModel.cs" />
+    <Compile Include="이력데이터\장비이력데이터ViewModel.cs" />
+    <Compile Include="이력데이터\장비이력데이터마킹.xaml.cs">
+      <DependentUpon>장비이력데이터마킹.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터멀티.xaml.cs">
+      <DependentUpon>장비이력데이터멀티.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터멀티ViewModel.cs" />
+    <Compile Include="이력데이터\장비이력데이터시작.cs" />
+    <Compile Include="이력데이터\장비이력데이터저장Popup.xaml.cs">
+      <DependentUpon>장비이력데이터저장Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="이력데이터\장비이력데이터종료.cs" />
+    <Compile Include="장비청소\Popup\설비상태팝업.xaml.cs">
+      <DependentUpon>설비상태팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="장비청소\검사장비청소점검.xaml.cs">
+      <DependentUpon>검사장비청소점검.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="장비청소\검사장비청소점검ViewModel.cs" />
+    <Compile Include="장비청소\설비청소시작.cs" />
+    <Compile Include="장비청소\설비청소종료.cs" />
+    <Compile Include="장비청소\생산설비청소점검.xaml.cs">
+      <DependentUpon>생산설비청소점검.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="장비청소\작업장청소점검.xaml.cs">
+      <DependentUpon>작업장청소점검.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="장비청소\생산설비청소점검ViewModel.cs" />
+    <Compile Include="장비청소\작업장청소점검ViewModel.cs" />
+    <Compile Include="장비청소\장비청소상태.xaml.cs">
+      <DependentUpon>장비청소상태.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="장비청소\장비청소상태ViewModel.cs" />
+    <Compile Include="장비청소\장비청소팝업.xaml.cs">
+      <DependentUpon>장비청소팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="장비청소\장비청소팝업ViewModel.cs" />
+    <Compile Include="저울점검\저울스캔팝업.xaml.cs">
+      <DependentUpon>저울스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="저울점검\저울스캔팝업ViewModel.cs" />
+    <Compile Include="저울점검\저울점검.xaml.cs">
+      <DependentUpon>저울점검.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="저울점검\저울점검ViewModel.cs" />
+    <Compile Include="WMS\Popup\ScaleScanPopup.xaml.cs">
+      <DependentUpon>ScaleScanPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\Popup\ScaleScanPopupViewModel.cs" />
+    <Compile Include="WMS\Popup\잔량확인.xaml.cs">
+      <DependentUpon>잔량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\현장칭량실적확인WMS전송.xaml.cs">
+      <DependentUpon>현장칭량실적확인WMS전송.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\칭량실적확인WMS전송.xaml.cs">
+      <DependentUpon>칭량실적확인WMS전송.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\칭량실적확인WMS전송ViewModel.cs" />
+    <Compile Include="정제체크마스터\정제체크마스터입력.xaml.cs">
+      <DependentUpon>정제체크마스터입력.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="정제체크마스터\정제체크마스터입력ViewModel.cs" />
+    <Compile Include="정제체크마스터\정제체크마스터조회_수정ViewModel.cs" />
+    <Compile Include="정제체크마스터\정제체크마스터조회_수정.xaml.cs">
+      <DependentUpon>정제체크마스터조회_수정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="정제체크마스터\정제체크마스터조회.xaml.cs">
+      <DependentUpon>정제체크마스터조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="정제체크마스터\정제체크마스터조회ViewModel.cs" />
+    <Compile Include="주사제\간섭상황\간섭상황기록.xaml.cs">
+      <DependentUpon>간섭상황기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\간섭상황\간섭상황기록ViewModel.cs" />
+    <Compile Include="주사제\간섭상황\간섭상황시간Popup.cs" />
+    <Compile Include="주사제\간섭상황\간섭상황조회.xaml.cs">
+      <DependentUpon>간섭상황조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\간섭상황\간섭상황조회ViewModel.cs" />
+    <Compile Include="주사제\공정검사\AQL검사기록.xaml.cs">
+      <DependentUpon>AQL검사기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\공정검사\AQL검사기록ViewModel.cs" />
+    <Compile Include="주사제\공정검사\SVP불량검사결과.xaml.cs">
+      <DependentUpon>SVP불량검사결과.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\공정검사\SVP불량검사결과ViewModel.cs" />
+    <Compile Include="주사제\공정검사\SVP수동검사불량유형조회.xaml.cs">
+      <DependentUpon>SVP수동검사불량유형조회.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\공정검사\SVP수동검사불량유형조회ViewModel.cs" />
+    <Compile Include="주사제\공정검사\SVP수동검사불량유형입력ViewModel.cs" />
+    <Compile Include="주사제\공정검사\SVP수동검사불량유형입력.xaml.cs">
+      <DependentUpon>SVP수동검사불량유형입력.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\공정검사\SVP캡핑IPC.xaml.cs">
+      <DependentUpon>SVP캡핑IPC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\공정검사\SVP캡핑IPCViewModel.cs" />
+    <Compile Include="주사제\공정검사\조제FIT결과.xaml.cs">
+      <DependentUpon>조제FIT결과.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\공정검사\조제FIT결과ViewModel.cs" />
+    <Compile Include="주사제\공정검사\중요간섭상황기록ViewModel.cs" />
+    <Compile Include="주사제\무균공정시트\무균공정사용Nozzle확인.xaml.cs">
+      <DependentUpon>무균공정사용Nozzle확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\무균공정시트\무균공정사용Nozzle확인ViewModel.cs" />
+    <Compile Include="주사제\무균공정시트\무균공정시간기록.xaml.cs">
+      <DependentUpon>무균공정시간기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\무균공정시트\무균공정시간기록ViewModel.cs" />
+    <Compile Include="주사제\무균공정시트\무균공정시트조회_동결.xaml.cs">
+      <DependentUpon>무균공정시트조회_동결.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\무균공정시트\무균공정시트조회_동결ViewModel.cs" />
+    <Compile Include="주사제\무균공정시트\무균공정시트조회_액상.xaml.cs">
+      <DependentUpon>무균공정시트조회_액상.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\무균공정시트\무균공정시트조회_액상ViewModel.cs" />
+    <Compile Include="주사제\무균공정시트\무균공정시간Popup.xaml.cs">
+      <DependentUpon>무균공정시간Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\무균공정시트\무균공정작업자입력.xaml.cs">
+      <DependentUpon>무균공정작업자입력.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\무균공정시트\무균공정작업자입력ViewModel.cs" />
+    <Compile Include="주사제\반제품\SVP반제품생성.xaml.cs">
+      <DependentUpon>SVP반제품생성.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\반제품\SVP반제품생성ViewModel.cs" />
+    <Compile Include="주사제\설비상태\Shelf별적재여부확인.xaml.cs">
+      <DependentUpon>Shelf별적재여부확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\Shelf별적재여부확인ViewModel.cs" />
+    <Compile Include="주사제\설비상태\멸균시작.cs" />
+    <Compile Include="주사제\설비상태\멸균종료.cs" />
+    <Compile Include="주사제\설비상태\세척장비액션수행.xaml.cs">
+      <DependentUpon>세척장비액션수행.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\세척장비액션수행ViewModel.cs" />
+    <Compile Include="주사제\설비상태\아이솔레이터압력확인ViewModel.cs" />
+    <Compile Include="주사제\공정검사\중요간섭상황기록.xaml.cs">
+      <DependentUpon>중요간섭상황기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\로드셀일일점검.xaml.cs">
+      <DependentUpon>로드셀일일점검.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\로드셀일일점검ViewModel.cs" />
+    <Compile Include="주사제\설비상태\로드셀점검팝업.xaml.cs">
+      <DependentUpon>로드셀점검팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\설비필터확인.xaml.cs">
+      <DependentUpon>설비필터확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\설비필터확인ViewModel.cs" />
+    <Compile Include="주사제\설비상태\아이솔레이터압력확인.xaml.cs">
+      <DependentUpon>아이솔레이터압력확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\설비상태\세척장비시간입력Popup.xaml.cs">
+      <DependentUpon>세척장비시간입력Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\자재정산\popup\SVP자재환입저울스캔팝업.xaml.cs">
+      <DependentUpon>SVP자재환입저울스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\자재정산\popup\SVP자재환입저울스캔팝업ViewModel.cs" />
+    <Compile Include="주사제\자재정산\SVP자재환입처리.xaml.cs">
+      <DependentUpon>SVP자재환입처리.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\자재정산\SVP자재환입처리ViewModel.cs" />
+    <Compile Include="주사제\자재정산\바이알적재량확인.xaml.cs">
+      <DependentUpon>바이알적재량확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\자재정산\바이알적재량확인ViewModel.cs" />
+    <Compile Include="주사제\수율계산\SVP캡핑수율.xaml.cs">
+      <DependentUpon>SVP캡핑수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\수율계산\SVP반제품검사수율.xaml.cs">
+      <DependentUpon>SVP반제품검사수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\수율계산\SVP캡핑수율ViewModel.cs" />
+    <Compile Include="주사제\수율계산\SVP최종반제품수율.xaml.cs">
+      <DependentUpon>SVP최종반제품수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\수율계산\SVP반제품충전수율.xaml.cs">
+      <DependentUpon>SVP반제품충전수율.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\수율계산\SVP반제품검사수율ViewModel.cs" />
+    <Compile Include="주사제\수율계산\SVP최종반제품수율ViewModel.cs" />
+    <Compile Include="주사제\수율계산\SVP반제품충전수율ViewModel.cs" />
+    <Compile Include="주사제\자재정산\SVP자재정산.xaml.cs">
+      <DependentUpon>SVP자재정산.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\자재정산\SVP자재정산ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\SVP소분원료현장칭량_기준량.xaml.cs">
+      <DependentUpon>SVP소분원료현장칭량_기준량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\미사용원료실적전송.xaml.cs">
+      <DependentUpon>미사용원료실적전송.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\미사용원료실적전송ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\SVP소분원료확인및무게측정.xaml.cs">
+      <DependentUpon>SVP소분원료확인및무게측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\SVP소분원료현장칭량_기준량ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\SVP소분원료확인및무게측정ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\비커무게측정.xaml.cs">
+      <DependentUpon>비커무게측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\비커무게측정ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\SVP원료칭량및투입.xaml.cs">
+      <DependentUpon>SVP원료칭량및투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\SVP용매확인및투입.xaml.cs">
+      <DependentUpon>SVP용매확인및투입.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\SVP원료칭량및투입ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\SVP용매확인및투입ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\원료보충.xaml.cs">
+      <DependentUpon>원료보충.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\용액냉각및보충.xaml.cs">
+      <DependentUpon>용액냉각및보충.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\원료보충ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\용액냉각및보충ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\원료저울스캔팝업.xaml.cs">
+      <DependentUpon>원료저울스캔팝업.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\원료저울스캔팝업ViewModel.cs" />
+    <Compile Include="주사제\칭량및투입\최종조제.xaml.cs">
+      <DependentUpon>최종조제.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="주사제\칭량및투입\최종조제ViewModel.cs" />
+    <Compile Include="칭량\popup\InputWeightpopup.xaml.cs">
+      <DependentUpon>InputWeightpopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\개별질량측정.xaml.cs">
+      <DependentUpon>개별질량측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\개별질량측정ViewModel.cs" />
+    <Compile Include="칭량\개별질량측정_1차층.xaml.cs">
+      <DependentUpon>개별질량측정_1차층.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\개별질량측정_1차층ViewModel.cs" />
+    <Compile Include="칭량\개별질량측정_기록.xaml.cs">
+      <DependentUpon>개별질량측정_기록.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\개별질량측정_기록ViewModel.cs" />
+    <Compile Include="칭량\개별평균질량측정.xaml.cs">
+      <DependentUpon>개별평균질량측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\개별평균질량측정ViewModel.cs" />
+    <Compile Include="칭량\칭량원료Pallet적재.xaml.cs">
+      <DependentUpon>칭량원료Pallet적재.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\칭량원료Pallet적재ViewModel.cs" />
+    <Compile Include="칭량\평균질량측정_2ViewModel.cs" />
+    <Compile Include="칭량\평균질량측정_2.xaml.cs">
+      <DependentUpon>평균질량측정_2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\칭량Pallet구성확인.xaml.cs">
+      <DependentUpon>칭량Pallet구성확인.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\칭량Pallet구성확인ViewModel.cs" />
+    <Compile Include="칭량\평균질량측정.xaml.cs">
+      <DependentUpon>평균질량측정.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="칭량\평균질량측정ViewModel.cs" />
+    <Compile Include="원료칭량\현장칭량.xaml.cs">
+      <DependentUpon>현장칭량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="수율계산\포장공정수율_지시량.xaml.cs">
+      <DependentUpon>포장공정수율_지시량.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="혼합기\혼합기레시피전송.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="LIMS\LIMS샘플링확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\BarcodePopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\CustomUIHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\IPCControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ScaleControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ScaleControlDW.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\SelectPrinterPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMS\Popup\WMS일반자재환입처리팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMS\Popup\WMS칭량자재투입팝업.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\Popup\RoomScalePopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\Popup\반제품출고Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\WMS일반자재환입처리.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMS\WMS자재환입처리.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\WMS칭량자재투입.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\Popup\자재환입저울스캔팝업.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\반제품검량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\반제품무게측정.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\반제품입고.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\반제품출고.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\빈용기무게측정.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\빈용기출고.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\질소시험정보조회.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMS\칭량IBC반제품무게측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\IPC검사결과조회.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="공정검사\LOD측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\Popup\공정검사결과입력.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\캡슐개별질량세팅.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="공정검사\경도측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\공정별성상.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\두께측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\마손측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\붕해측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\선별공정불량확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\캡슐개별질량확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="공정검사\타정IPC_두께경도.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="공정검사\타정IPC_붕해마손.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="레시피확인\레시피확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="바코드확인\SVP소분원료확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="바코드확인\소분원료확인및무게측정.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\Popup\포장공정반제품분할이력.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\반제품Pallet적재.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\반제품보관정보확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\캡슐선별반제품생성.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\포장공정반제품분할.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\포장반제품분할수량확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="설비사용\라인클리어런스기록.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="설비사용\설비가동시간조회.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="설비사용\설비가동시간체크_장비번호.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수동선별양품수량생성\수동선별양품수량생성.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\완제품해체선별수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="라벨발행\불출라벨발행.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\캡슐공정수율.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\캡슐반제품수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\캡슐선별공정수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\타정공정수율_다층정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\타정손실수율.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\포장공정최종생산수율_지시량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\포장공정최종입고수율_지시량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\샘플수량수동입력.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\이미지등록.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="라벨발행\라벨발행.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="바코드확인\소분원료확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="바코드확인\소분원료확인팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\Popup\반제품저울스캔팝업.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\반제품보관상태확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\반제품분할.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\Popup\반제품스캔팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\반제품투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\과립반제품투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\정제수확인및투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\용매확인및투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\Popup\자재저울스캔팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\저울반제품투입.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\용기중량확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\칭량반제품투입.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\포장반제품조회.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="반제품\포장반제품투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="반제품\포장실적및샘플조회.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="부스점검\부스점검.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="부스점검\부스점검팝업.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="생산출고\생산출고피킹정보조회.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="설비사용\공정작업완료확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="설비사용\라인클리어런스조회.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="설비사용\사용한설비확인및종료.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="설비사용\설비가동시간체크.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="설비사용\작업공수관리.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\과립공정수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\반제품수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\선별공정수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\코팅공정수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\타정공정수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\정제수량확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\포장공정수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="수율계산\포장공정최종생산수율.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\포장공정최종입고수율.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\popup\출고포장자재환산popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\popup\포장자재저울스캔.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\popup\포장자재확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\중량선별기범위.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\출고포장자재환산.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\포장완제품입고3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="완제품\포장완제품입고2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="완제품\포장자재사진등록.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="완제품\포장자재정산.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\포장자재중량측정.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\포장완제품입고.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="완제품\포장자재출고기록.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="용기사용\IBC사용여부선택.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="원료칭량\Popup\DispensingInfoPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="원료칭량\Popup\AllocationInfoPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="원료칭량\소분원료현장칭량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="원료칭량\원료칭량확인및기록.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="원료칭량\현장칭량_기준량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="원료투입\소분원료분할투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="원료투입\소분원료전량투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="원료투입\소분원료분할투입팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="원료투입\소분원료전량투입팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\BMS실시간데이터.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비실시간데이터.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터V1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터V2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터마킹.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터멀티.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="이력데이터\장비이력데이터저장Popup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="장비청소\Popup\설비상태팝업.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="장비청소\검사장비청소점검.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="장비청소\생산설비청소점검.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="장비청소\작업장청소점검.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="장비청소\장비청소상태.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="장비청소\장비청소팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="저울점검\저울스캔팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="저울점검\저울점검.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMS\Popup\ScaleScanPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\Popup\잔량확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\현장칭량실적확인WMS전송.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WMS\칭량실적확인WMS전송.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="정제체크마스터\정제체크마스터입력.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="정제체크마스터\정제체크마스터조회_수정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="정제체크마스터\정제체크마스터조회.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\간섭상황\간섭상황기록.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\간섭상황\간섭상황시간Popup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\간섭상황\간섭상황조회.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\공정검사\AQL검사기록.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\공정검사\SVP불량검사결과.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\공정검사\SVP수동검사불량유형조회.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\공정검사\SVP수동검사불량유형입력.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\공정검사\SVP캡핑IPC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\공정검사\조제FIT결과.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\공정검사\중요간섭상황기록.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\무균공정시트\무균공정사용Nozzle확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\무균공정시트\무균공정시간기록.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\무균공정시트\무균공정시트조회_동결.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\무균공정시트\무균공정시트조회_액상.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\무균공정시트\무균공정시간Popup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\무균공정시트\무균공정작업자입력.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\반제품\SVP반제품생성.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\설비상태\Shelf별적재여부확인.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\설비상태\로드셀일일점검.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\설비상태\로드셀점검팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\설비상태\설비필터확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\설비상태\세척장비액션수행.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\설비상태\아이솔레이터압력확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\설비상태\세척장비시간입력Popup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\자재정산\popup\SVP자재환입저울스캔팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\자재정산\SVP자재환입처리.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\자재정산\바이알적재량확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\수율계산\SVP캡핑수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\수율계산\SVP반제품검사수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\수율계산\SVP최종반제품수율.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\수율계산\SVP반제품충전수율.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\자재정산\SVP자재정산.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\SVP소분원료현장칭량_기준량.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\미사용원료실적전송.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\SVP소분원료확인및무게측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\비커무게측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\SVP원료칭량및투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\SVP용매확인및투입.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\원료보충.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\용액냉각및보충.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="주사제\칭량및투입\원료저울스캔팝업.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="주사제\칭량및투입\최종조제.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="칭량\popup\InputWeightpopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="칭량\개별질량측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="칭량\개별질량측정_1차층.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="칭량\개별질량측정_기록.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="칭량\개별평균질량측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="칭량\칭량원료Pallet적재.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="칭량\평균질량측정_2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="칭량\칭량Pallet구성확인.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="칭량\평균질량측정.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="원료칭량\현장칭량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="수율계산\포장공정수율_지시량.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ico_minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Apply.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\btn_x_red.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /R /Y "$(TargetPath)" "$(ProjectDir)..\LGCNS.iPharmMES.SUI\ClientBin"
+xcopy /R /Y "$(TargetPath)" "$(ProjectDir)..\Debug.SUI.OOB\ClientBin"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

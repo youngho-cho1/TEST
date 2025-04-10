@@ -1,0 +1,234 @@
+﻿<UserControl    x:Class="Board.ManufacturingProcessStatusView"
+                xmlns:local="clr-namespace:Board" 
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"  
+                xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+                xmlns:ControlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+                xmlns:Ctrl="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+                xmlns:c1="clr-namespace:C1.Silverlight.DataGrid;assembly=C1.Silverlight.DataGrid.5"
+                mc:Ignorable="d"
+                d:DesignHeight="768" d:DesignWidth="1024" 
+                Name="Main">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="lblStyle" TargetType="sdk:Label">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style x:Key="txtStyle" TargetType="TextBox">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Width" Value="200"/>
+            </Style>
+            <Style x:Key="colHeader" TargetType="c1:DataGridColumnHeaderPresenter">
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            <Style x:Key="radioStyle" TargetType="RadioButton">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="Malgun Gothic"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Margin" Value="2 0 2 0"/>
+            </Style>
+            <local:ManufacturingProcessStatusViewModel x:Key="ViewModel"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" DataContext="{StaticResource ViewModel}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                       CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"  />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ControlsLib:MainPanel_Top x:Name="mainPanel" Grid.Row="1" Grid.RowSpan="1" IsExpanded="True" IsEnableSearch="False" IsEnableSave="False" HorizontalAlignment="Stretch">
+            <ControlsLib:MainPanel_Top.Search>
+                <Grid x:Name="searchPanel" VerticalAlignment="Center"  Margin="0 5 0 0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <RadioButton Content="완제품" IsChecked="{Binding ISFERT, Mode=TwoWay}" Name="radioButton1" GroupName="Prod" Style="{StaticResource radioStyle}"/>
+                        <RadioButton Content="반제품" IsChecked="{Binding ISHALB, Mode=TwoWay}" Name="radioButton2" GroupName="Prod" Style="{StaticResource radioStyle}"/>
+                    </StackPanel>
+                    <sdk:Label Grid.Column="3" Content="계획시작일자" Style="{StaticResource lblStyle}"/>
+                    <StackPanel Grid.Column="5" Orientation="Horizontal" Width="210">
+                        <Ctrl:iPharmMESFromToCalendar SelectedDateFrom="{Binding Path=PeriodSTDTTM, Mode=TwoWay}"
+                                                       SelectedDateTo="{Binding Path=PeriodEDDTTM, Mode=TwoWay}"/>
+                    </StackPanel>
+                    <sdk:Label Grid.Column="7" Content="제품코드" Style="{StaticResource lblStyle}"/>
+                    <TextBox Grid.Column="9"  Text="{Binding PRODID, Mode=TwoWay}" Style="{StaticResource txtStyle}"/>
+                    <sdk:Label Grid.Column="11" Content="배치번호" Style="{StaticResource lblStyle}"/>
+                    <TextBox Grid.Column="13" Text="{Binding BATCHNO, Mode=TwoWay}" Style="{StaticResource txtStyle}"/>
+                    <sdk:Label Grid.Column="15" Content="오더번호" Style="{StaticResource lblStyle}"/>
+                    <TextBox Grid.Column="17" Text="{Binding POID, Mode=TwoWay}" Style="{StaticResource txtStyle}"/>
+                    <sdk:Label Grid.Column="19" Content="작업자" Style="{StaticResource lblStyle}"/>
+                    <TextBox Grid.Column="21" Text="{Binding WORKER, Mode=TwoWay}" Style="{StaticResource txtStyle}"/>
+                    <Button Grid.Column="23" Content="검색" Width="80" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding Path=BtnSearchCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </ControlsLib:MainPanel_Top.Search>
+            <ControlsLib:MainPanel_Top.Contents>
+                <Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="5" />
+                            
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="5" />
+                        </Grid.RowDefinitions>
+
+                        <c1:C1DataGrid Grid.Row="1" Grid.Column="1" x:Name="dgProductionOrder"
+                                       HeadersVisibility="None"
+                                       AutoGenerateColumns="False"
+                                       SelectionMode="SingleRow"
+                                       CanUserAddRows="False"
+                                       CanUserSort="True"
+                                       GridLinesVisibility="All"
+                                       CanUserFreezeColumns="Left"
+                                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                       ScrollMode="RealTime"
+                                       MergingCells="dgProductionOrder_MergingCells"
+                                       ItemsSource="{Binding Path=BR_PHR_RPT_ProductionOrder_WorkTime.OUTDATAs, Mode=OneWay}">
+                            
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=dgProductionOrder, Path=SelectedItem}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            
+                            <c1:C1DataGrid.Columns>
+                                <c1:DataGridTextColumn SortMemberPath="POID" Header="[오더번호]" Binding="{Binding POID}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="BATCHNO" Header="[배치번호]" Binding="{Binding BATCHNO}" IsReadOnly="True"  HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="PRODID" Header="[제품코드]" Binding="{Binding PRODID}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="PRODNAME" Header="[제품명]" Binding="{Binding PRODNAME}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="ACTSTDATE" Header="[생상 시작일]" Binding="{Binding ACTSTDATE}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="ACTEDDATE" Header="[생산 완료일]" Binding="{Binding ACTEDDATE}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="PRODSTATUS" Header="[진행상태]" Binding="{Binding PRODSTATUS}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="PLANQTY" Header="[계획수량]" Binding="{Binding PLANQTY}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="UOM" Header="[단위]" Binding="{Binding UOM}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORK_MIN" Header="[작업시간, 분]" Binding="{Binding WORK_MIN}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORK_HOUR" Header="[작업시간, 시간]" Binding="{Binding WORK_HOUR}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="SETUP_MIN" Header="[준비시간, 분]" Binding="{Binding SETUP_MIN}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="SETUP_HOUR" Header="[준비시간, 시간]" Binding="{Binding SETUP_HOUR}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="CLEAN_MIN" Header="[청소시간, 분]" Binding="{Binding CLEAN_MIN}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="CLEAN_HOUR" Header="[청소시간, 시간]" Binding="{Binding CLEAN_HOUR}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="TOTAL_MIN" Header="[총, 분]" Binding="{Binding TOTAL_MIN}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="TOTAL_HOUR" Header="[총, 시간]" Binding="{Binding TOTAL_HOUR}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="TOTAL_MAN" Header="[인원, 명]" Binding="{Binding TOTAL_MAN}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                            </c1:C1DataGrid.Columns>
+                            <c1:C1DataGrid.TopRows>
+                                <c1:DataGridColumnHeaderRow />
+                                <c1:DataGridColumnHeaderRow />
+                            </c1:C1DataGrid.TopRows>
+                        </c1:C1DataGrid>
+                        <c1:C1DataGrid Grid.Row="3" Grid.Column="1" x:Name="dgDetail"
+                                       HeadersVisibility="None"
+                                       AutoGenerateColumns="False"
+                                       SelectionMode="SingleRow"
+                                       CanUserAddRows="False"
+                                       CanUserSort="True"
+                                       GridLinesVisibility="All"
+                                       CanUserFreezeColumns="Left"
+                                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                       ScrollMode="RealTime"
+                                       MergingCells="dgDetail_MergingCells"
+                                       ItemsSource="{Binding Path=BR_PHR_RPT_ProductionOrderDetail_WorkTime.OUTDATAs, Mode=OneWay}">
+                            <c1:C1DataGrid.Columns>
+                                <c1:DataGridTextColumn SortMemberPath="OPSGNAME" Header="[공정명]" Binding="{Binding OPSGNAME}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="ROOMID" Header="[작업실 코드]" Binding="{Binding ROOMID}" IsReadOnly="True"  HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="ROOMNAME" Header="[작업실명]" Binding="{Binding ROOMNAME}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="DEPTNAME" Header="[부서]" Binding="{Binding DEPTNAME}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="EMPNO" Header="[사원코드]" Binding="{Binding EMPNO}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="EMPNAME" Header="[사원명]" Binding="{Binding EMPNAME}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORKTYPE" Header="[유형]" Binding="{Binding WORKTYPE}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORKSTDATE" Header="[작업시작]" Binding="{Binding WORKSTDATE}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORKEDDATE" Header="[작업종료]" Binding="{Binding WORKEDDATE}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORK_MIN" Header="[작업시간, 분]" Binding="{Binding WORK_MIN}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>
+                                <c1:DataGridTextColumn SortMemberPath="WORK_HOUR" Header="[작업시간, 시간]" Binding="{Binding WORK_HOUR}" IsReadOnly="True" HeaderStyle="{StaticResource colHeader}"/>                 
+                            </c1:C1DataGrid.Columns>
+                            <c1:C1DataGrid.TopRows>
+                                <c1:DataGridColumnHeaderRow />
+                                <c1:DataGridColumnHeaderRow />
+                            </c1:C1DataGrid.TopRows>
+                        </c1:C1DataGrid>
+
+                        <Button Grid.Row="5" Grid.Column="1" Width="60" Height="30" HorizontalAlignment="Right" Cursor="Hand" Visibility="Visible">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Image Source="../../Images/Excel.png"/>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <icommon:EventToCommandAction Command="{Binding ClickExportExcelCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </ControlsLib:MainPanel_Top.Contents>
+        </ControlsLib:MainPanel_Top>
+    </Grid>
+</UserControl>

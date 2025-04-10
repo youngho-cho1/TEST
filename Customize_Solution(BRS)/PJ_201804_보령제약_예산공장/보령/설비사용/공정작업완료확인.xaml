@@ -1,0 +1,56 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.공정작업완료확인" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           xmlns:local="clr-namespace:보령"
+           mc:Ignorable="d"
+           Width="600" Height="500" x:Name="Main"
+           Title="공정작업완료 확인">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:공정작업완료확인ViewModel x:Key="ViewModel"/>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter" x:Key="HeaderStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator x:Name="BusyIn" DataContext="{Binding Source={StaticResource ViewModel}}" IsBusy="{Binding IsBusy}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" x:Name="MainSection">
+                <c1:C1DataGrid x:Name="MainDataGrid" HeadersVisibility="Column" SelectionMode="SingleRow"
+                               AutoGenerateColumns="False" CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserResizeRows="False"
+                               ItemsSource="{Binding BR_BRS_SEL_ProductOrder_JOB_HIST.OUTDATAs}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTextColumn Header="항목" Binding="{Binding Path=EQSJUSER}" HeaderStyle="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Width="0.5*"/>
+                        <c1:DataGridTextColumn Header="작업시작시간" Binding="{Binding Path=EQSJSTDTTM}" HeaderStyle="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Width="2*"/>
+                        <c1:DataGridTextColumn Header="작업종료시간" Binding="{Binding Path=EQSJEDDTTM}" HeaderStyle="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Width="2*"/>
+                        <c1:DataGridTextColumn Header="Tack Time" Binding="{Binding Path=TACKTIME}" HeaderStyle="{StaticResource HeaderStyle}" HorizontalAlignment="Center" Width="2*"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="Footer">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" x:Name="btnConfirm" Margin="5" Content="기록" Command="{Binding ConfirmCommandAsync}"/>
+                <Button Grid.Column="2" x:Name="btnCancel" Margin="5" Content="취소" Click="btnCancel_Click"/>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

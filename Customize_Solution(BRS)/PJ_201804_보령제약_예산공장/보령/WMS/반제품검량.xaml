@@ -1,0 +1,66 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.반제품검량"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:보령"
+    mc:Ignorable="d" Title="반제품검량"
+    Name="Main" Width="450" Height="300">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:반제품검량ViewModel x:Key="ViewModel"/>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <toolkit:BusyIndicator Name="BusyIndicator" IsBusy="{Binding IsBusy}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Name="btnGroup1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="110"/>
+                    </Grid.ColumnDefinitions>
+                    <sdk:Label Grid.Column="0" Width="100" Height="40" Content="출고목록" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBox Name="txtSelContainer" Grid.Column="1" KeyDown="txtSelContainer_KeyDown" Margin="5" Padding="10" VerticalAlignment="Stretch" VerticalContentAlignment="Center"/>
+                    <Button Name="btnSelectIBC" Grid.Column="2" Content="선 택" Width="100" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnSelectIBC_Click"/>
+                </Grid>
+                <Rectangle Fill="Transparent" Grid.Row="1" Margin="0,0,10,0" Canvas.ZIndex="2"/>
+                <ScrollViewer x:Name="scrollbar" Grid.Row="1" Height="Auto" Width="Auto">
+                    <c1:C1DataGrid Name="GridRequestOutList" Canvas.ZIndex="1"
+                       AutoGenerateColumns="False" HeadersVisibility="Column" CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" SelectionMode="SingleRow"
+                       ItemsSource="{Binding ListRequestOut}" SelectionChanged="GridRequestOutList_SelectionChanged">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Header="상태" Binding="{Binding Path=STATUS}"/>
+                            <c1:DataGridTextColumn Header="용기번호" Binding="{Binding Path=VESSELID}"/>
+                            <c1:DataGridTextColumn Header="투입공정명" Binding="{Binding Path=OPSGNAME}"/>
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+                </ScrollViewer>
+                <Grid Grid.Row="2" Name="btnGroup2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Width="100" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" Content="기록" Name="btnConfirm" Margin="0,0,10,0" Command="{Binding ConfirmCommandAsync}"/>
+                    <Button Grid.Column="1" Width="100" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" Content="취소" Name="btnCancel" Margin="10,0,0,0" Click="btnCancel_Click"/>
+                </Grid>
+            </Grid>
+        </toolkit:BusyIndicator>
+    </Grid>
+</ShopFloorUI:ShopFloorCustomWindow>

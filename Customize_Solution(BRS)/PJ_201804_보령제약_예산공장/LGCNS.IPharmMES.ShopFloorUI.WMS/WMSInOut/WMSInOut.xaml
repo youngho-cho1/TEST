@@ -1,0 +1,341 @@
+﻿<UserControl x:Class="WMS.WMSInOut"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ControlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"  
+    xmlns:UserCtl="clr-namespace:LGCNS.EZMES.Common.UserCtl;assembly=LGCNS.EZMES.Common" 
+    xmlns:iPharmControls="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:iPharmCommonControls="clr-namespace:LGCNS.iPharmMES.Common.UserCtl;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:local="clr-namespace:WMS"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    x:Name="Main"
+    mc:Ignorable="d"
+    d:DesignHeight="1080" d:DesignWidth="1980" KeyDown="Main_KeyDown" SizeChanged="Main_SizeChanged">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/GlobalResource/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/iPharmMESSilderCheckBoxApprovalTemplate.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/iPharmBusyIndicatorTemplate.xaml"/>
+                <ResourceDictionary Source="/WMS;component/Themes/WMSTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <iPharmControls:String2ColorConverter x:Key="String2ColorConverter"/>
+            <local:WMSInoutViewModel x:Key="ViewModelInstance"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid x:Name="LayoutRoot"  Background="DarkGray" DataContext="{StaticResource ViewModelInstance}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+            <Grid x:Name="LayoutRootInner">
+                <sdk:TabControl Background="DarkGray" Padding="0">
+                    <sdk:TabItem Name="TabInput">
+                    <sdk:TabItem.Template>
+                        <ControlTemplate>
+                            <Button x:Name="btnTabInput" Content="Storage In" Width="150" Background="#FFA91414" Style="{StaticResource TabBtnBasicStyle}" Click="btnTabInput_Click" IsEnabled="{Binding isInEble, Mode=TwoWay}"/>
+                        </ControlTemplate>
+                    </sdk:TabItem.Template>
+                        <toolkit:BusyIndicator Grid.Row="0" IsBusy="{Binding IsBusy}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource BusyIndicatorDefaultStyle}">
+                            <Border BorderBrush="#FF333333" BorderThickness="3">
+                                <Grid Margin="5,5,5,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Column="0" Grid.Row="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="140"/>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="100"/>
+                                            </Grid.ColumnDefinitions>
+                                            <sdk:Label Grid.Row="0" Grid.Column="0" Content="Barcode" Background="#FF4F81BD" FontSize="20" FontWeight="Bold" Style="{StaticResource LabelStyle}"/>
+                                            <TextBox Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Left" Foreground="Black" Style="{StaticResource TextBoxAlignmentStyle}" Text="{Binding txtBarcode, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" Padding="10,0,0,0"
+                                                 Name="txtBarcodes" KeyDown="txtBarcodes_KeyDown" />
+                                            <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Scan" FontSize="20" FontWeight="Bold" Style="{StaticResource BtnBasicStyle}" Height="70"
+                                                Command="{Binding ScanBtnCommand, Source={StaticResource ViewModelInstance}}" CommandParameter="{Binding Text, ElementName=txtBarcodes}"/>
+                                        </Grid>
+                                        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="0,5,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="35"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                        <sdk:Label Content=" Total " FontSize="20" Foreground="White"/>
+                                                        <sdk:Label Content="{Binding tbIncount,Mode=TwoWay}" FontSize="20" Foreground="White"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <c1:C1DataGrid Grid.Row="1"
+                                                   AutoGenerateColumns="False" 
+                                                   CanUserAddRows="False"
+                                                   ItemsSource="{Binding InputData}" x:Name="dgList"
+                                                   SelectionMode="SingleRow" 
+                                                   Visibility="Visible"
+			                                       Margin="1"
+			                                       RowHeaderWidth="0"
+                                                   ColumnHeaderHeight="30"
+			                                       RowHeight="Auto"
+                                                   FontSize="20"
+			                                       GridLinesVisibility="All"   
+			                                       AlternatingRowBackground="#FFCCCCCC" RowBackground="#FFAAAAAA" Background="DarkGray"
+                                                   LoadedCellPresenter="dgList_LoadedCellPresenter" LoadedRowPresenter="dgList_LoadedRowPresenter">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectionChanged">
+                                                            <i:InvokeCommandAction Command="{Binding Path=SelectChangeCommand}"  CommandParameter="{Binding ElementName=dgList}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                    <c1:C1DataGrid.Columns>
+                                                        <c1:DataGridTextColumn Header="IBC ID" Width="*" Binding="{Binding Path=VESSELID}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}" />
+                                                        <c1:DataGridTextColumn Header="Product Code" Width="1.5*" Binding="{Binding Path=MTRLID}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Header="Product Name" Width="2*" Binding="{Binding Path=MTRLNAME}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Header="Order No" Width="*" Binding="{Binding Path=POID}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Header="Batch No" Width="1.5*" Binding="{Binding Path=BATCHNO}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Header="Product Date" Width="2*" Binding="{Binding Path=PRODDTTM}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}" 
+                                                                   Format="yyyy-MM-dd HH:mm:ss"/>
+                                                        <c1:DataGridTextColumn Header="Washing Date" Width="2*" Binding="{Binding Path=WSDTTM}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"
+                                                                   Format="yyyy-MM-dd HH:mm:ss"/>
+                                                        <c1:DataGridTextColumn Header="In No" Width="*" Binding="{Binding Path=RowIndex}" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTemplateColumn Header="Remove" MinWidth="80" Width="*" IsReadOnly="False" HeaderStyle="{StaticResource HeaderStyle}">
+                                                            <c1:DataGridTemplateColumn.CellTemplate>
+                                                                <c1:C1HierarchicalDataTemplate>
+                                                                    <Grid>
+                                                                        <Button Name="btnRemove" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" 
+                                                                    Command="{Binding RemoveCommandAsync, Source={StaticResource ViewModelInstance}}" CommandParameter="{Binding}" Click="btnRemove_Click">
+                                                                            <Image Source="/WMS;component/Images/ico_minus.png"  />
+                                                                        </Button>
+                                                                    </Grid>
+                                                                </c1:C1HierarchicalDataTemplate>
+                                                            </c1:DataGridTemplateColumn.CellTemplate>
+                                                        </c1:DataGridTemplateColumn>
+                                                    </c1:C1DataGrid.Columns>
+                                                </c1:C1DataGrid>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.ColumnSpan="2" Grid.Row="1" Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="2" Name="btnInput" Content="Storage In" Background="#FFA91414"
+                                                Command="{Binding SaveinputCommand, Source={StaticResource ViewModelInstance}}" Style="{StaticResource BtnBasicStyle}"/>
+                                        <Button Grid.Column="3" Name="btnPrint" Content="Label Print" Style="{StaticResource BtnBasicStyle}" Margin="5,0"/>
+                                        <Button Grid.Column="4" Name="btnInitial" Content="Initial" Style="{StaticResource BtnBasicStyle}"
+                                                Command="{Binding initialInputCommand, Source={StaticResource ViewModelInstance}}"></Button>
+                                    </Grid>
+                                    <Border Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" BorderThickness="1" BorderBrush="#FF333333">
+                                        <Grid Margin="5">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <sdk:Label Background="#FF385D8A" Grid.Row="1" Content="Batch No" Style="{StaticResource LabelStyle}" Height="40"/>
+                                            <TextBox Name="txtBatchno" Background="#FF4F81BD" Grid.Row="2" FontSize="70" HorizontalContentAlignment="Center" Style="{StaticResource TextBoxAlignmentStyle}" Text="{Binding txtBatchNo, Mode=TwoWay, Source={StaticResource ViewModelInstance}}"/>
+                                            <sdk:Label Background="#FF385D8A" Grid.Row="4" Content="IBC ID" Style="{StaticResource LabelStyle}" Height="40"/>
+                                            <TextBox Name="txtIBCID" Background="#FF4F81BD" Grid.Row="5" FontSize="70" Style="{StaticResource TextBoxAlignmentStyle}" Text="{Binding txtIBCID, Mode=TwoWay, Source={StaticResource ViewModelInstance}}"/>
+                                            <sdk:Label Background="#FF333333" Grid.Row="7" Content="Prev Weight" Style="{StaticResource LabelStyle}" Height="40"/>
+                                            <TextBox Name="txtPrevOpW" Background="#FF666666" Grid.Row="8" FontSize="90" FontWeight="Normal" Style="{StaticResource TextBoxAlignmentStyle}" FontFamily="/WMS;component/Font/LCD.TTF#LCD" Text="{Binding txtPrevOpW, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" />
+                                            <sdk:Label Background="#FF333333" Grid.Row="10"  Content="Total Weight" Style="{StaticResource LabelStyle}" Height="40"/>
+                                            <TextBox Name="txtSubTotalWT" Background="Black" Grid.Row="11" FontSize="90" FontWeight="Normal" Style="{StaticResource TextBoxAlignmentStyle}" FontFamily="/WMS;component/Font/LCD.TTF#LCD" Text="{Binding txtSubTotalWT, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" />
+                                            <sdk:Label Background="#A91414" Grid.Row="13"  Content="Yield" Style="{StaticResource LabelStyle}" Height="40"/>
+                                            <TextBox Name="txtGoodQty" Background="#FFBB4343" Grid.Row="14" FontSize="90" FontWeight="Normal" Style="{StaticResource TextBoxAlignmentStyle}" FontFamily="/WMS;component/Font/LCD.TTF#LCD" Text="{Binding txtGoodQty, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </toolkit:BusyIndicator>
+                    </sdk:TabItem>
+                    <sdk:TabItem Name="TabOutput">
+                    <sdk:TabItem.Template>
+                                <ControlTemplate>
+                                <Button Name="btnTabOutput" Content="Storage Out" FontSize="20" Width="150" Height="70" Background="#FF385D8A" Style="{StaticResource TabBtnBasicStyle}" Click="btnTabOutput_Click" IsEnabled="{Binding isOutEble, Mode=TwoWay}"/>
+                                </ControlTemplate>
+                            </sdk:TabItem.Template>
+                        <toolkit:BusyIndicator Grid.Row="0" IsBusy="{Binding IsBusyA}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource BusyIndicatorDefaultStyle}">
+                            <Border BorderBrush="#FF333333" BorderThickness="3">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition />
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Grid.Column="0" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Prod Info" Style="{StaticResource LabelStyle}" />
+                                                <TextBox Background="#FF666666" Grid.Row="2" Height="70" Style="{StaticResource TextBoxAlignmentStyle}" Name="txtProdInfoOut" Text="{Binding txtProdInfoOut, Mode=TwoWay, Source={StaticResource ViewModelInstance}}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Order No" Style="{StaticResource LabelStyle}" />
+                                                <TextBox Background="#FF666666" Grid.Row="2" Height="70" Style="{StaticResource TextBoxAlignmentStyle}" x:Name="txtOrderNoOut" Text="{Binding txtOrderNoOut, Mode=TwoWay, Source={StaticResource ViewModelInstance}}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="2">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Batch No" Style="{StaticResource LabelStyle}" />
+                                                <TextBox Background="#FF666666" Height="70" Style="{StaticResource TextBoxAlignmentStyle}" x:Name="txtBatchNoOut" Text="{Binding txtBatchNoOut, Mode=TwoWay, Source={StaticResource ViewModelInstance}}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="3">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Process" Style="{StaticResource LabelStyle}" />
+                                                <TextBox Background="#FF666666" Grid.Row="2" Height="70" Style="{StaticResource TextBoxAlignmentStyle}" Name="txtProcessOut" Text="{Binding txtProcessOut, Mode=TwoWay, Source={StaticResource ViewModelInstance}}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Button Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Stretch" Content="Set Up" Width="100" Height="Auto"
+                                            Style="{StaticResource BtnBasicStyle}" Name="btnScanOut" Command="{Binding ScanOutCommandAsync, Source={StaticResource ViewModelInstance}}"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Border BorderBrush="#FF333333" BorderThickness="1" Margin="5,0,0,0">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="30"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Row="1">
+                                                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                            <sdk:Label Content=" Total " FontSize="20" Foreground="White"/>
+                                                            <sdk:Label Content="{Binding tbOutcount,Mode=TwoWay}" FontSize="20" Foreground="White"/>
+                                                        </StackPanel>
+                                                    </Grid>
+
+                                                </Grid>
+                                                <c1:C1DataGrid Name="dgOutputList" Grid.Row="1" Grid.Column="0"
+                                                   AutoGenerateColumns="False" 
+                                                   CanUserAddRows="False"
+                                                   SelectionMode="SingleRow" 
+                                                   Visibility="Visible"        
+			                                   
+			                                       RowHeaderWidth="0"
+                                                   ColumnHeaderHeight="30"
+			                                       RowHeight="Auto"
+                                                   FontSize="20"
+			                                       GridLinesVisibility="All"   
+			                                       AlternatingRowBackground="#FFCCCCCC"
+                                                   RowBackground="#FFFFFFFF" Background="DarkGray"
+                                                   ItemsSource="{Binding OutData}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectionChanged">
+                                                            <i:InvokeCommandAction Command="{Binding Path=SelectOutChangeCommand}"  CommandParameter="{Binding ElementName=dgOutputList}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                    <c1:C1DataGrid.Columns>
+                                                        <c1:DataGridTextColumn Binding="{Binding OUTTYPE}" Header="Type" MinWidth="80" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Binding="{Binding IBC}" Header="IBC Info" Width="1.5*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Binding="{Binding WASHINGDTTM}" Header="Washing Date" Width="2*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTextColumn Binding="{Binding RowIndex}" Header="Out No" Width="1.5*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                        <c1:DataGridTemplateColumn Header="Remove" Width="*" IsReadOnly="False" HeaderStyle="{StaticResource HeaderStyle}">
+                                                            <c1:DataGridTemplateColumn.CellTemplate>
+                                                                <c1:C1HierarchicalDataTemplate>
+                                                                    <Grid>
+                                                                        <Button Name="btnRemove" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" Click="btnRemove_Click_1">
+                                                                            <Image Source="/WMS;component/Images/ico_minus.png"  />
+                                                                        </Button>
+                                                                    </Grid>
+                                                                </c1:C1HierarchicalDataTemplate>
+                                                            </c1:DataGridTemplateColumn.CellTemplate>
+                                                        </c1:DataGridTemplateColumn>
+                                                    </c1:C1DataGrid.Columns>
+                                                </c1:C1DataGrid>
+                                            </Grid>
+                                        </Border>
+
+                                        <Border Grid.Row="0" Grid.Column="1" BorderBrush="#FF333333" BorderThickness="1" Margin="5,0,5,0">
+                                            <Grid Margin="2,0,2,0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="5"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="120"/>
+                                                    <RowDefinition Height="5"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="120"/>
+                                                    <RowDefinition Height="5"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="120"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <sdk:Label Background="#FF385D8A" Grid.Row="1" Content="IBC ID" Style="{StaticResource LabelStyle}" Height="40"/>
+                                                <TextBox Name="txtIBCIDOutput" Background="#FF4F81BD" Grid.Row="2" FontSize="70" Style="{StaticResource TextBoxAlignmentStyle}" Text="{Binding txtIBCIDOutput, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" />
+                                                <sdk:Label Background="#FF333333" Grid.Row="4" Content="Standard Weight" Style="{StaticResource LabelStyle}" Height="40"/>
+                                                <TextBox Name="txtStdWt" Background="#FF666666" Grid.Row="5"   Style="{StaticResource TextBoxAlignmentStyle}" FontSize="90" FontFamily="/WMS;component/Font/LCD.TTF#LCD" Text="{Binding txtBinWtOut, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" />
+                                                <sdk:Label Background="#FF333333" Grid.Row="7" Content="Weighing" Style="{StaticResource LabelStyle}" Height="40"/>
+                                                <TextBox Name="txtWeightWt" Background="Black" Grid.Row="8" Style="{StaticResource TextBoxAlignmentStyle}" FontSize="90" FontFamily="/WMS;component/Font/LCD.TTF#LCD" Text="{Binding txtGoodWtout, Mode=TwoWay, Source={StaticResource ViewModelInstance}}" />
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.Row="2" Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Row="0" Grid.Column="2" Name="btnOutPut" Content="Storage Out" FontSize="20" Margin="5,5,0,5" Width="Auto" Background="#FF385D8A"
+                                                Command="{Binding SaveOutCommand, Source={StaticResource ViewModelInstance}}" Style="{StaticResource BtnBasicStyle}"/>
+                                        <Button Grid.Row="0" Grid.Column="3" Name="btnPrintOutput" Content="Label Print" FontSize="20" Margin="5,5,0,5" Width="Auto" Style="{StaticResource BtnBasicStyle}"></Button>
+                                        <Button Grid.Row="0" Grid.Column="4" Name="btnInitialOutput" Content="Initial" FontSize="20" Margin="5" Width="Auto" Style="{StaticResource BtnBasicStyle}"
+                                                Command="{Binding initialOutCommand, Source={StaticResource ViewModelInstance}}"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </toolkit:BusyIndicator>
+                    </sdk:TabItem>
+                </sdk:TabControl>                
+            </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,77 @@
+﻿<icommon:iPharmMESChildWindow x:Class="보령.TrustScaleWeightPopup"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           xmlns:controlLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+           xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"                           
+           xmlns:local="clr-namespace:Weighing"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           xmlns:my="clr-namespace:보령.UserControls" 
+           Width="700" Height="700" x:Name="rootWindow"
+           Title="Trust Weighing">
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition />
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.3*" />
+                <ColumnDefinition Width="7.7*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="◈ 용기당 등록 중량" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" />
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4.5*" />
+                    <ColumnDefinition Width="5.5*" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="txtWeight" Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" TextAlignment="Right" Width="190" Height="38" Text="{Binding TR_CURRENTWT, Mode=TwoWay}" FontSize="20" />
+                <Button x:Name="btnKeyTrPad" Grid.Column="0" Grid.Row="0" Margin="0,0,1,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="46" Height="38" Content="Num" FontWeight="Bold" Command="{Binding keyPadPopupCommand}" CommandParameter="{Binding ElementName=btnKeyTrPad}" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="(중량을 입력 후, Barcode를 Scan 하세요.)" VerticalAlignment="Bottom" HorizontalAlignment="Left" FontWeight="Bold" FontSize="17"/>
+                <my:BarcodeTextBox x:Name="txtBarcode"  Grid.Column="1"  Grid.Row="0" TextWrapping="Wrap" IsReadOnly="False" VerticalAlignment="Bottom" Height="38" HorizontalAlignment="Stretch"  TextAlignment="Center" Text="{Binding TRUST_BARCODE, Mode=TwoWay}" FontSize="20" GotFocus="txtBarcode_GotFocus" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:ExecuteCommandAction Cmd="{Binding SetTrustSourceCmd}"  Param="{Binding Text, ElementName=txtBarcode}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </my:BarcodeTextBox>
+            </Grid>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="◈ 실제 중량" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" />
+            <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Width="500">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbCurrentWeight" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="{Binding SC_CURRENTWT}" VerticalAlignment="Center" FontFamily="/Weighing;component/Fonts/LCD.TTF#LCD" FontWeight="Bold" FontSize="60" />
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding SC_UNIT}" VerticalAlignment="Bottom" FontSize="30" Width="45" Margin="2,0,0,7" />
+                <Button x:Name="btnTare" Content="Tare" Width="120" Height="56" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="2" Margin="0,0,0,0" FontSize="22" FontWeight="Bold" Command="{Binding Path=TrustTareCommand}" />
+            </Grid>
+            <controlLib:CNSDataGrid Name="dgSourceList" IsRowNumber="True" IsRowDelete="True" ItemsSource="{Binding TParameters, Mode=TwoWay}" IsEditSection="False" Grid.Row="5" Grid.ColumnSpan="2" Margin="2" LoadedRowPresenter="dgSourceList_LoadedRowPresenter" LoadedColumnHeaderPresenter="dgSourceList_LoadedColumnHeaderPresenter" >
+                <controlLib:CNSDataGrid.DataColumns>
+                    <!--<controlLib:DataColumn DataField="RowEditSec" ColumnVisibility="Collapsed" ColumnType="TextBox"  HeadName="RowEditSec"  HeaderWidth="150" HorizontalAlignment="Left" ReadOnly="False"  />-->
+                    <controlLib:DataColumn DataField="BarCode" ColumnType="TextBox" HeadName="BarCode"  Excel="True" HeaderWidth="350" HorizontalAlignment="Center" ReadOnly="True"  CanUserFilter="False" CanUserSort="False" />
+                    <controlLib:DataColumn DataField="MWeight" ColumnType="TextBox" HeadName="Manual Weight"  Excel="True" HeaderWidth="230" HorizontalAlignment="Right" ReadOnly="True" CanUserFilter="False" CanUserSort="False"  />
+                </controlLib:CNSDataGrid.DataColumns>
+            </controlLib:CNSDataGrid>
+        </Grid>
+        <Button x:Name="CancelButton" Content="취소" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="3" Grid.Column="1" />
+        <!--<Button x:Name="trustDispense" Content="확인" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="3" Grid.Column="1"  Command="{Binding Path=DispenseCommand}" />-->
+        <icommon:iPharmAuthButton Grid.Row="3" Grid.Column="1" AccessType="Create" CertificationType="Function" FunctionCode="WM_Weighing_Dispensing" x:Name="trustDispense" Content="확인"   Width="75" Height="23" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,12,79,0" />
+    </Grid>
+</icommon:iPharmMESChildWindow>

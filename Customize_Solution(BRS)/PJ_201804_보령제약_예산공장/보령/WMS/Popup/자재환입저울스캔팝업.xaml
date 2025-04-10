@@ -1,0 +1,64 @@
+﻿<icommon:iPharmMESChildWindow
+    x:Class="보령.자재환입저울스캔팝업"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:controlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    mc:Ignorable="d"
+    x:Name="Main"
+    Title="스캔" 
+    Height="200" 
+    Width="400">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="10 0 0 0" FontSize="16" Text="{Binding Message,FallbackValue=대기}"/>
+
+            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" x:Name="tbBarcode" Margin="10 0 10 0" FontSize="16" Height="Auto"
+                     Text="{Binding Barcode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="KeyDown">
+                        <icommon:EditBoxKeyDownAction Command="{Binding BarcodeChangedCommandAsync}"   CommandParameter="{Binding ElementName=Main}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <ShopFloorUI:KeyPadType Grid.Row="1" Grid.Column="0" Name="tbQty" Margin="5" FontSize="16" Value="{Binding Barcode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="Auto" VerticalAlignment="Center"/>
+            <ComboBox Name="comboUOM" Grid.Row="1" Grid.Column="1" Height="Auto" VerticalAlignment="Center" FontSize="16"/>
+        </Grid>
+        <Grid Grid.Row="1" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnConfirm" Content="확인" Width="150" Margin="0,5,0,5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding BarcodeChangedCommandAsync}"  CommandParameter="{Binding ElementName=Main}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnClose" Content="닫기" Width="150" Click="btnClose_Click" Margin="10, 5, 0, 5"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</icommon:iPharmMESChildWindow>

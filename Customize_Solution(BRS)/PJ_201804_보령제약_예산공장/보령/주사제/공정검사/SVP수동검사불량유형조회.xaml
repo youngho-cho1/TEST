@@ -1,0 +1,110 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.SVP수동검사불량유형조회"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+            xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:ezmes="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:local="clr-namespace:보령"
+           x:Name="Main" Width="1200" Height="650"
+           Title="SVP수동검사불량유형조회">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:SVP수동검사불량유형조회ViewModel x:Key="ViewModel"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Border x:Name="PrintArea"  Grid.Row="0" BorderBrush="#FFD6D4D4" BorderThickness="3">
+            <Grid x:Name="LayoutRoot">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="PrintMain" Grid.Row="0">
+                    <Grid x:Name="LayoutPrint">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="180"/>
+                            <RowDefinition Height="160"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="PrintArea1"  Grid.Row="0" BorderBrush="#FFD6D4D4" BorderThickness="3">
+                            <Grid x:Name="MainSection" Grid.Row="0" >
+                                <ezmes:CNSDataGrid Grid.Column="0" x:Name="RejectionDetail" HeaderRowCount="6"
+                                           IsRowAdd="False" IsRowDelete="False" IsEditMode="False" IsEditSection="True" HeadersVisibility="Column" IsRowNumber="False" 
+                                           ItemsSource="{Binding BR_BRS_SEL_UDT_BRS_SVP_REJECT_SUM.OUTDATAs}">
+                                    <ezmes:CNSDataGrid.DataColumns>
+                                        <ezmes:DataColumn HeadName="검사자" DataField="INSUSER" ColumnType="TextBox" HeaderWidth="95"/>
+                                        <ezmes:DataColumn HeadName="검사일자" DataField="INSPECTIONDTTM" ColumnType="Date" HeaderWidth="85"/>
+                                        <ezmes:DataColumn HeadName="검사수량(Vial)" DataField="INSPECTQTY" ColumnType="Int32" HeaderWidth="100"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|흰티|치명결점|1"  DataField="REJECT_NO1" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|검은티|치명결점|2" DataField="REJECT_NO2" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|유색|치명결점|3" DataField="REJECT_NO3" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|금속성|치명결점|4" DataField="REJECT_NO4" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|유리조각|치명결점|5" DataField="REJECT_NO5" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|섬유(> 1mm)|치명결점|6" DataField="REJECT_NO6" ColumnType="Int32" HeaderWidth="90"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|이물|섬유(≤ 1mm)|중결점¹|7" DataField="REJECT_NO7" ColumnType="Int32" HeaderWidth="90"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|내용물|충전량불량|충전량불량|중결점|8" DataField="REJECT_NO8" ColumnType="Int32" HeaderWidth="75"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|용기|바이알손상|바이알손상|치명결점|9" DataField="REJECT_NO9" ColumnType="Int32" HeaderWidth="75"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|용기|내부오염|내부오염|중결점|10" DataField="REJECT_NO10" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|용기|바이알흠집|바이알흠집|경결점|11" DataField="REJECT_NO11" ColumnType="Int32" HeaderWidth="70"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|용기|성형불량|성형불량|경결점|12" DataField="REJECT_NO12" ColumnType="Int32" HeaderWidth="70"/>
+                                    </ezmes:CNSDataGrid.DataColumns>
+                                </ezmes:CNSDataGrid>
+                            </Grid>
+                        </Border>
+                        <Border x:Name="PrintArea2"  Grid.Row="1" BorderBrush="#FFD6D4D4" BorderThickness="3">
+                            <Grid x:Name="MainSection2" Grid.Row="1">
+                                <ezmes:CNSDataGrid Grid.Row="1" Grid.Column="0" x:Name="RejectionDetail2" HeaderRowCount="5"
+                                           IsRowAdd="False" IsRowDelete="False" IsEditMode="False" IsEditSection="False" HeadersVisibility="Column" IsRowNumber="False" 
+                                           ItemsSource="{Binding BR_BRS_SEL_UDT_BRS_SVP_REJECT_SUM.OUTDATAs}">
+                                    <ezmes:CNSDataGrid.DataColumns>
+                                        <ezmes:DataColumn HeadName="검사자" DataField="INSUSER" ColumnType="TextBox" HeaderWidth="95"/>
+                                        <ezmes:DataColumn HeadName="검사일자" DataField="INSPECTIONDTTM" ColumnType="Date" HeaderWidth="85"/>
+                                        <ezmes:DataColumn HeadName="검사수량(Vial)" DataField="INSPECTQTY" ColumnType="Int32" HeaderWidth="100"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|켑|캡씰링불량|중결점|13" DataField="REJECT_NO13" ColumnType="Int32" HeaderWidth="85"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|켑|이종캡|중결점|14" DataField="REJECT_NO14" ColumnType="Int32" HeaderWidth="80"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|켑|캡외관불량|경결점|15" DataField="REJECT_NO15" ColumnType="Int32" HeaderWidth="85"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|고무전|고무전없음|치명결점|16" DataField="REJECT_NO16" ColumnType="Int32" HeaderWidth="88"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|고무전|이종고무전|치명결점|17" DataField="REJECT_NO17" ColumnType="Int32" HeaderWidth="88"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|고무전|고무전이물|중결점|18" DataField="REJECT_NO18" ColumnType="Int32" HeaderWidth="88"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|Cake상태불량²|Cake상태불량²|Cake상태불량²|19" DataField="REJECT_NO19" ColumnType="Int32" HeaderWidth="105" ReadOnly="True"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|바이알내부기벽/고무전약액묻음²|바이알내부기벽/고무전약액묻음²|바이알내부기벽/고무전약액묻음²|20" 
+                                                  DataField="REJECT_NO20" ColumnType="Int32" HeaderWidth="190" ReadOnly="True"/>
+                                        <ezmes:DataColumn HeadName="불량 유형 및 수량|기타불량³|기타불량³|기타불량³|21" DataField="REJECT_NO21" ColumnType="Int32" HeaderWidth="85" ReadOnly="True"/>
+                                    </ezmes:CNSDataGrid.DataColumns>
+                                </ezmes:CNSDataGrid>
+                            </Grid>
+                        </Border>
+                        <Border x:Name="PrintArea3"  Grid.Row="2" BorderBrush="#FFD6D4D4" BorderThickness="3">
+                            <Grid x:Name="MainSection3" Grid.Row="2">
+                                <ezmes:CNSDataGrid Grid.Row="2" Grid.Column="0" x:Name="RejectionDetail3" HeaderRowCount="1"
+                                           IsRowAdd="False" IsRowDelete="False" IsEditMode="False" IsEditSection="False" HeadersVisibility="Column" IsRowNumber="False" 
+                                           ItemsSource="{Binding BR_BRS_SEL_UDT_BRS_SVP_REJECT_SUM_COMMENT.OUTDATAs}">
+                                    <ezmes:CNSDataGrid.DataColumns>
+                                        <ezmes:DataColumn HeadName="검사자" DataField="INSUSER" ColumnType="TextBox" HeaderWidth="95"/>
+                                        <ezmes:DataColumn HeadName="검사일자" DataField="INSPECTIONDTTM" ColumnType="Date" HeaderWidth="85"/>
+                                        <ezmes:DataColumn HeadName="검사수량(Vial)" DataField="INSPECTQTY" ColumnType="Int32" HeaderWidth="100"/>
+                                        <ezmes:DataColumn HeadName="비고" DataField="COMMENTS" ColumnType="TextBox" HeaderWidth="897" ReadOnly="True"/>
+                                    </ezmes:CNSDataGrid.DataColumns>
+                                </ezmes:CNSDataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Grid x:Name="Footer" Grid.Row="3" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="기록" Margin="5" Name="btnConfirm" Command="{Binding ComfirmCommandAsync}"/>
+                    <Button Grid.Column="1" Content="취소" Margin="5" Name="btnCancel" Click="btnCancel_Click"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

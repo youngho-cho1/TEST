@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{92140630-1F00-46FA-8D3E-8792CC85D20D}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Board</RootNamespace>
+    <AssemblyName>Board</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Binaries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Binaries\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.Silverlight.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Chart.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Chart.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Chart.Extended.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Chart.Extended.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Data.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Data.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.DataGrid.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.DataGrid.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.DateTimeEditors.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.DateTimeEditors.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Excel.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Excel.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.FlexGrid.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.FlexGrid.5.dll</HintPath>
+    </Reference>
+    <Reference Include="C1.Silverlight.Imaging.5">
+      <HintPath>..\..\Reference Assemblies\C1.Silverlight.Imaging.5.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.Common">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.ControlsLib">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.ControlsLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.EZMES.CorLib">
+      <HintPath>..\..\Reference Assemblies\LGCNS.EZMES.CorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.iPharmMES.Common">
+      <HintPath>..\..\Reference Assemblies\LGCNS.iPharmMES.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LGCNS.iPharmMES.Controls">
+      <HintPath>..\..\Reference Assemblies\LGCNS.iPharmMES.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client">
+      <HintPath>..\..\Reference Assemblies\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5">
+      <HintPath>..\..\Reference Assemblies\Microsoft.CompilerServices.AsyncTargetingPack.Silverlight5.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Reference Assemblies\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="system" />
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=5.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.IO">
+      <HintPath>..\..\Reference Assemblies\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\..\Reference Assemblies\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\..\Reference Assemblies\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\..\Reference Assemblies\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\..\Reference Assemblies\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\..\Reference Assemblies\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Data.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\Reference Assemblies\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Reference Assemblies\Silverlight5SDK\System.Xml.Linq.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model.Access\iPharm.Report\BR.Performance\BR_BRS_INS_TST_APPROVAL_CANCELL.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.Performance\BR_BRS_REG_UDT_OperationProcessSegmentReady.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.Performance\BR_BRS_SEL_CleanningSettingList.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.Performance\BR_BRS_SEL_TST_REQUEST_NUMBER_CONFIRM.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrderDetail_Result.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrderDetail_WorkTime.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrderTestSpecificationResult.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrder_Result.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrder_Result_by_ProdRoom.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrder_Status.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.ProductionOrderReport\BR_PHR_RPT_ProductionOrder_WorkTime.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.WorkTimeReport\BR_PHR_GET_PROD_DEPT.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.WorkTimeReport\BR_PHR_RPT_Employee_WorkTime.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.WorkTimeReport\BR_PHR_RPT_Employee_WorkTime_by_EmpNo.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR.WorkTimeReport\BR_PHR_RPT_Equipment_WorkTime.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR_MaterialReport\BR_BRS_SEL_MaterialPickingInfoList.Access.cs" />
+    <Compile Include="Model.Access\iPharm.Report\BR_SVP_RejectInfo\BR_BRS_SEL_UDT_BRS_SVP_REJECT_INFO.Access.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\BoardSettingPopupViewModel.cs" />
+    <Compile Include="ViewModel\CleanningSettingViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\FacilitiesOperationStatusViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\IPCTestResultViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\ManufacturingProcessStatusViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\MaterialPickingInfoListViewModel.cs" />
+    <Compile Include="ViewModel\IPCCPPRsltViewViewModel.cs" />
+    <Compile Include="ViewModel\Mockup_classes.cs" />
+    <Compile Include="ViewModel\DetailSearch\WorkerProcessStatusViewModel.cs" />
+    <Compile Include="ViewModel\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\ManufacturingPerformanceViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\ManufacturingProgressViewModel.cs" />
+    <Compile Include="ViewModel\DetailSearch\PerformanceByWorkshopViewModel.cs" />
+    <Compile Include="ViewModel\Original\BoardSettingPopupViewModel.cs" />
+    <Compile Include="ViewModel\Original\MainPageViewModel.cs" />
+    <Compile Include="ViewModel\SVP_RejectInfoViewModel.cs" />
+    <Compile Include="ViewModel\TstRequestConfirmViewModel.cs" />
+    <Compile Include="View\BoardMain.xaml.cs">
+      <DependentUpon>BoardMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BoardSettingPopup.xaml.cs">
+      <DependentUpon>BoardSettingPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CleanningSetting.xaml.cs">
+      <DependentUpon>CleanningSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\FacilitiesOperationStatusView.xaml.cs">
+      <DependentUpon>FacilitiesOperationStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\IPCTestResultView.xaml.cs">
+      <DependentUpon>IPCTestResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\ManufacturingPerformanceView.xaml.cs">
+      <DependentUpon>ManufacturingPerformanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\ManufacturingProcessStatusView.xaml.cs">
+      <DependentUpon>ManufacturingProcessStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\ManufacturingProgressView.xaml.cs">
+      <DependentUpon>ManufacturingProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\MaterialPickingInfoList.xaml.cs">
+      <DependentUpon>MaterialPickingInfoList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\PerformanceByWorkshopView.xaml.cs">
+      <DependentUpon>PerformanceByWorkshopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailSearch\WorkerProcessStatusView.xaml.cs">
+      <DependentUpon>WorkerProcessStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LineStatusBoard.xaml.cs">
+      <DependentUpon>LineStatusBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LineStatusBoardType01.xaml.cs">
+      <DependentUpon>LineStatusBoardType01.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Original\BoardMain.xaml.cs">
+      <DependentUpon>BoardMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Original\BoardSettingPopup.xaml.cs">
+      <DependentUpon>BoardSettingPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Original\LineStatusBoard.xaml.cs">
+      <DependentUpon>LineStatusBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Original\PlanActualBoard.xaml.cs">
+      <DependentUpon>PlanActualBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Original\ProcStatusBoard.xaml.cs">
+      <DependentUpon>ProcStatusBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Original\ProdRoomStatusBoard.xaml.cs">
+      <DependentUpon>ProdRoomStatusBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlanActualBoard.xaml.cs">
+      <DependentUpon>PlanActualBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProcStatusBoard.xaml.cs">
+      <DependentUpon>ProcStatusBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProcStatusBoardType05.xaml.cs">
+      <DependentUpon>ProcStatusBoardType05.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProcStatusBoardType55.xaml.cs">
+      <DependentUpon>ProcStatusBoardType55.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProdRoomStatusBoard.xaml.cs">
+      <DependentUpon>ProdRoomStatusBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IPCCPPRsltView.xaml.cs">
+      <DependentUpon>IPCCPPRsltView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SVP_RejectInfo.xaml.cs">
+      <DependentUpon>SVP_RejectInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TstRequestConfirm.xaml.cs">
+      <DependentUpon>TstRequestConfirm.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\BoardMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BoardSettingPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CleanningSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DetailSearch\FacilitiesOperationStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\IPCTestResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\ManufacturingPerformanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\ManufacturingProcessStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\ManufacturingProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\MaterialPickingInfoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\PerformanceByWorkshopView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailSearch\WorkerProcessStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LineStatusBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LineStatusBoardType01.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Original\BoardMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Original\BoardSettingPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Original\LineStatusBoard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Original\PlanActualBoard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Original\ProcStatusBoard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Original\ProdRoomStatusBoard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PlanActualBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProcStatusBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProcStatusBoardType05.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProcStatusBoardType55.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProdRoomStatusBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\IPCCPPRsltView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SVP_RejectInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TstRequestConfirm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SettingIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /R /Y "$(TargetPath)" "$(ProjectDir)..\LGCNS.iPharmMES.IUI\ClientBin"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

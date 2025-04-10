@@ -1,0 +1,32 @@
+﻿<icommon:iPharmMESChildWindow x:Class="보령.로드셀점검팝업" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           Width="400" Height="200"
+           Title="로드셀 점검">
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="MainSection">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <sdk:Label Grid.Row="0" x:Name="lblAlert" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            <sdk:Label Grid.Row="1" x:Name="txtTagValue" Margin="5" Background="White" BorderBrush="Black" BorderThickness="1" HorizontalContentAlignment="Center" Content="N/A" FontSize="20"/>
+        </Grid>
+        <Grid x:Name="Footer" Grid.Row="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="110"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="기록" Margin="5" Name="btnConfirm"/>
+            <Button Grid.Column="1" Content="취소" Margin="5" Name="btnCancel"/>
+        </Grid>
+    </Grid>
+</icommon:iPharmMESChildWindow>

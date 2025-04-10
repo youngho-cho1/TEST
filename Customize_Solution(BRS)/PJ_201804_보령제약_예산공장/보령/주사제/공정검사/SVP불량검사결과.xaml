@@ -1,0 +1,98 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+           x:Class="보령.SVP불량검사결과" 
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+           xmlns:ezmes="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           xmlns:local="clr-namespace:보령"
+           mc:Ignorable="d"
+           Width="1200" Height="500" Name="Main"
+           Title="SVP불량검사결과">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:SVP불량검사결과ViewModel x:Key="ViewModel"/>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid x:Name="MainSection">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="800"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ezmes:CNSDataGrid Grid.Column="0" x:Name="RejectionDetail"
+                                   IsRowAdd="True" IsRowDelete="True" IsEditMode="True" IsEditSection="True" HeadersVisibility="Column" IsRowNumber="True"
+                                   ItemsSource="{Binding RejectionDetails}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CommittedRowEdit">
+                            <i:InvokeCommandAction Command="{Binding RowEditCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ezmes:CNSDataGrid.DataColumns>
+                        <ezmes:DataColumn HeadName="검사자" DataField="INSUSER" HeaderWidth="120"/>
+                        <ezmes:DataColumn HeadName="검사일자" DataField="INSDTTM" ColumnType="Date" HeaderWidth="150"/>
+                        <ezmes:DataColumn HeadName="섬유이물" DataField="FIBER" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="흰이물" DataField="WHITE" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="검은이물" DataField="BLACK" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="변색" DataField="DISCOLOR" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="파손" DataField="BROKEN" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="용기흠" DataField="CRACK" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="캡핑불량" DataField="CAPREJ" ColumnType="Int32" HeaderWidth="60"/>
+                        <ezmes:DataColumn HeadName="기타" DataField="OTHER" ColumnType="Int32" HeaderWidth="60"/>
+                    </ezmes:CNSDataGrid.DataColumns>
+                </ezmes:CNSDataGrid>
+                <c1:C1DataGrid Grid.Column="1" x:Name="RejectionSummary" AutoGenerateColumns="False" Margin="5"
+                               HeadersVisibility="Column" CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False"
+                               ItemsSource="{Binding RejectionSummarys}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTextColumn Header="불량유형" Width="1.5*" Binding="{Binding REJECTIONTYPE, UpdateSourceTrigger=PropertyChanged}"/>
+                        <c1:DataGridTextColumn Header="불량합계" Width="*" Binding="{Binding REJECTIONQTY, UpdateSourceTrigger=PropertyChanged}"/>
+                        <c1:DataGridTextColumn Header="불량율" Width="*" Binding="{Binding REJECTIONRATIO, UpdateSourceTrigger=PropertyChanged}"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="120"/>
+                    </Grid.RowDefinitions>
+                    <sdk:Label Grid.Row="0" Content="전 공정 인수량" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Text="{Binding INPUTQTY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <sdk:Label Grid.Row="2" Content="불량 총 합계" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="3" Text="{Binding REJECTIONSUM, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <sdk:Label Grid.Row="4" Content="전체 불량률" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="5" Text="{Binding REJECTIONRATIO, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <sdk:Label Grid.Row="6" Content="정상 제품 수량" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="7" Text="{Binding GOODQTY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                    <Grid x:Name="Footer" Grid.Row="8" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Content="기록" Width="110" Margin="5" Name="btnConfirm" Command="{Binding ComfirmCommandAsync}"/>
+                        <Button Grid.Row="1" Content="취소" Width="110" Margin="5" Name="btnCancel" Click="btnCancel_Click"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

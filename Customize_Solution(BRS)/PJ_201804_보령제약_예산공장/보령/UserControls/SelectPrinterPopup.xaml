@@ -1,0 +1,54 @@
+﻿<icommon:iPharmMESChildWindow
+    x:Class="보령.UserControls.SelectPrinterPopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:ctrl="clr-namespace:LGCNS.iPharmMES.Common.UserCtl;assembly=LGCNS.iPharmMES.Common"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:보령.UserControls"
+    Title="{Binding W[CUISeletectPrinterPopupTitle], Source={StaticResource R}, FallbackValue=프린트 선택}"
+    x:Name="Main" Width="600" Height="300">
+    <icommon:iPharmMESChildWindow.Resources>
+        <icommon:YN2BoolConverter x:Name="YNConverter"/>
+        <local:SelectPrinterPopupViewModel x:Key="VM"/>
+    </icommon:iPharmMESChildWindow.Resources>
+    <toolkit:BusyIndicator x:Name="BusyIn" IsBusy="{Binding IsBusy}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <icommon:EventToCommandAction Command="{Binding Path=LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="RoomInfo" Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+                <TextBlock FontSize="12" HorizontalAlignment="Center" Text="{Binding W[CUIWorkRoom], Source={StaticResource R}, FallbackValue=작업장}" VerticalAlignment="Center" Margin="10, 5, 0, 0"/>
+                <ctrl:iPharmCodeName Height="30" Width="300" FontSize="12"
+                                 VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,5,5,0"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                 CodeNameType="EquipmentByGroup" NameValue="{Binding RoomName, Mode=TwoWay}"
+                                 CodeValue="{Binding RoomID, Mode=TwoWay}">
+                </ctrl:iPharmCodeName>
+            </StackPanel>
+            <c1:C1DataGrid x:Name="SourceGrid" Grid.Row="1" Margin="5" SelectionMode="SingleRow"
+                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" HeadersVisibility="Column"
+                       ItemsSource="{Binding Path=BR_PHR_SEL_System_Printer.OUTDATAs}" SelectedItem="{Binding selectedPrint}">
+                <c1:C1DataGrid.Columns>
+                    <c1:DataGridTextColumn Header="{Binding W[CUIPrintName], Source={StaticResource R}, FallbackValue=프린터명}" Binding="{Binding PRINTERNAME}" Width="*"/>
+                    <c1:DataGridCheckBoxColumn Header="{Binding W[CUIDefaultPrint], Source={StaticResource R}, FallbackValue=기본프린터}" Binding="{Binding ISDEFAULT, Converter={StaticResource YNConverter}}" Width="100"/>
+                </c1:C1DataGrid.Columns>
+            </c1:C1DataGrid>
+            <StackPanel x:Name="Footer" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Margin="5,0" x:Name="btnSave" Width="100" Content="{Binding W[CUIConfrimButtonText], Source={StaticResource R}, FallbackValue=확인}" Click="btnSave_Click"/>
+                <Button Margin="5,0" x:Name="btnCancel" Width="100" Content="{Binding W[CUICloseButtonText], Source={StaticResource R}, FallbackValue=취소}" Click="btnCancel_Click"/>
+            </StackPanel>
+        </Grid>
+    </toolkit:BusyIndicator>
+</icommon:iPharmMESChildWindow>

@@ -1,0 +1,150 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.평균질량측정_2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ControlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib" 
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:local="clr-namespace:보령"
+    x:Name="Main"
+    Title="평균질량 측정 화면"
+    Height="400" Width="500">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:평균질량측정_2ViewModel x:Key="VM"/>
+        <Style x:Key="LabelStyle" TargetType="sdk:Label">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="TextStyle" TargetType="TextBox">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="0 2 0 2" />
+        </Style>
+        <Style x:Key="NumericStyle" TargetType="toolkit:NumericUpDown">
+            <Setter Property="FontFamily" Value="Malgun Gothic" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0 0 0 0" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style TargetType="ScrollBar" x:Key="gdScroll">
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="MinWidth" Value="25"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Background="White" IsBusy="{Binding IsBusy}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}"
+                                               CommandParameter="{Binding ElementName=Main}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" x:Name="MainSection">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4"/>
+                    <RowDefinition Height="4.3*"/>
+                    <RowDefinition Height="2"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="2" />
+                </Grid.ColumnDefinitions>
+
+                <sdk:Label Grid.Column="1" Grid.Row="1" Content="저울 장비 번호" Style="{Binding Source={StaticResource LabelStyle}}"/>
+                <TextBox Grid.Column="3" Grid.Row="1" x:Name="txtEQPTID" Text="{Binding Path=eqptID, Mode=OneWay}" Style="{Binding Source={StaticResource TextStyle}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:EditBoxKeyDownAction Command="{Binding BarcodeChangedCommand}" CommandParameter="{Binding ElementName=txtEQPTID, Path=Text}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <Button Grid.Column="5" Grid.Row="1"  Content="TARE" IsEnabled="{Binding isBtnEnable}" Margin="1 3 1 3" Command="{Binding SetTareCommand}"/>
+
+                <sdk:Label Grid.Column="1" Grid.Row="3" Content="샘플 수량" Style="{Binding Source={StaticResource LabelStyle}}" />
+                <ShopFloorUI:NumericKeyPadType Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="3" x:Name="txtSample"
+                                       Value="{Binding Path=sampleCount, Mode=TwoWay}"/>
+
+                <sdk:Label Grid.Column="1" Grid.Row="5" Content="무게" Style="{Binding Source={StaticResource LabelStyle}}" />
+                <TextBox Grid.Column="3" Grid.Row="5" IsReadOnly="True" Text="{Binding Path=curWeight}" Style="{Binding Source={StaticResource TextStyle}}"/>
+                <Button Grid.Column="5" Grid.Row="5" Margin="1" Content="저울 미사용" Command="{Binding UnuseScaleCommand}"/>
+
+                <sdk:Label Grid.Column="1" Grid.Row="7" Content="평균 무게" Style="{Binding Source={StaticResource LabelStyle}}" />
+                <Grid Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" IsReadOnly="True" Text="{Binding Path=avgWeighing}" Style="{Binding Source={StaticResource TextStyle}}"/>
+                    <Button Grid.Column="2" Content="기록" IsEnabled="{Binding isBtnEnable}" Margin="1 3 1 3" Command="{Binding RecordCommand}"/>
+                    <Button Grid.Column="4" Content="삭제" IsEnabled="{Binding isBtnEnable}" Margin="1 3 1 3" Command="{Binding RowDeleteCommand}"/>
+                </Grid>
+
+                <c1:C1DataGrid Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="9" AutoGenerateColumns="False" HeadersVisibility="Column"
+                       CanUserAddRows="False" CanUserRemoveRows="False" CanUserEditRows="True"
+                       RowHeight="30" ScrollBarStyle="{Binding Source={StaticResource gdScroll}}"
+                       ItemsSource="{Binding filteredComponents}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTemplateColumn Width="30">
+                            <c1:DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Viewbox Width="30" Height="30">
+                                        <CheckBox IsThreeState="False" IsChecked="{Binding CHK, Mode=TwoWay}"/>
+                                    </Viewbox>
+                                </DataTemplate>
+                            </c1:DataGridTemplateColumn.CellTemplate>
+                        </c1:DataGridTemplateColumn>
+                        <c1:DataGridTextColumn Header="순번" Binding="{Binding INX}" IsReadOnly="True"/>
+                        <c1:DataGridTextColumn Header="샘플 수량" Binding="{Binding SMPQTY}" IsReadOnly="True"/>
+                        <c1:DataGridTextColumn Header="무게" Binding="{Binding CUR_WEIGHT}" IsReadOnly="True"/>
+                        <c1:DataGridTextColumn Header="평균 무게" Binding="{Binding AVG_WEIGHT}" IsReadOnly="True"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+            </Grid>
+
+            <Grid Grid.Row="2" x:Name="Footer">
+                <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="5" HorizontalAlignment="Center">
+                    <Button Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource R}, FallbackValue='저장'}" Margin="5,1" Width="100" Height="40" 
+                            IsEnabled="{Binding IsSaveEnable}" Command="{Binding ClickConfirmCommand}"/>
+                    <Button Content="{Binding W[CUIDefaultDataWriteToEBRButtonText], Source={StaticResource R}, FallbackValue='저장(기록없음)'}" Margin="5,1" Width="100" Height="40"
+                            Command="{Binding NoRecordConfirmCommand}"/>
+                    <Button Content="{Binding W[CUICloseButtonText], Source={StaticResource R}, FallbackValue='닫기'}" Margin="5,1" Width="100" Height="40"
+                            Click="btnClose_Click"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

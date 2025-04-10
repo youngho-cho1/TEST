@@ -1,0 +1,10 @@
+<OutOfBrowserSettings ShortName="DebugCoverSUI 응용 프로그램" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+  <OutOfBrowserSettings.Blurb>DebugCoverSUI 응용 프로그램이 가정, 직장의 바탕 화면에 있거나 이동 중입니다.</OutOfBrowserSettings.Blurb>
+  <OutOfBrowserSettings.WindowSettings>
+    <WindowSettings Title="DebugCoverSUI 응용 프로그램" WindowStyle="None" />
+  </OutOfBrowserSettings.WindowSettings>
+  <OutOfBrowserSettings.SecuritySettings>
+    <SecuritySettings ElevatedPermissions="Required" />
+  </OutOfBrowserSettings.SecuritySettings>
+  <OutOfBrowserSettings.Icons />
+</OutOfBrowserSettings>

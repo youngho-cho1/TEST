@@ -1,0 +1,177 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.정제체크마스터조회"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:toolkit ="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:보령"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:controlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ezmes="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    x:Name="Main" Title="정제체크마스터"
+    Width="1100" Height="450">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <Style TargetType="TextBox" x:Key="txtEQPT">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="txtTime">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Button" x:Key="BtnDefault">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button" x:Key="BtnTime">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Content" Value="123"/>
+        </Style>
+        <Style TargetType="ScrollBar" x:Key="dgScroll">
+            <Setter Property="MinWidth" Value="30"/>
+            <Setter Property="MinHeight" Value="30"/>
+        </Style>
+        <local:정제체크마스터조회ViewModel x:Name="VM"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Name="BusyIn" IsBusy="{Binding IsBusy}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Header" Grid.Row="0">
+
+            </Grid>
+
+            <Grid x:Name="MainSection" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="SearchSection" Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="타정기 정보" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBox x:Name="txtEqptId" Text="{Binding EQPTID, Mode=OneWay}" Style="{Binding Source={StaticResource txtEQPT}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="KeyDown">
+                                    <icommon:EditBoxKeyDownAction Command="{Binding SearchEquipmentCommandAsync}" CommandParameter="{Binding ElementName=txtEqptId, Path=Text}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox x:Name="txtEqptName" Text="{Binding EQPTNAME, Mode=OneWay}" IsReadOnly="True" Style="{Binding Source={StaticResource txtEQPT}}"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="점검 일시" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="From" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <c1:C1DatePicker Grid.Column="1" SelectedDate="{Binding FROMDATE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedDateFormat="Custom" CustomFormat="yyyy-MM-dd"/>
+                        <Button Grid.Column="2" Style="{Binding Source={StaticResource BtnTime}}" Command="{Binding NumericPopupCommand}" CommandParameter="{Binding ElementName=txtFromHour}"/>
+                        <TextBox Grid.Column="3" x:Name="txtFromHour" Style="{Binding Source={StaticResource txtTime}}" Text="{Binding FROMHOUR}"/>
+                        <TextBlock Grid.Column="4" Text=":" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Grid.Column="5" Style="{Binding Source={StaticResource BtnTime}}" Command="{Binding NumericPopupCommand}" CommandParameter="{Binding ElementName=txtFromMinute}"/>
+                        <TextBox Grid.Column="6" x:Name="txtFromMinute" Style="{Binding Source={StaticResource txtTime}}" Text="{Binding FROMMINUTE}"/>
+
+                        <TextBlock Grid.Column="8" Text="To" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <c1:C1DatePicker Grid.Column="9" SelectedDate="{Binding TODATE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectedDateFormat="Custom" CustomFormat="yyyy-MM-dd"/>
+                        <Button Grid.Column="10" Style="{Binding Source={StaticResource BtnTime}}" Command="{Binding NumericPopupCommand}" CommandParameter="{Binding ElementName=txtToHour}"/>
+                        <TextBox Grid.Column="11" x:Name="txtToHour" Style="{Binding Source={StaticResource txtTime}}" Text="{Binding TOHOUR}"/>
+                        <TextBlock Grid.Column="12" Text=":" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <Button Grid.Column="13" Style="{Binding Source={StaticResource BtnTime}}" Command="{Binding NumericPopupCommand}" CommandParameter="{Binding ElementName=txtToMinute}"/>
+                        <TextBox Grid.Column="14" x:Name="txtToMinute" Style="{Binding Source={StaticResource txtTime}}" Text="{Binding TOMINUTE}"/>
+                    </Grid>
+
+                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" x:Name="btnSearch" Content="조회" IsEnabled="{Binding SEARCH_ENABLE}"
+                            Style="{Binding Source={StaticResource BtnDefault}}" VerticalAlignment="Bottom"
+                            HorizontalAlignment="Right" Command="{Binding GetIPCResultCommandAsync}"/>
+                </Grid>
+
+                <Grid x:Name="IPCResultSection" Grid.Row="1" Margin="5">
+                    <c1:C1DataGrid x:Name="dgCheckMasterIPCResult" HeadersVisibility="Column" AutoGenerateColumns="False"
+                                   ScrollBarStyle="{Binding Source={StaticResource dgScroll}}"
+                                   CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserSort="False"
+                                   ItemsSource="{Binding Path=BR_BRS_GET_Selector_Check_Master.OUTDATAs}">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Header="No" Width="40" Binding="{Binding SEQ}"/>
+                            <c1:DataGridTextColumn Header="점검 일시" MinWidth="150" Binding="{Binding STDATETIME}"/>
+
+                            <c1:DataGridTextColumn Header="평균질량" MinWidth="100" Binding="{Binding AVG_WEIGHT}"/>
+                            <c1:DataGridTextColumn Header="개개질량(최소)" MinWidth="100" Binding="{Binding MIN_WEIGHT}"/>
+                            <c1:DataGridTextColumn Header="개개질량(최대)" MinWidth="100" Binding="{Binding MAX_WEIGHT}"/>
+
+                            <c1:DataGridTextColumn Header="두께(평균)" MinWidth="100" Binding="{Binding AVG_THICK}"/>
+                            <c1:DataGridTextColumn Header="두께(최소)" MinWidth="100" Binding="{Binding MIN_THICK}"/>
+                            <c1:DataGridTextColumn Header="두께(최대)" MinWidth="100" Binding="{Binding MAX_THICK}"/>
+
+                            <c1:DataGridTextColumn Header="경도(평균)" MinWidth="100" Binding="{Binding AVG_HARDNESS}"/>
+                            <c1:DataGridTextColumn Header="경도(최소)" MinWidth="100" Binding="{Binding MIN_HARDNESS}"/>
+                            <c1:DataGridTextColumn Header="경도(최대)" MinWidth="100" Binding="{Binding MAX_HARDNESS}"/>
+
+                            <c1:DataGridTextColumn Header="직경(평균)" MinWidth="100" Binding="{Binding AVG_DIAMETER}"/>
+                            <c1:DataGridTextColumn Header="직경(최소)" MinWidth="100" Binding="{Binding MIN_DIAMETER}"/>
+                            <c1:DataGridTextColumn Header="직경(최대)" MinWidth="100" Binding="{Binding MAX_DIAMETER}"/>
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Footer" Grid.Row="2">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="btnRecord" Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource R}, FallbackValue='기록'}" 
+                            Style="{Binding Source={StaticResource BtnDefault}}" IsEnabled="{Binding RECORD_ENABLE}"
+                            Command="{Binding ConfirmCommandAsync}"/>
+                    <Button x:Name="btnCacel" Content="{Binding W[CUICloseButtonText], Source={StaticResource R}, FallbackValue='취소'}"
+                            Style="{Binding Source={StaticResource BtnDefault}}"
+                            Click="btnCancel_Click"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

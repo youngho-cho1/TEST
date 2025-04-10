@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="보령.UserControls.ScaleControlDW"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ia="http://schemas.microsoft.com/expression/2010/interactions"
+    mc:Ignorable="d"
+    d:DesignHeight="200" d:DesignWidth="400" Loaded="UserControl_Loaded" SizeChanged="UserControl_SizeChanged" >
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Rectangle HorizontalAlignment="Stretch" Name="BackgroundRect" Fill="Black" VerticalAlignment="Stretch" Grid.ColumnSpan="10" Grid.Row="2" />
+        <Rectangle Name="ScaleBar" Fill="Black" Grid.ColumnSpan="10" Grid.Row="2"  />
+        <Grid Name="CalibrationGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="5" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="3" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="140*" />
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="9*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle HorizontalAlignment="Stretch" Name="CalibrationGridRect" Fill="Transparent" VerticalAlignment="Stretch" Grid.ColumnSpan="5" />
+            <Rectangle Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" Name="CalibrationMinBar" Fill="Gray" VerticalAlignment="Stretch" />
+            <Rectangle Grid.Column="2" Grid.Row="0" Grid.RowSpan="5" HorizontalAlignment="Stretch" Name="CalibrationAvgBar" Fill="Orange" VerticalAlignment="Stretch" />
+            <Rectangle Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" HorizontalAlignment="Stretch" Name="CalibrationMaxBar" Fill="Gray" VerticalAlignment="Stretch" />
+            <Rectangle Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Name="CalibrationH1" Fill="Gray" VerticalAlignment="Stretch" />
+            <Rectangle Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" Name="CalibrationH2" Fill="Gray" VerticalAlignment="Stretch" />
+            <Rectangle Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Name="CalibrationH3" Fill="Gray" VerticalAlignment="Stretch" />
+            <Rectangle Grid.Column="3" Grid.Row="3" HorizontalAlignment="Stretch" Name="CalibrationH4" Fill="Gray" VerticalAlignment="Stretch" />
+        </Grid>
+        <Rectangle HorizontalAlignment="Stretch" Name="UnderCalibrationRect" Fill="Transparent" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="1" />
+        <Rectangle HorizontalAlignment="Stretch" Name="OverCalibrationRect" Fill="Transparent" VerticalAlignment="Stretch" Grid.Column="9" Grid.Row="1" />
+        <TextBlock Grid.Column="4" Grid.ColumnSpan="6" HorizontalAlignment="Center" Name="TargetValueText" Text="Order Qty" VerticalAlignment="Center" FontSize="34" Foreground="#990033" FontWeight="Bold" />
+        <TextBlock Grid.Column="4" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Center" Name="CalibrationMinValueText" Text="CalibrationMin" VerticalAlignment="Center" FontSize="22" />
+        <TextBlock Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Center" Name="CalibrationMaxValueText" Text="CalibrationMax" VerticalAlignment="Center" FontSize="22" />
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="0" HorizontalAlignment="Left" Name="ScaleNameText" Text="Scale Name" VerticalAlignment="Center" FontSize="30" />
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="4" HorizontalAlignment="Left" Name="PrnterNameText" Text="PrnterName" VerticalAlignment="Bottom" FontSize="12" />
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="10" Grid.Row="2" HorizontalAlignment="Left" Name="TotalValueText" Text="0.000/900.000 G" VerticalAlignment="Center" FontSize="60" FontWeight="Bold"  Foreground="White" FontFamily="/Weighing;component/Fonts/LCD.TTF#LCD" Margin="2,0,0,0" />
+        <!--<TextBlock Grid.Column="4" Grid.Row="2"  HorizontalAlignment="Left" Name="UnitText" VerticalAlignment="Bottom" FontSize="30" Width="45" Margin="0,0,0,0" Foreground="White" />-->
+        <!--<Grid x:Name="LayoutBar" Background="Transparent" Grid.Row="2"  Grid.ColumnSpan="10" UseLayoutRounding="True">
+            <Path x:Name="dBar" Data="M0,0 L0,10" HorizontalAlignment="Left" Height="100" Margin="0,0,0,0" Stretch="Fill" Stroke="Red" StrokeThickness="7"  VerticalAlignment="Center" Visibility="Collapsed" />
+        </Grid>-->
+    </Grid>
+</UserControl>

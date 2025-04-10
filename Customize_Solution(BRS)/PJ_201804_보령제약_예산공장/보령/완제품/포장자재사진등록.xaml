@@ -1,0 +1,87 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.포장자재사진등록"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:my="clr-namespace:보령"
+    x:Name="Main"
+    mc:Ignorable="d"
+    Title="포장자재 사진 등록"
+    Height="600" Width="600">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/GlobalResource/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/iPharmMESSilderCheckBoxApprovalTemplate.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/iPharmBusyIndicatorTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <my:포장자재사진등록ViewModel x:Key="ViewModelInstance"/>
+        </ResourceDictionary>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding isBusy}">
+    <Grid x:Name="LayoutRoot" Margin="2" DataContext="{StaticResource ViewModelInstance}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="8" BorderBrush="Black" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" Source="{Binding Image}"/>
+                    <Rectangle Grid.Row="0" Fill="{Binding ViedoBrush}" Visibility="Collapsed"/>
+                    <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,1,0,0">
+                        <Grid>
+                            <Button Margin="4,4,0,4" Content="이미지 파일 열기" FontSize="12" FontWeight="Bold" Width="120" Height="40" HorizontalAlignment="Right"
+                            Command="{Binding Path=OpenFileCommand}" />
+                            <Button Margin="0,4,4,4" Content="사진촬영" FontSize="12" FontWeight="Bold" Width="80" Height="40" HorizontalAlignment="Left"
+                                    Command="{Binding Path=TakePictureCommand}" Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+                </Grid>                
+            </Border>
+            <Button x:Name="OKButton" Content="확인" Margin="0,0,20,0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" FontSize="20" Command="{Binding Path=ConfirmCommandAsync}" IsEnabled="{Binding Path=isEbConfirm}"/>
+
+            <Button x:Name="CancelButton" Content="닫기" Margin="20,0,0,0" Click="CancelButton_Click" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" HorizontalContentAlignment="Center" 
+                    VerticalContentAlignment="Center" Grid.Row="9" Grid.Column="5" Grid.ColumnSpan="2" FontSize="20" />
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow >

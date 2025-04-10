@@ -1,0 +1,123 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow x:Class="보령.WMS일반자재환입처리"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:local="clr-namespace:보령"
+    Width="1000" Height="300" Title="WMS 일반자재 환입처리" Name="Main">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:WMS일반자재환입처리ViewModel x:Key="ViewModel"/>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="MinWidth" Value="20"/>
+            <Setter Property="MinHeight" Value="20"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Name="BusyIndicator" IsBusy="{Binding IsBusy, Mode=TwoWay}" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" Name="MainSection">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="setSourceSection" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="자재 바코드"/>
+                    <TextBox Grid.Column="1" Name="txtMTRLBCD" Margin="5" VerticalAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="KeyDown">
+                                <icommon:EditBoxKeyDownAction Command="{Binding BCDCheckCommandAsync}" CommandParameter="{Binding Text, ElementName=txtMTRLBCD}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBlock Grid.Column="2" Text="자재 SUBLOT"/>
+                    <TextBox Grid.Column="3" Text="{Binding MSUBLOTBCD}" Margin="5" IsReadOnly="True" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="4" Text="{Binding MSUBLOTQTYSTR}" Margin="5" IsReadOnly="True" VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="0" Name="SourceSection" Margin="10">
+                    <ScrollViewer Canvas.ZIndex="1" Padding="0">
+                        <c1:C1DataGrid Name="ReturnSoureContainer" AutoGenerateColumns="False" SelectionMode="SingleRow" HeadersVisibility="Column"
+                                       CanUserAddRows="False" CanUserRemoveRows="False" CanUserEditRows="False"
+                                       ItemsSource="{Binding PickingSourceContainers}" SelectedItem="{Binding CurSourceContainer}">
+                            <c1:C1DataGrid.Columns>
+                                <c1:DataGridTextColumn Header="자재코드" Width="0.5*" Binding="{Binding Path=MTRLID, Mode=TwoWay}"/>
+                                <c1:DataGridTextColumn Header="자재명" Width="*" Binding="{Binding Path=MTRLNAME, Mode=TwoWay}"/>
+                                <c1:DataGridTextColumn Header="자재바코드" Width="*" Binding="{Binding Path=MSUBLOTBCD, Mode=TwoWay}"/>
+                                <c1:DataGridTextColumn Header="처리상태" Width="100" Binding="{Binding Path=STATUS, Mode=TwoWay}"/>
+                            </c1:C1DataGrid.Columns>
+                        </c1:C1DataGrid>
+                    </ScrollViewer>
+                    <Border Canvas.ZIndex="2" Background="Transparent" Margin="0,0,20,0"/>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="1" Name="ReturnInfoSection" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="환입수량" FontSize="20" Margin="3"/>
+                    <Button Grid.Row="1" Grid.Column="0" Content="123" FontSize="20" Command="{Binding KeyPadPopupCommand}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtReturnQty" Text="{Binding RETURNQTY, Mode=OneWay, StringFormat='#,0'}" TextAlignment="Right" FontSize="20">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="KeyDown">
+                                <icommon:EditBoxKeyDownAction Command="{Binding ChangeReturnQtyCommand}" CommandParameter="{Binding Text, ElementName=txtReturnQty}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" Name="Footer">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Text="{Binding Path=W[CUICurrentPrintName], Source={StaticResource R}, FallbackValue=프린트명}" Margin="2,0"/>
+                    <TextBlock Text="{Binding curPrintName, FallbackValue=N/A}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Margin="5,0" Width="100" x:Name="btnChangePrint" Content="{Binding W[CUIChangePrintButtonText], Source={StaticResource R}, FallbackValue=프린터변경}" Command="{Binding ChangePrintCommand}"/>
+                    <Button Margin="5,0" Width="100" x:Name="btnReturn" Content="자재 환입"  Command="{Binding SetReturnQtyCommandAsync}" IsEnabled="{Binding btnReturnEnable}"/>
+                    <Button Margin="5,0" Width="100" x:Name="btnConfrim" Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource R}, FallbackValue=기록}" Command="{Binding ConfrimCommandAsync}"/>
+                    <Button Margin="5,0" Width="100" x:Name="btnCancel" Content="{Binding W[CUICloseButtonText], Source={StaticResource R}, FallbackValue=종료}" Click="btnCancel_Click" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

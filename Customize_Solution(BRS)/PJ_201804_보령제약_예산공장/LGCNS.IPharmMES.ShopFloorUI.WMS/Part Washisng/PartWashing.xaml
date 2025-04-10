@@ -1,0 +1,437 @@
+﻿<UserControl
+    x:Class="WMS.PartWashing"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:item="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls"
+    xmlns:my="clr-namespace:WMS"
+    x:Name="Main"
+    mc:Ignorable="d"
+    d:DesignHeight="1080" d:DesignWidth="1920" KeyDown="Main_KeyDown" Loaded="Main_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Unloaded="Main_Unloaded">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/GlobalResource/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/iPharmMESSilderCheckBoxApprovalTemplate.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/iPharmBusyIndicatorTemplate.xaml"/>
+                <ResourceDictionary Source="/WMS;component/Themes/WMSTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <my:PartWashingViewModel x:Key="ViewModel"/>
+            <icontrol:String2ColorConverter x:Key="String2ColorConverter"/>
+            <Style TargetType="sdk:Calendar">
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="DarkGray" DataContext="{Binding Source={StaticResource ViewModel }}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+            <sdk:TabControl Padding="0">
+                <sdk:TabItem Name="tabWashing" >
+                    <sdk:TabItem.Template>
+                        <ControlTemplate>
+                        <Button Name="btnWashing" Content="Wahsing" Click="btnWashing_Click" IsEnabled="{Binding isWashEble, Mode=TwoWay}"
+                                Background="#FF385D8A" Width="205" Style="{StaticResource TabBtnBasicStyle}"/>
+                        </ControlTemplate>
+                </sdk:TabItem.Template>
+                    <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" Name="tktBusyIndctWashing"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                       Style="{StaticResource BusyIndicatorDefaultStyle}">
+
+                    <Grid Name="WashingGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="0"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Border BorderBrush="Black" BorderThickness="4">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="100"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF232323" Offset="1"/>
+                                        <GradientStop Color="#FF686868"/>
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                                <sdk:Label Grid.Row="0" Grid.Column="0" Content="Clean Recipe" Background="#FF4F81BD" Height="Auto" Width="Auto"
+                                        FontWeight="Bold" Margin="1" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding tbheader, Mode=TwoWay, Source={StaticResource ViewModel}}" FontSize="60" FontWeight="Bold" Foreground="Black"
+                                Background="{Binding clrheader,Mode=TwoWay, Converter={StaticResource String2ColorConverter}}" Margin="1,0,1,1" IsReadOnly="{Binding rdHeader, Mode=TwoWay}" HorizontalContentAlignment="Left" Padding="10,0,0,0" Style="{StaticResource TextBoxAlignmentStyle}" Name="tbHederN"/>
+                                <Button Grid.Row="0" Grid.Column="2" Margin="1" Content="Add" Command="{Binding AddCommnadAsync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
+                                    CommandParameter="{Binding}" Height="100" Style="{StaticResource BtnBasicStyle}"/>
+                                <Button Grid.Row="0" Grid.Column="3" Margin="1" Content="Initiate" Command="{Binding InitiateCommnadAsync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
+                                    CommandParameter="{Binding}" Height="100" Style="{StaticResource BtnBasicStyle}"/>
+                                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
+                                    <c1:C1DataGrid x:Name="CleanRecipeDataGrid" 
+                                    ItemsSource="{Binding Path=SEL_Toolinfo, Mode=TwoWay}"
+                                    AutoGenerateColumns="False" 
+                                    CanUserAddRows="False"
+                                    Visibility="Visible"
+                                    SelectionMode="SingleRow"
+                                    Margin="1"
+                                    RowHeaderWidth="0"
+                                    ColumnHeaderHeight="30"
+                                    RowHeight="Auto"
+                                    FontSize="20"
+                                    GridLinesVisibility="All"
+                                    Background="DarkGray" AlternatingRowBackground="#FFCCCCCC" RowBackground="White">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding Path=SelectChangeCommand}"  CommandParameter="{Binding ElementName=CleanRecipeDataGrid}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <c1:C1DataGrid.Columns>
+                                            <c1:DataGridTextColumn Header="SEQ" Width="*" Binding="{Binding Path=Seq}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}" 
+                                                    SortMemberPath="SEQ" />
+                                            <c1:DataGridTextColumn Header="Tool ID" Width="1.5*"  Binding="{Binding Path=TOOLID}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                            <c1:DataGridTextColumn Header="Tool Name" Width="2*"  Binding="{Binding Path=TOOLNAME}"  IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+                                            <c1:DataGridTextColumn Header="생산제품" Width="4*" Binding="{Binding Path=MTRLNAME}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                            <c1:DataGridTextColumn Header="BatchNo" Width="2*" Binding="{Binding Path=BATCHNO}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                            <c1:DataGridTextColumn Header="생산공정" Width="2*" Binding="{Binding Path=OPSGNAME}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                            <c1:DataGridTextColumn Header="사용일시" Width="4*" Binding="{Binding Path=PROC_OFFTIME}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}" />
+                                            <c1:DataGridTextColumn Header="세척Recipe" Width="3*" Binding="{Binding Path=RECIPENO}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                            <c1:DataGridTemplateColumn Header="Remove" MinWidth="80" Width="*" IsReadOnly="False" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}">
+                                                <c1:DataGridTemplateColumn.CellTemplate>
+                                                    <c1:C1HierarchicalDataTemplate>
+                                                        <Grid>
+                                                            <Button Name="btnRemove" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" Command="{Binding RemoveCommandAsync}" CommandParameter="{Binding}" Click="btnRemove_Click">
+                                                                <Image Source="/WMS;component/Images/ico_minus.png"  />
+                                                            </Button>
+                                                        </Grid>
+                                                    </c1:C1HierarchicalDataTemplate>
+                                                </c1:DataGridTemplateColumn.CellTemplate>
+                                            </c1:DataGridTemplateColumn>
+                                        </c1:C1DataGrid.Columns>
+                                    </c1:C1DataGrid>
+                                </Grid>
+                                <Grid Grid.Row="2" Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="1" Background="#FF777777">
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <sdk:Label Content="{Binding tbGridcount,Mode=TwoWay}" Style="{StaticResource LabelStyle}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                                <!--<TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding tbFooter,Mode=TwoWay}" FontSize="18" FontWeight="Bold" IsReadOnly="True"
+                            Background="{Binding clrFooter, Mode=TwoWay, Converter={StaticResource String2ColorConverter}}" Margin="1"/>-->
+
+                                <Grid Grid.Row="2" Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBox Grid.Row="0" Grid.RowSpan="2" TextAlignment="Center" Text="{Binding tbFooter1, Mode=TwoWay}" Foreground="Black" FontSize="40" IsReadOnly="True"
+                                            Background="{Binding clrFooter, Mode=TwoWay, Converter={StaticResource String2ColorConverter}}" Style="{StaticResource TextBoxAlignmentStyle}"/>
+                                    <ContentPresenter Grid.Row="0" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding tbFooter, Mode=TwoWay}" Padding="10,0,0,0" FontSize="20" FontWeight="Bold" Foreground="Black"/>
+                                    </ContentPresenter>
+                                </Grid>
+                                <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="1" Content="{Binding txtbtnsave, Mode=TwoWay}" Command="{Binding SaveCommnadAsync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
+                        CommandParameter="{Binding}" Height="100" Width="200" Style="{StaticResource BtnBasicStyle}"/>
+                            </Grid>
+                        </Border>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <TextBox Visibility="Visible" Name="txtMain" KeyDown="txtMain_KeyDown"/>
+                        </Grid>
+                    </Grid>
+                </toolkit:BusyIndicator>
+            </sdk:TabItem>
+            <sdk:TabItem Name="tbDry">
+                <sdk:TabItem.Template>
+                    <ControlTemplate>
+                        <Button Name="btnDry" Content="Drying" Click="btnDry_Click" IsEnabled="{Binding isDryEble, Mode=TwoWay}"
+                                Background="#FF385D8A" Width="205" Style="{StaticResource TabBtnBasicStyle}"/>
+                    </ControlTemplate>
+                </sdk:TabItem.Template>
+                <Grid Name="DryGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <toolkit:BusyIndicator IsBusy="{Binding IsBusyA}" Name="tktBusyIndctDry"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                       Style="{StaticResource BusyIndicatorDefaultStyle}">
+                            <Border BorderBrush="Black" BorderThickness="4">
+                                <Grid Background="DarkGray">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="LightGray">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="160"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="80"/>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="130"/>
+                                        </Grid.ColumnDefinitions>
+                                        <sdk:Label Content="Clean Date" Grid.Column="0" Height="Auto" Background="#FF4F81BD" Style="{StaticResource LabelStyle}"/>
+                                        <Grid Grid.Column="1" x:Name="Container">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0" HorizontalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="80"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" x:Name="FromPartText" IsReadOnly="True" Text="{Binding Path=CleanDateFrom, Mode=TwoWay}" FontSize="50" Background="{x:Null}"
+                                                         Margin="20,0,20,0"  Style="{StaticResource TextBoxAlignmentStyle}" HorizontalContentAlignment="Center" Foreground="Black"/>
+                                                <TextBlock Grid.Column="1" Text="~" Margin="2,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" FontFamily="Verdana" />
+                                                <TextBox Grid.Column="2" x:Name="ToPartText" IsReadOnly="True" Text="{Binding Path=CleanDateTo, Mode=TwoWay}" FontSize="50" Background="{x:Null}"
+                                                         Margin="20,0,20,0" Style="{StaticResource TextBoxAlignmentStyle}" HorizontalContentAlignment="Center" Foreground="Black"/>
+                                                <Button Grid.Column="3" x:Name="OpenCalendarPart" VerticalAlignment="Center"  HorizontalAlignment="Center" Padding="0" BorderBrush="Transparent" Background="Transparent" >
+                                                    <Image Source="/WMS;component/Images/Calendar.png"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="50"/>
+                                                </Button>
+                                            </Grid>
+                                            <Popup Grid.Row="1" Grid.ColumnSpan="3" x:Name="PopupPart">
+                                                <Grid x:Name="PopupRootPart">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <sdk:Calendar Grid.Column="0" x:Name="FromPartCalendar" Style="{StaticResource customCalendar}"/>
+                                                    <sdk:Calendar Grid.Column="1" x:Name="ToPartCalendar" Style="{StaticResource customCalendar}"/>
+                                                </Grid>
+                                            </Popup>
+                                        </Grid>
+                                        <icontrol:iPharmMESCheckBox Grid.Column="2" Content="3 Days ago" IsChecked="{Binding isDateago, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                  FontFamily="Malgun Gothic" FontSize="20" FontWeight="Bold" Checked="iPharmMESCheckBox_Checked" Unchecked="iPharmMESCheckBox_Unchecked"/>
+                                        <Button Grid.Column="3" Command="{Binding SerchDryCommand, Source={StaticResource ViewModel} }" Content="Serach" Height="Auto" Style="{StaticResource BtnBasicStyle}"/>
+                                        <TextBlock Text="* 포함" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                   FontFamily="Malgun Gothic" FontSize="20" FontWeight="Bold"/>
+                                        <CheckBox Grid.Column="6" Content="세척중" IsChecked="{Binding IsWashing,Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                  FontFamily="Malgun Gothic" FontSize="20" FontWeight="Bold"/>
+                                        <CheckBox Grid.Column="7" Content="건조완료" IsChecked="{Binding isDryComplete, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                  FontFamily="Malgun Gothic" FontSize="20" FontWeight="Bold"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <c1:C1DataGrid x:Name="DryDataGrid"                                             
+                                            ItemsSource="{Binding Path=DryHistory, Mode=TwoWay}"
+                                                       AutoGenerateColumns="False" 
+                                                       CanUserAddRows="False"
+                                                       Visibility="Visible"
+                                                       SelectionMode="SingleRow"
+                                                       Margin="1"
+                                                       RowHeaderWidth="0"
+                                                       ColumnHeaderHeight="30"
+                                                       RowHeight="Auto"
+                                                       FontSize="20"
+                                                       GridLinesVisibility="All"
+                                                       Background="DarkGray" AlternatingRowBackground="#FFCCCCCC" RowBackground="White">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding Path=SelectDryCommand}"  CommandParameter="{Binding ElementName=DryDataGrid}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <c1:C1DataGrid.Columns>
+                                                <c1:DataGridTextColumn Header="SEQ" Width="200" Binding="{Binding Path=SEQ}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}" 
+                                                           SortMemberPath="SEQ" />
+                                                <c1:DataGridTextColumn Header="Start Date" Width="400"  Binding="{Binding Path=EQSTONDTTM}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                <c1:DataGridTextColumn Header="End Date" Width="400"  Binding="{Binding Path=EQSTOFFDTTM}"  IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                <c1:DataGridTextColumn Header="Clean Recipe" Width="*" Binding="{Binding Path=CLEANRECIPE}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                <c1:DataGridTextColumn Header="Status" Width="220" Binding="{Binding Path=STATUS}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                <c1:DataGridTextColumn Header="ToolCount" Width="220" Binding="{Binding Path=CNT}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>                                            
+                                            </c1:C1DataGrid.Columns>
+                                        </c1:C1DataGrid>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Border Grid.Row="1" Background="#FF777777">
+                                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                    <sdk:Label Content="{Binding tbDryGridcount,Mode=TwoWay}" Style="{StaticResource LabelStyle}"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                        <Grid Grid.Column="1" Background="White">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBox Grid.Row="0" Grid.RowSpan="2" TextAlignment="Center" Text="{Binding tbFooter1, Mode=TwoWay}" FontSize="40" Foreground="Black" IsReadOnly="True" 
+                                                     Background="{Binding clrFooter2, Mode=TwoWay, Converter={StaticResource String2ColorConverter}}" Style="{StaticResource TextBoxAlignmentStyle}"/>
+                                            <ContentPresenter Grid.Row="0" HorizontalAlignment="Left">
+                                                <TextBlock Text="{Binding tbFooter, Mode=TwoWay}" Padding="10,0,0,0" FontSize="20" FontWeight="Bold" Foreground="Black"/>
+                                            </ContentPresenter>
+                                        </Grid>
+                                        <Button Grid.Column="2" Margin="1" Content="Open" Command="{Binding OpenDryCommnadAsync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
+                                                CommandParameter="{Binding}" Height="100" Width="200" Style="{StaticResource BtnBasicStyle}" Name="btnOpen" Click="btnOpen_Click" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </toolkit:BusyIndicator>
+                    </Grid>
+                    <Grid Grid.Row="1" >
+                        <toolkit:BusyIndicator IsBusy="{Binding isBusyB}" Name="tktBusyindctDry2"
+                                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                       Style="{StaticResource BusyIndicatorDefaultStyle}">
+                            <Border BorderBrush="Black" BorderThickness="4">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Part Washer" Style="{StaticResource LabelStyle}"/>
+                                                <TextBox Background="#FF666666" Grid.Row="2" Height="70" Name="txtPartWasher" Text="{Binding txtPartWasher, Mode=TwoWay, Source={StaticResource ViewModel}}"
+                                                         Style="{StaticResource TextBoxAlignmentStyle}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Clean Recipe" Style="{StaticResource LabelStyle}"/>
+                                                <TextBox Background="#FF666666" Grid.Row="2" Height="70" Name="txtCleanRecipe" Text="{Binding txtCleanRecipe, Mode=TwoWay, Source={StaticResource ViewModel}}"
+                                                         Style="{StaticResource TextBoxAlignmentStyle}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="2">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="Start Date" Style="{StaticResource LabelStyle}"/>
+                                                <TextBox Background="#FF666666" Height="70"  x:Name="txtDryStartDate" Text="{Binding txtDryStartDate, Mode=TwoWay, Source={StaticResource ViewModel}}"
+                                                         Style="{StaticResource TextBoxAlignmentStyle}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="3">
+                                            <StackPanel Orientation="Vertical" Margin="2,0,0,0">
+                                                <sdk:Label Background="#FF333333" Grid.Row="1" Height="30" Content="End Date" Style="{StaticResource LabelStyle}"/>
+                                                <TextBox Background="#FF666666" Grid.Row="2" Height="70" Name="txtDryEndDate" Text="{Binding txtDryEndDate, Mode=TwoWay, Source={StaticResource ViewModel}}"
+                                                         Style="{StaticResource TextBoxAlignmentStyle}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <c1:C1DataGrid x:Name="DryDetailGrid" 
+                                            ItemsSource="{Binding Path=DryDetail, Mode=TwoWay}"
+                                            AutoGenerateColumns="False" 
+                                                       CanUserAddRows="False"
+                                                       Visibility="Visible"
+                                                       SelectionMode="SingleRow"
+                                                       Margin="1"
+                                                       RowHeaderWidth="0"
+                                                       ColumnHeaderHeight="30"
+                                                       RowHeight="Auto"
+                                                       FontSize="20"
+                                                       GridLinesVisibility="All"
+                                                       Background="DarkGray" AlternatingRowBackground="#FFCCCCCC" RowBackground="White">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding Path=SelectDryCommand}"  CommandParameter="{Binding ElementName=DryDataGrid}" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                            <c1:C1DataGrid.Columns>
+                                                <c1:DataGridTextColumn Header="SEQ" Width="0.5*" Binding="{Binding Path=SEQ}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}" 
+                                                           SortMemberPath="SEQ" />
+                                                <c1:DataGridTextColumn Header="Tool Info" Width="1.5*"  Binding="{Binding Path=TOOLID}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                <c1:DataGridTextColumn Header="Stauts" Width="*"  Binding="{Binding Path=STATUS}"  IsReadOnly="True" HorizontalAlignment="Center"  HeaderStyle="{StaticResource HeaderStyle}"/>
+                                                <!--<c1:DataGridCheckBoxColumn Header="Drying Complete" Width="3*" Binding="{Binding Path=DryingComplete, Mode=TwoWay}" IsReadOnly="False" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>-->
+                                                <!--<c1:DataGridCheckBoxColumn Header="Rewashing" Width="3*" Binding="{Binding Path=Rewashing, Mode=TwoWay}" IsReadOnly="False" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>-->
+                                                <c1:DataGridTemplateColumn Header="Drying Complete" Width="*" HorizontalAlignment="Center" IsReadOnly="False" CanUserSort="False" HeaderStyle="{StaticResource HeaderStyle}">
+                                                    <c1:DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <CheckBox Name="chkDry" IsChecked="{Binding Path=DryingComplete,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkDry_Checked" Unchecked="chkDry_Unchecked" 
+                                                                      Style="{StaticResource TriStateCheckBoxControlTemplate}">
+                                                            </CheckBox>
+                                                        </DataTemplate>
+                                                    </c1:DataGridTemplateColumn.CellTemplate>
+                                                </c1:DataGridTemplateColumn>
+                                                <c1:DataGridTemplateColumn Header="Rewashing" Width="*" HorizontalAlignment="Center" IsReadOnly="False" CanUserSort="False" HeaderStyle="{StaticResource HeaderStyle}">
+                                                    <c1:DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <CheckBox Name="chkRew" IsChecked="{Binding Path=Rewashing,Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkRew_Checked" Unchecked="chkRew_Unchecked" 
+                                                                      Style="{StaticResource TriStateCheckBoxControlTemplate}">
+                                                            </CheckBox>
+                                                        </DataTemplate>
+                                                    </c1:DataGridTemplateColumn.CellTemplate>
+                                                </c1:DataGridTemplateColumn>
+                                            </c1:C1DataGrid.Columns>
+                                        </c1:C1DataGrid>
+                                    </Grid>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="200"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0" Background="DarkGray">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Border Grid.Row="1" Background="#FF777777">
+                                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                    <sdk:Label Content="{Binding tbDry2Gridcount,Mode=TwoWay}" FontSize="20" Foreground="White" Style="{StaticResource LabelStyle}"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                        <Button Grid.Column="2" Margin="1" Content="Save" Command="{Binding SaveDryCommnadAsync}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
+                                                CommandParameter="{Binding}" Height="100" Width="200" Style="{StaticResource BtnBasicStyle}"/>
+                                        <Button Grid.Column="3" Margin="1" Content="Previous" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="20"
+                                                CommandParameter="{Binding}" Height="100" Width="200" Style="{StaticResource BtnBasicStyle}" Name="btnPrev" Click="btnPrev_Click"/>
+                                        
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </toolkit:BusyIndicator>
+                    </Grid>
+                </Grid>
+            </sdk:TabItem>
+        </sdk:TabControl>
+    </Grid>
+</UserControl>

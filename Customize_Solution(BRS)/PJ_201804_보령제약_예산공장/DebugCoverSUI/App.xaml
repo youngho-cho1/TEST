@@ -1,0 +1,16 @@
+﻿<Application   
+  x:Class="DebugCoverSUI.App"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ShopFloorUI;component/Themes/ResourceDic.xaml"/>
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="/LGCNS.iPharmMES.Common;component/GlobalResource/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

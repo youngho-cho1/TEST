@@ -1,0 +1,67 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+           x:Class="보령.칭량반제품투입" 
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:my="clr-namespace:보령"
+           xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+           xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+           xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+           xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+           mc:Ignorable="d"
+           Width="800" Height="450"
+           Title="칭량반제품투입" Name="Main">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <my:칭량반제품투입ViewModel x:Key="VM"/>
+        <Style x:Key="HeaderStyle" TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <Grid x:Name="LayoutRoot" Margin="5" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <sdk:Label Grid.Column="0" Content="용기 번호" HorizontalAlignment="Center"/>
+            <TextBox Grid.Column="1" Name="txtVesselId" Text="{Binding VesselId, Mode=TwoWay}" Width="200" VerticalAlignment="Center" HorizontalAlignment="Left" KeyDown="txtVesselId_KeyDown"/>
+        </Grid>
+        <c1:C1DataGrid Grid.Row="1" AutoGenerateColumns="False"
+                       CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" HeadersVisibility="Column"
+                       ItemsSource="{Binding Path=BR_BRS_SEL_ProductionOrderDispenseOutput.OUTDATAs}">
+            <c1:C1DataGrid.Columns>
+                <c1:DataGridTextColumn Header="원료코드" HeaderStyle="{StaticResource HeaderStyle}" Binding="{Binding MTRLID}"/>
+                <c1:DataGridTextColumn Header="원료명" HeaderStyle="{StaticResource HeaderStyle}" Binding="{Binding MTRLNAME}"/>
+                <c1:DataGridTextColumn Header="원료시험번호" HeaderStyle="{StaticResource HeaderStyle}" Binding="{Binding TST_REQ_NO}"/>
+                <c1:DataGridTextColumn Header="무게" HeaderStyle="{StaticResource HeaderStyle}" Binding="{Binding MSUBLOTQTYUOM}"/>
+                <c1:DataGridTextColumn Header="바코드" HeaderStyle="{StaticResource HeaderStyle}" Binding="{Binding MSUBLOTBCD}"/>
+            </c1:C1DataGrid.Columns>
+        </c1:C1DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="btnComfrim" Width="90" Height="40" Content="기록">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding ConfirmCommandAsync}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button Grid.Column="2" Name="btnCancel" Width="90" Height="40" Content="Canceled" Click="btnCancel_Click"/>
+        </Grid>
+    </Grid>
+</ShopFloorUI:ShopFloorCustomWindow>

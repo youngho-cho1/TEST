@@ -1,0 +1,60 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.반제품보관상태확인"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:local="clr-namespace:보령"
+    x:Name="Main" Width="800" Height="300" Title="반제품보관상태확인">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <local:반제품보관상태확인ViewModel x:Key="VM"/>
+        <Style x:Key="HeaderStyle" TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot" Margin="2" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" x:Name="MainSection">
+                <c1:C1DataGrid Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" x:Name="dgProductionOutput"
+                       GridLinesVisibility="All" AutoGenerateColumns="False" HeadersVisibility="Column"
+                       CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserReorderColumns="False"
+                       RowHeight="30" AlternatingRowBackground="White" RowBackground="White"
+                       ItemsSource="{Binding BR_BRS_SEL_ProductionOrderOutput_State.OUTDATAs}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTextColumn Header="공정명" Width="145" Binding="{Binding Path=OPSGNAME}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Header="관리번호" Width="145" Binding="{Binding Path=VESSELNAME}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Header="보관기간(기준)" Width="120" Binding="{Binding Path=STRGSTANDARD}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Header="보관기간" Width="120" Binding="{Binding Path=STRGDATE}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Header="일탈여부" Width="120" Binding="{Binding Path=DEVIATIONYN}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+            </Grid>
+
+            <Grid Grid.Row="2" x:Name="Footer">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="OKButton" Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource R}, FallbackValue='기록'}" Command="{Binding Path=ConfirmCommand}" Width="120" Height="35" Margin="10,0"/>
+                    <Button x:Name="CancelButton" Content="{Binding W[CUICloseButtonText], Source={StaticResource R}, FallbackValue='취소'}" Click="CancelButton_Click" Width="120" Height="35" Margin="10,0"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

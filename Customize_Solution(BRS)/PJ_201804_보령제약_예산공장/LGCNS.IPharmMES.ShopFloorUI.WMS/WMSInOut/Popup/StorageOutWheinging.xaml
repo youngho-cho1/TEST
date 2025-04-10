@@ -1,0 +1,169 @@
+﻿<icommon:iPharmMESChildWindow
+    x:Class="WMS.StorageOutWheinging"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:ControlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"  
+    xmlns:UserCtl="clr-namespace:LGCNS.EZMES.Common.UserCtl;assembly=LGCNS.EZMES.Common" 
+    xmlns:iPharmControls="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:iPharmCommonControls="clr-namespace:LGCNS.iPharmMES.Common.UserCtl;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    x:Name="Main"
+    Width="1200" Height="545" 
+    Title="무게 측정" Loaded="Main_Loaded" KeyDown="Main_KeyDown">
+    <icommon:iPharmMESChildWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WMS;component/Themes/WMSTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <icommon:YN2BoolConverter x:Key="YN2BoolConverter1" />
+        </ResourceDictionary>
+    </icommon:iPharmMESChildWindow.Resources>
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding OUTWeigingLoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="45"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="AUTO"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Visibility="{Binding isFirstVisbility}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <sdk:Label Grid.Column="0" Content="{Binding BinScanBarcodeMsg}" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                           Style="{StaticResource LabelStyle}" Background="#FF333333" Margin="5"/>
+                <TextBox Grid.Column="1" Text="{Binding OUTWeigingBinBarcode, Mode=TwoWay}" HorizontalContentAlignment="Left" Padding="10,0,0,0" BorderBrush="Black" BorderThickness="1" Foreground="Black" FontSize="20"
+                     Style="{StaticResource TextBoxAlignmentStyle}" Margin="5" Name="txtBinBarcode">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:EditBoxKeyDownAction Command="{Binding BinBarcodeScanCommand}" CommandParameter="{Binding ElementName=txtBinBarcode}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Visibility="{Binding isSecondVisbility}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="70"/>
+                </Grid.RowDefinitions>
+                <sdk:Label Background="#FF385D8A" Grid.Row="0" Content="IBC Info" Style="{StaticResource LabelStyle}" Height="40"/>
+                <TextBox Name="txtIBCIDOutput" Background="#FF4F81BD" FontSize="60" IsReadOnly="True" Style="{StaticResource TextBoxAlignmentStyle}" 
+                         Text="{Binding BinIBCInfo, Mode=TwoWay}" Grid.Row="2" />
+
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Visibility="{Binding isSecondVisbility}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Background="#FF333333" Grid.Row="0"/>
+                <sdk:Label Grid.Row="0" Background="#FF333333" Style="{StaticResource LabelStyle}" Height="Auto" Content=" Total Weight" HorizontalAlignment="Left"/>
+                <TextBox Grid.Row="1" Height="70" Text="{Binding txtTotalWpopOUTBIN}" Background="Black" Style="{StaticResource TextBoxAlignmentStyle}" HorizontalContentAlignment="Right" FontSize="60" FontWeight="Normal" Padding="0,0,10,0" IsReadOnly="True" FontFamily="/WMS;component/Font/LCD.TTF#LCD" />
+            </Grid>
+
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Visibility="{Binding isThirdVisibility}">
+                <c1:C1DataGrid Name="dgwipList" 
+                       AutoGenerateColumns="False" 
+                       CanUserAddRows="False"
+                       Visibility="Visible"
+                       SelectionMode="SingleRow"
+                       Margin="5"
+                       RowHeaderWidth="0"
+                       ColumnHeaderHeight="30"
+                       RowHeight="Auto"
+                       FontSize="20"
+                       GridLinesVisibility="All"
+                       Background="DarkGray" AlternatingRowBackground="#FFCCCCCC" RowBackground="White" 
+                       ItemsSource="{Binding BR_BRS_GET_VESSEL_INFO_DETAIL.OUTDATA_WIPs}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridTextColumn Binding="{Binding VESSELID}" Header="IBC No" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding NOTATION}" Header="단위" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding TOTALQTY_UPPER}" Header="상한값" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding TOTALQTY}" Header="총중량" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding TOTALQTY_LOWER}" Header="하한값" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding REALQTY}" Header="실중량" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding CHECKWEIGHT}" Header="검량완료여부" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+            </Grid>
+            <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Visibility="{Binding isFourthVisibility}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <sdk:Label Grid.Column="0" Content="자재 바코드" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                           Style="{StaticResource LabelStyle}" Background="#FF333333" Margin="5"/>
+                <TextBox Grid.Column="1" Text="{Binding PalletBinBarcode, Mode=TwoWay}" HorizontalContentAlignment="Left" Padding="10,0,0,0" BorderBrush="Black" BorderThickness="1" Foreground="Black" FontSize="15"
+                     Style="{StaticResource TextBoxAlignmentStyle}" Margin="5" Name="txtPalletBinBarcode">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <icommon:EditBoxKeyDownAction Command="{Binding PalletBinBarcodeScanCommand}" CommandParameter="{Binding ElementName=txtPalletBinBarcode}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <c1:C1DataGrid Name="dgDetailList" 
+                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                       AutoGenerateColumns="False" 
+                       CanUserAddRows="False"
+                       Visibility="Visible"
+                       SelectionMode="SingleRow"
+                       Margin="5"
+                       RowHeaderWidth="0"
+                       ColumnHeaderHeight="30"
+                       RowHeight="Auto"
+                       FontSize="20"
+                       GridLinesVisibility="All"
+                       Background="DarkGray" AlternatingRowBackground="#FFCCCCCC" RowBackground="White" 
+                       ItemsSource="{Binding BR_BRS_GET_VESSEL_INFO_DETAIL.OUTDATA_DETAILs}">
+                    <c1:C1DataGrid.Columns>
+                        <c1:DataGridCheckBoxColumn Binding="{Binding CHK_FLAG, Converter={StaticResource YN2BoolConverter1}}" Header="CHK" Width="0.5*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding MTRLID}" Header="자재코드" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding MTRLNAME}" Header="자재 명" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding MLOTID}" Header="성적번호" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding NOTATION}" Header="단위" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding TOTALQTY}" Header="총중량" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding TOTALQTY_UPPER}" Header="상한값" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding MSUBLOTQTY}" Header="내용물중량" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding TOTALQTY_LOWER}" Header="하한값" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding REALQTY}" Header="실중량" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                        <c1:DataGridTextColumn Binding="{Binding CHECKWEIGHT}" Header="검량완료여부" Width="*" IsReadOnly="True" HeaderStyle="{StaticResource HeaderStyle}"/>
+                    </c1:C1DataGrid.Columns>
+                </c1:C1DataGrid>
+            </Grid>
+            <Button x:Name="OKButton" Content="확인" Click="OKButton_Click" Width="100" Height="35" FontSize="15" Style="{StaticResource BtnBasicStyle}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding isEOutWeighBtn}" Margin="0,5"/>
+            <Button x:Name="CancelButton" Content="닫기" Click="CancelButton_Click" Width="100" Height="35" FontSize="15" Style="{StaticResource BtnBasicStyle}" Grid.Row="5" Grid.Column="3" Margin="0,5"/>
+            <sdk:Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding OutWegingMsg}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,1,1,5" Foreground="Red"/>
+        </Grid>
+
+    </Grid>
+</icommon:iPharmMESChildWindow>

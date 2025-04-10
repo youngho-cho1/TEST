@@ -1,0 +1,144 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.라벨발행"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"  
+    xmlns:icommoncontrol="clr-namespace:LGCNS.iPharmMES.Common.UserCtl;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:my="clr-namespace:보령"
+    x:Name="Main"
+    mc:Ignorable="d"
+    Width="600" Height="600" 
+    Title="Printer Select">
+
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <my:라벨발행ViewModel x:Key="viewModel"/>
+        <icommon:YN2BoolConverter x:Key="YN2BoolConverter1" />
+        <icontrol:StreamToImageConverter x:Key="StreamToImageConverter"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+
+    <Grid x:Name="LayoutRoot" Margin="2"  DataContext="{Binding Source={StaticResource viewModel}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadCommandAsync}"  CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+        <TextBlock  Grid.Row="0" Grid.ColumnSpan="2"  HorizontalAlignment="Left" Text="Printers" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+
+        <TextBlock Grid.Row="1"  HorizontalAlignment="Left" Margin="15,0,0,0" Text="Label Type" VerticalAlignment="Center" Visibility="{Binding cboVisibility}" />
+        <ComboBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="cboLabelType"  Margin="93,5,0,0" Width="161"
+                          VerticalAlignment="Top" HorizontalAlignment="Left" 
+                          SelectedValuePath="CMCODE" DisplayMemberPath="CMCDNAME"
+                          SelectedValue="{Binding SelectedLabel, Mode=TwoWay}"  Visibility="{Binding cboVisibility}"
+                          ItemsSource="{Binding BR_PHR_SEL_CommonCode_Label.OUTDATAs}"  >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Path=cboLabelTypeCommandAsync}" CommandParameter="{Binding Path=SelectedLabel}"  />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+
+        <Border Grid.Row="3" Grid.ColumnSpan="2"  BorderBrush="Gray" BorderThickness="1" x:Name="Label">
+            <Image  x:Name="LabelImage"  Source="{Binding Label, Converter={StaticResource  StreamToImageConverter}}" />
+        </Border>
+
+        <Border Grid.Row="5" Grid.RowSpan="2" BorderBrush="Gray" BorderThickness="1" VerticalAlignment="Center" >
+            <Grid Height="120" VerticalAlignment="Top" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                </Grid.RowDefinitions>
+                <TextBlock  Grid.Column="0"  Grid.Row="0" Text="용지방향" VerticalAlignment="Center"  HorizontalAlignment="Right" FontSize="12" Margin="0 0 10 0"/>
+                <RadioButton  Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Content="가로"  IsChecked="{Binding LandScape, Mode=TwoWay}" ></RadioButton>
+                <RadioButton  Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Content="세로" IsChecked="{Binding Protrait,Mode=TwoWay}"></RadioButton>
+
+
+                <TextBlock Grid.Column="0" Grid.Row="2"  Text="출력매수" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="12" Margin="0,4,10,0"/>
+                <toolkit:NumericUpDown Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"  Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Height="24" Value="{Binding Copies,Mode=TwoWay}" DecimalPlaces="0" Minimum="1" Maximum="24"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="5" Grid.RowSpan="2"  Grid.Column="1" Margin="0,0,0,10" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Grid.Column="1"  FontSize="12" HorizontalAlignment="Right" Text="방 번호(Print)" VerticalAlignment="Center" />
+            <icommoncontrol:iPharmCodeName Grid.Column="3" Grid.Row="0"  
+                                           Height="30"
+                                           FontSize="12" 
+                                           VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2"
+                                           CodeNameType="EquipmentByGroup" NameValue="{Binding RoomName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                           CodeValue="{Binding RoomID, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectionCommandAsync}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </icommoncontrol:iPharmCodeName>
+
+            <sdk:DataGrid x:Name="SourceGrid" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Margin="10,10,0,0"
+                          AutoGenerateColumns="False" SelectionMode="Extended" SelectedItem="{Binding SelectedPrinter, Mode=TwoWay}"
+                      ItemsSource="{Binding Path=BR_PHR_SEL_System_Printer.OUTDATAs}"   >
+                <sdk:DataGrid.Columns>
+                    <sdk:DataGridTextColumn Header="프린터명" Binding="{Binding PRINTERNAME}" Width="*"/>
+                    <sdk:DataGridCheckBoxColumn Header="기본 프린터" Binding="{Binding ISDEFAULT, Converter={StaticResource YN2BoolConverter1}}" Width="100" IsReadOnly="False"/>
+                </sdk:DataGrid.Columns>
+            </sdk:DataGrid>
+        </Grid>
+
+
+
+        <StackPanel Grid.Row="9"  Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button x:Name="OKButton"  Content="확인" Width="100" Height="40" IsEnabled="{Binding Is_Enable_OKBtn}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <icommon:EventToCommandAction  Command="{Binding PrintCommandAsync}"  CommandParameter="{Binding ElementName=Main}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="CancelButton" Content="취소" Click="CancelButton_Click" 
+                    Width="100" Height="40" Margin="10 0 0 0"/>
+        </StackPanel>
+    </Grid>
+
+</ShopFloorUI:ShopFloorCustomWindow>

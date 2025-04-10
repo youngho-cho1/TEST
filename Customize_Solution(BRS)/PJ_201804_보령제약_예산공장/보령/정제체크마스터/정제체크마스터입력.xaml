@@ -1,0 +1,227 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow
+    x:Class="보령.정제체크마스터입력"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:toolkit ="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:보령"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:controlsLib="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ezmes="clr-namespace:LGCNS.EZMES.ControlsLib;assembly=LGCNS.EZMES.ControlsLib"
+    x:Name="Main" Title="정제체크마스터입력"
+    Width="1100" Height="479.29">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <Style TargetType="TextBox" x:Key="txtEQPT">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="150"/>
+        </Style>
+        <Style TargetType="Button" x:Key="BtnDefault">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter" x:Key="HeaderCenter_color">
+            <Setter Property="Background" Value="#F3F5F6"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="c1:DataGridColumnHeaderPresenter" x:Key="HeaderCenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="c1:DataGridCellPresenter" x:Key="CellCenter_color">
+            <Setter Property="Background" Value="#F3F5F6"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <local:정제체크마스터입력ViewModel x:Name="VM"/>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+    <toolkit:BusyIndicator Name="BusyIn" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" DataContext="{Binding Source={StaticResource VM}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommandAsync}" CommandParameter="{Binding ElementName=Main}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="Header" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            </Grid>
+            <Grid x:Name="MainSection" Grid.Row="1" Margin="0,0,0,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid x:Name="InsertSection" Grid.Row="0" Margin="0,0,0,319" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55*"/>
+                        <RowDefinition Height="14*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="타정기 정보" Margin="5,17,5,22" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Width="59"/>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Margin="0,9,0,6" Width="374" >
+                        <TextBox x:Name="txtEqptId" Text="{Binding EQPTID, Mode=TwoWay}" IsReadOnly="{Binding EQPTID_ENABLE}" Style="{Binding Source={StaticResource txtEQPT}}" Margin="5,1,5,9"/>
+                        <TextBox x:Name="txtEqptName" Text="{Binding EQPTNAME, Mode=OneWay}" IsReadOnly="True" Style="{Binding Source={StaticResource txtEQPT}}" Width="199" Margin="5,1,5,9"/>
+                    </StackPanel>
+
+                    <Button Grid.Row="0" Grid.Column="1" x:Name="btnSearch" Content="입력" IsEnabled="{Binding INPUT_ENABLE}"
+                                Style="{Binding Source={StaticResource BtnDefault}}" VerticalAlignment="Bottom"
+                                HorizontalAlignment="Right" Command="{Binding InputEquipmentCommandAsync}" Height="50" Margin="0,0,10,2" Width="95"/>
+                </Grid>
+
+                <Grid x:Name="IPC_CheckMaster" Grid.Row="1" Margin="0,0,0,10">
+                    <sdk:Label Grid.Column="0" Content="[IPC 기준 정보]"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="512,54,495,308" />
+                    <c1:C1DataGrid Grid.Row="0" AutoGenerateColumns="False"
+                       CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" HeadersVisibility="Column" Margin="0,75,0,0"  Height="57" VerticalAlignment="Top" Background="{x:Null}" BorderThickness="0" ItemsSource="{Binding IPC_STANDARDS}">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Header="평균질량" MinWidth="90" Binding="{Binding RSLT_AVG_WEIGHT}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="개개질량(최소)" MinWidth="90" Binding="{Binding RSLT_MIN_WEIGHT}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="개개질량(최대)" MinWidth="90" Binding="{Binding RSLT_MAX_WEIGHT}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="개별질량RSD" MinWidth="90" Binding="{Binding RSLT_SD_WEIGHT}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="두께(평균)" MinWidth="90" Binding="{Binding RSLT_AVG_THICKNESS}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="두께(최소)" MinWidth="90" Binding="{Binding RSLT_MIN_THICKNESS}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="두께(최대)" MinWidth="90" Binding="{Binding RSLT_MAX_THICKNESS}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="경도(평균)" MinWidth="90" Binding="{Binding RSLT_AVG_HARDNESS}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="경도(최소)" MinWidth="90" Binding="{Binding RSLT_MIN_HARDNESS}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                            <c1:DataGridTextColumn Header="경도(최대)" MinWidth="90" Binding="{Binding RSLT_MAX_HARDNESS}" HeaderStyle="{StaticResource HeaderCenter_color}" CellStyle="{StaticResource CellCenter_color}"/>
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+
+                </Grid>
+
+                <Grid x:Name="IPCResultSection" Grid.Row="2" Margin="5">
+                    <ezmes:CNSDataGrid x:Name="dgCheckMasterIPCResult" IsRowAdd="True" IsRowDelete="True" IsEditMode="True" IsEditSection="True" IsRowNumber="False"
+                                    HeadersVisibility="Column" ItemsSource="{Binding IPCResultSections}" Margin="0,130,0,51" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ezmes:CNSDataGrid.DataColumns>
+                            <ezmes:DataColumn HeadName="점검 일시" HeaderWidth="135" DataField = "STRTDTTM" ColumnType ="DateTime" HorizontalAlignment="Center"/>
+                            <ezmes:DataColumn HeadName="평균질량" HeaderWidth="94" DataField = "AVG_WEIGHT" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding AVG_WEIGHT, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="개개질량(최소)" HeaderWidth="94" DataField = "MIN_WEIGHT" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding MIN_WEIGHT, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="개개질량(최대)" HeaderWidth="94" DataField = "MAX_WEIGHT" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding MAX_WEIGHT, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="개별질량RSD" HeaderWidth="94" DataField ="SD_WEIGHT" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding SD_WEIGHT, Mode=TwoWay}" Visibility="{Binding DataContext.RSD_CHECK, RelativeSource = {RelativeSource AncestorType=toolkit:BusyIndicator}}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="두께(평균)" HeaderWidth="94" DataField = "AVG_THICKNESS" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding AVG_THICKNESS, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="두께(최소)" HeaderWidth="94" DataField = "MIN_THICKNESS" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding MIN_THICKNESS, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="두께(최대)" HeaderWidth="94" DataField = "MAX_THICKNESS" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding MAX_THICKNESS, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="경도(평균)" HeaderWidth="94" DataField = "AVG_HARDNESS" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding AVG_HARDNESS, Mode=TwoWay}" Visibility="{Binding DataContext.CIRCLE_CHECK, RelativeSource = {RelativeSource AncestorType=toolkit:BusyIndicator}}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="경도(최소)" HeaderWidth="94" DataField = "MIN_HARDNESS" ColumnType ="Template">
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding MIN_HARDNESS, Mode=TwoWay}" Visibility="{Binding DataContext.CIRCLE_CHECK, RelativeSource = {RelativeSource AncestorType=toolkit:BusyIndicator}}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                            <ezmes:DataColumn HeadName="경도(최대)" HeaderWidth="94" DataField = "MAX_HARDNESS" ColumnType ="Template" >
+                                <ezmes:DataColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ShopFloorUI:KeyPadType Value="{Binding MAX_HARDNESS, Mode=TwoWay}" Visibility="{Binding DataContext.CIRCLE_CHECK, RelativeSource = {RelativeSource AncestorType=toolkit:BusyIndicator}}"/>
+                                    </DataTemplate>
+                                </ezmes:DataColumn.CellTemplate>
+                            </ezmes:DataColumn>
+                        </ezmes:CNSDataGrid.DataColumns>
+                    </ezmes:CNSDataGrid>
+                </Grid>
+
+                <Grid x:Name="AVG_IPCResult" Grid.Row="3">
+                    <c1:C1DataGrid Grid.Row="0" AutoGenerateColumns="False"
+                       CanUserAddRows="False" CanUserEditRows="False" CanUserRemoveRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" HeadersVisibility="Column" Margin="0,340,0,-9" ItemsSource="{Binding IPC_RESULTS}" Height="57" VerticalAlignment="Top">
+                        <c1:C1DataGrid.Columns>
+                            <c1:DataGridTextColumn Header="점검일시" MinWidth="135" Binding="{Binding RSLT_AVG_DTTM}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="평균질량" MinWidth="90" Binding="{Binding RSLT_AVG_WEIGHT}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="개개질량(최소)" MinWidth="90" Binding="{Binding RSLT_MIN_WEIGHT}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="개개질량(최대)" MinWidth="90" Binding="{Binding RSLT_MAX_WEIGHT}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="개별질량RSD" MinWidth="90" Binding="{Binding RSLT_SD_WEIGHT}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+
+                            <c1:DataGridTextColumn Header="두께(평균)" MinWidth="90" Binding="{Binding RSLT_AVG_THICKNESS}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="두께(최소)" MinWidth="90" Binding="{Binding RSLT_MIN_THICKNESS}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="두께(최대)" MinWidth="90" Binding="{Binding RSLT_MAX_THICKNESS}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+
+                            <c1:DataGridTextColumn Header="경도(평균)" MinWidth="90" Binding="{Binding RSLT_AVG_HARDNESS}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="경도(최소)" MinWidth="90" Binding="{Binding RSLT_MIN_HARDNESS}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+                            <c1:DataGridTextColumn Header="경도(최대)" MinWidth="90" Binding="{Binding RSLT_MAX_HARDNESS}" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderCenter}"/>
+
+                        </c1:C1DataGrid.Columns>
+                    </c1:C1DataGrid>
+                </Grid>
+            </Grid>
+
+            <Grid x:Name="Footer" Grid.Row="2">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="btnAVG" Content="평균" Style="{Binding Source={StaticResource BtnDefault}}" Command="{Binding AVGCommandAsync}" Height="39" Width="89"/>
+                    <Button x:Name="btnRecord" Content="{Binding W[CUIDataWriteToEBRButtonText], Source={StaticResource VM}, FallbackValue= '기록'}" 
+                            Style="{Binding Source={StaticResource BtnDefault}}" Command="{Binding ConfirmCommandAsync}" Height="39" Width="89"/>
+                    <Button x:Name="btnCacel" Content="{Binding W[CUICloseButtonText], Source={StaticResource VM}, FallbackValue= '취소'}"
+                            Style="{Binding Source={StaticResource BtnDefault}}"
+                            Click="btnCancel_Click" Height="39" Width="89"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </toolkit:BusyIndicator>
+</ShopFloorUI:ShopFloorCustomWindow>

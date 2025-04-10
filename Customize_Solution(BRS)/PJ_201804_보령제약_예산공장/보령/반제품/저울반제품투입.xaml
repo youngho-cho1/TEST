@@ -1,0 +1,134 @@
+﻿<ShopFloorUI:ShopFloorCustomWindow 
+    x:Class="보령.저울반제품투입"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:icommon="clr-namespace:LGCNS.iPharmMES.Common;assembly=LGCNS.iPharmMES.Common"    
+    xmlns:icontrol="clr-namespace:LGCNS.iPharmMES.Controls;assembly=LGCNS.iPharmMES.Controls"
+    xmlns:ShopFloorUI="clr-namespace:ShopFloorUI;assembly=ShopFloorUI.Common"
+    xmlns:my="clr-namespace:보령"
+    x:Name="Main"
+    mc:Ignorable="d"
+    Title="무게확인 및 반제품투입"
+    Height="450" Width="700" Closed="Main_Closed">
+    <ShopFloorUI:ShopFloorCustomWindow.Resources>
+        <my:저울반제품투입ViewModel x:Key="ViewModel"/>
+        <Style x:Key="HeaderStyle" TargetType="c1:DataGridColumnHeaderPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </ShopFloorUI:ShopFloorCustomWindow.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White" DataContext="{Binding Source={StaticResource ViewModel}}">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=Main}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid.Resources>
+            <DataTemplate x:Name="LablePrintTemplate">
+                <Button Content="재발행" Command="{Binding LabelPrintCommand, Source={StaticResource ViewModel}}" 
+                        CommandParameter="{Binding}" IsEnabled ="{Binding Path=buttonEnable}"/>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.6*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.6*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="용기스캔"  HorizontalAlignment="Stretch" Margin="10,8,0,10" Grid.RowSpan="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction Command="{Binding ScanBinCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <sdk:Label Grid.Column="1" Content="용기 관리 번호" Margin="0,0,10,0"  HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="2" VerticalAlignment="Center" TextAlignment="Center" Margin="0,0,10,0" Text="{Binding Path=VesselId}"  />
+
+        <sdk:Label Grid.Column="1" Grid.Row="1" Content="용기무게" Margin="0,5,10,19"  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBox  Grid.Column="2"  Grid.Row="1" VerticalAlignment="Center"  Text="{Binding Tare}" Height="30" FontSize="17" FontWeight="Bold" TextAlignment="Center"  Margin="0,0,10,10"  />
+        <!--<TextBox  Grid.Column="4"  Grid.Row="0" VerticalAlignment="Center" Text="{Binding TareUOM}" Height="30" FontSize="17" FontWeight="Bold" TextAlignment="Center"  Margin="109,5,0,5"  />-->
+
+
+        <Button  Grid.Column="3"  Content="저울스캔"  HorizontalAlignment="Stretch" Margin="10,8,0,12" Grid.RowSpan="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction Command="{Binding ScanScaleCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+        <sdk:Label Grid.Row="0"  Grid.Column="4" Content="저울ID" Margin="0,0,10,0"  HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="0" Grid.Column="6" VerticalAlignment="Center" TextAlignment="Center" Margin="0,0,10,0" Text="{Binding Path=ScaleId}"  />
+
+        <sdk:Label Grid.Column="4" Grid.Row="1" Content="현재 저울 값" Margin="0,5,9,19"  HorizontalAlignment="Right" VerticalAlignment="Center" />
+        <TextBox  x:Name="txtScaleValue" Grid.Column="5" Grid.Row="1" Margin="0,0,0,10" Width="155"
+                  VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center"
+                  Text="{Binding Scale}" Height="30" FontSize="17" FontWeight="Bold" TextChanged="txtScaleValue_TextChanged"  />
+        <!--<TextBox  Grid.Column="4" VerticalAlignment="Center" Text="{Binding ScaleUOM}" Height="30" FontSize="17" FontWeight="Bold" TextAlignment="Center" Grid.Row="1" Margin="109,5,0,5"  />-->
+
+        <!--<Button Grid.Column="5" Content="재조회" Margin="10,5" Grid.Row="1" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction Command="{Binding ScaleCommandAsync}" CommandParameter="{Binding ElementName=Main}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>-->
+
+        <c1:C1DataGrid Grid.Row="2" 
+                       Grid.ColumnSpan="6" 
+                       Grid.RowSpan="1"
+                       x:Name="dgProductionOutput" 
+                       AutoGenerateColumns="False" 
+                       Margin="10,0,10,0"
+                       CanUserAddRows="False"
+                       RowHeaderWidth="0"
+                       RowHeight="30"
+                       GridLinesVisibility="All"   
+                       AlternatingRowBackground="White"
+                       RowBackground="White"
+                       ItemsSource="{Binding BR_BRS_SEL_Scale_ProductionOrderOutput.OUTDATAs}" 
+                       MergingCells="dgProductionOutput_MergingCells"
+                       LoadedRowPresenter="dgProductionOutput_LoadedRowPresenter">
+
+            <c1:C1DataGrid.Columns>
+                <c1:DataGridTextColumn  Header="자재ID" Width="150" Binding="{Binding Path=MTRLID}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="자재명" Width="150" Binding="{Binding Path=MTRLNAME}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="원료배치번호" Width="170" Binding="{Binding Path=MLOTID}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="무게"  Width="100"  Binding="{Binding Path=MSUBLOTQTY, StringFormat='0.##0'}" IsReadOnly="True" HorizontalAlignment="Right" HeaderStyle="{StaticResource HeaderStyle}"/>
+                <c1:DataGridTextColumn  Header="단위"  Width="50"  Binding="{Binding Path=UOMNAME}" IsReadOnly="True" HorizontalAlignment="Center" HeaderStyle="{StaticResource HeaderStyle}"/>
+            </c1:C1DataGrid.Columns>
+        </c1:C1DataGrid>
+
+
+        <CheckBox Grid.Row="3" Grid.Column="0" x:Name="chkLabel" Content="자동 라벨 발행" IsChecked="{Binding LabelChecked, Mode=TwoWay}" Margin="10 10 0 0" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <icommon:EventToCommandAction Command="{Binding Path=LabelPrintClickCommand}" CommandParameter="{Binding Path=LabelChecked}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </CheckBox>
+
+        <StackPanel Grid.Row="4"  Grid.ColumnSpan="6"  Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="btnConfirm" Content="투입" Grid.Row="1" Grid.Column="1" Width="195" Command="{Binding ConfirmCommandAsync}" IsEnabled="{Binding IsEnabled}"/>
+            <Button x:Name="btnClose" Content="닫기"  Grid.Row="1" Grid.Column="1" Width="195" Click="Button_Click" Margin="20 0 0 0"/>
+
+        </StackPanel>
+
+
+    </Grid>
+</ShopFloorUI:ShopFloorCustomWindow>
