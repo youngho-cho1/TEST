@@ -170,6 +170,7 @@ namespace 보령
                         CommandResults["LoadedCommandAsync"] = false;
                         CommandCanExecutes["LoadedCommandAsync"] = false;
                         ///
+
                         IsBusy = true;
 
                         if (arg != null && arg is WMS일반자재환입처리)
